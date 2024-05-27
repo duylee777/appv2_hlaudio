@@ -1,29 +1,9 @@
-@extends('theme.layouts.index')
-@section('title','Tài khoản')
-@section('content')
-
-<!--=====================
-Breadcrumb Aera Start
-=========================-->
-<div class="breadcrumbs_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="breadcrumb_content">
-                    <ul>
-                        <li>
-                            <h1><a href="index.html">Home</a></h1>
-                        </li>
-                        <li>My Account</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--=====================
-Breadcrumb Aera End
-=========================-->
+@extends('theme.layouts.page')
+@section('title','Tài khoản của tôi')
+@section('category-url', '')
+@section('category-name', '')
+@section('page-name', 'Tài khoản của tôi')
+@section('page-content')
 
 <!--======================
 My Account area Start
@@ -33,23 +13,23 @@ My Account area Start
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-2">
                 <ul class="nav flex-column dashboard-list mb-20 role=" tablist">
-                    <li><a class="nav-link" data-bs-toggle="tab" href="#dashboard">Dashboard</a></li>
-                    <li> <a class="nav-link active show" data-bs-toggle="tab" href="#orders">Orders</a></li>
-                    <li><a class="nav-link" data-bs-toggle="tab" href="#downloads">Downloads</a></li>
-                    <li><a class="nav-link" data-bs-toggle="tab" href="#address">Addresses</a></li>
-                    <li><a class="nav-link" data-bs-toggle="tab" href="#account-details">Account details</a></li>
-                    <li><a class="nav-link" href="login.html">logout</a></li>
+                    <li><a class="nav-link" data-bs-toggle="tab" href="#dashboard">Bảng điều khiển</a></li>
+                    <li> <a class="nav-link active show" data-bs-toggle="tab" href="#orders">Đơn đặt hàng</a></li>
+                    <li><a class="nav-link" data-bs-toggle="tab" href="#downloads">Tải về</a></li>
+                    <li><a class="nav-link" data-bs-toggle="tab" href="#address">Địa chỉ</a></li>
+                    <li><a class="nav-link" data-bs-toggle="tab" href="#account-details">Cài đặt tài khoản</a></li>
+                    <li><a class="nav-link" href="#">Đăng xuất</a></li>
                 </ul>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-10">
                 <!-- Tab panes -->
                 <div class="tab-content dashboard-content mb-20">
                     <div id="dashboard" class="tab-pane fade">
-                        <h3 class="last-title">Dashboard </h3>
+                        <h3 class="last-title">Bảng điều khiển </h3>
                         <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
                     </div> <!-- end of tab-pane -->
                     <div id="orders" class="tab-pane fade active show">
-                        <h3 class="last-title">Orders</h3>
+                        <h3 class="last-title">Đơn hàng</h3>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -111,7 +91,7 @@ My Account area Start
                     </div> <!-- end of tab-pane -->
                     <div id="address" class="tab-pane">
                         <p>The following addresses will be used on the checkout page by default.</p>
-                        <h4 class="billing-address">Billing address</h4>
+                        <h4 class="billing-address">Địa chỉ</h4>
                         <a class="btn btn-secondary my-4" href="#">edit</a>
                         <address>
                             House #00<br>Road #00<br>Block #ABCD <br>State <br> UK <br>100000
@@ -120,8 +100,11 @@ My Account area Start
                             <p>United State</p>
                     </div> <!-- end of tab-pane -->
                     <div id="account-details" class="tab-pane fade">
-                        <h3 class="last-title">Account details </h3>
-                        <div class="checkout_info">
+                        <h3 class="last-title">Cài đặt tài khoản</h3>
+                        @include('theme.auth.partials.update-profile-information-form')
+                        @include('theme.auth.partials.update-password-form')
+                        @include('theme.auth.partials.delete-user-form')
+                        {{-- <div class="checkout_info">
                             <form class="form-row" action="#">
                                 <div class="col-lg-12 text-left mb-20">
                                     <p class="register-page"> Already have an account? <a href="login.html">Log in instead!</a></p>
@@ -178,7 +161,7 @@ My Account area Start
                                     <input type="submit" class="btn-secondary" value="Register">
                                 </div>
                             </form>
-                        </div>
+                        </div> --}}
                     </div> <!-- end of tab-pane -->
                 </div>
             </div>

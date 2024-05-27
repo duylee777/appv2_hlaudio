@@ -5,6 +5,11 @@
 @section('page-name', 'Đăng nhập')
 @section('page-content')
 
+<style>
+    .form_group .login-register {
+        width: max-content;
+    }
+</style>
 <!--======================
 login area Start
 ==========================-->
@@ -13,15 +18,16 @@ login area Start
         <div class="row">
             <div class="offset-lg-3 col-lg-6">
                 <div class="checkout_info mb-20">
-                    <form class="form-row" action="#">
+                    <form class="form-row" action="{{ route('login') }}" method="POST">
+                        @csrf
                         <h1 class="last-title mb-30 text-center">Đăng nhập vào tài khoản của bạn</h1>
                         <div class="form_group col-12">
                             <label class="form-label">Email <span>*</span></label>
-                            <input class="input-form" type="text">
+                            <input class="input-form" type="text" name="email">
                         </div>
                         <div class="form_group col-12 position-relative">
                             <label class="form-label">Mật khẩu <span>*</span></label>
-                            <input class="input-form input-login" type="text">
+                            <input class="input-form input-login" type="password" name="password">
                             <button class="show-btn">Hiển thị</button>
                         </div>
                         <div class="form_group group_3 col-lg-3">

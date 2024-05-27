@@ -24,8 +24,9 @@ class ClientController extends Controller
         return view('theme.auth.register');
     }
 
-    public function account() {
-        return view('theme.auth.account');
+    public function account(Request $request) {
+        $user = $request->user();
+        return view('theme.auth.account', compact('user'));
     }
 
     public function home() {
@@ -46,6 +47,7 @@ class ClientController extends Controller
         return view('theme.shop.shop');
     }
     public function category($category_slug, Request $request) {
+        $paginate = 9;
         $category = Category::where('slug', $category_slug)->first();
         $isChildCate = isset($category->children) ? count($category->children) : 0;
 
@@ -64,50 +66,50 @@ class ClientController extends Controller
 
         if(isset($soft) && $soft == 'name_asc') {
             if($filterBrand != "all") {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->orderBy('name', 'ASC')->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->orderBy('name', 'ASC')->paginate($paginate);
             }
             else {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->orderBy('name', 'ASC')->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->orderBy('name', 'ASC')->paginate($paginate);
             }
             
         }
         elseif(isset($soft) && $soft == 'name_desc') {
             if($filterBrand != "all") {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->orderBy('name', 'DESC')->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->orderBy('name', 'DESC')->paginate($paginate);
             }
             else {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->orderBy('name', 'DESC')->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->orderBy('name', 'DESC')->paginate($paginate);
             }
             
         }
         elseif(isset($soft) && $soft == 'price_asc') {
             if($filterBrand != "all") {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->orderBy('odd_price', 'ASC')->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->orderBy('odd_price', 'ASC')->paginate($paginate);
             }
             else {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->orderBy('odd_price', 'ASC')->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->orderBy('odd_price', 'ASC')->paginate($paginate);
             }
         }
         elseif(isset($soft) && $soft == 'price_desc') {
             if($filterBrand != "all") {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->orderBy('odd_price', 'DESC')->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->orderBy('odd_price', 'DESC')->paginate($paginate);
             }
             else {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->orderBy('odd_price', 'DESC')->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->orderBy('odd_price', 'DESC')->paginate($paginate);
             }
         }
         else {
             if($filterBrand != "all") {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->whereIn('brand_id', $brandIds)->paginate($paginate);
             }
             else {
-                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->paginate(2);
+                $productByCates = Product::where('is_active', true)->where('category_id', $category->id)->paginate($paginate);
             }  
         }
         
         if($isChildCate != 0) {
             foreach($category->children as $childCate) {
-                $productByChildCates =  Product::where('is_active', true)->where('category_id', $childCate->id)->paginate(2);
+                $productByChildCates =  Product::where('is_active', true)->where('category_id', $childCate->id)->paginate($paginate);
                 $products = $productByCates->merge($productByChildCates);
             }  
         } else {

@@ -35,6 +35,7 @@ Route::get('/', [ClientController::class, 'home'])->name('theme.home');
 Route::get('/404', [ClientController::class, 'error'])->name('theme.error');
 
 Route::get('/dang-nhap', [ClientController::class, 'loginClient'])->name('theme.login_client');
+// Route::post('/dang-nhap', [ClientController::class, 'loginPostClient'])->name('theme.login_post_client');
 Route::get('/dang-ky', [ClientController::class, 'registerClient'])->name('theme.register_client');
 Route::get('/tai-khoan', [ClientController::class, 'account'])->name('theme.account');
 

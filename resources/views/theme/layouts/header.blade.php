@@ -34,7 +34,7 @@ Header Area Start
                                 </a>
                                 <ul class="box-dropdown drop-dropdown">
                                     @if(auth()->user())
-                                        <li><a href="#">Tài khoản của tôi</a></li>
+                                        <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
                                         <li><a href="#">Thanh toán</a></li>
                                     @endif
                                     <li><a href="{{route('theme.login_client')}}">Đăng nhập</a></li>
