@@ -4,7 +4,7 @@
 @section('category-name', '')
 @section('page-name', 'Tài khoản của tôi')
 @section('page-content')
-
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 <!--======================
 My Account area Start
 ==========================-->
@@ -13,22 +13,28 @@ My Account area Start
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-2">
                 <ul class="nav flex-column dashboard-list mb-20 role=" tablist">
-                    <li><a class="nav-link" data-bs-toggle="tab" href="#dashboard">Bảng điều khiển</a></li>
+                    {{-- <li><a class="nav-link" data-bs-toggle="tab" href="#dashboard">Bảng điều khiển</a></li>
                     <li> <a class="nav-link active show" data-bs-toggle="tab" href="#orders">Đơn đặt hàng</a></li>
                     <li><a class="nav-link" data-bs-toggle="tab" href="#downloads">Tải về</a></li>
-                    <li><a class="nav-link" data-bs-toggle="tab" href="#address">Địa chỉ</a></li>
+                    <li><a class="nav-link" data-bs-toggle="tab" href="#address">Địa chỉ</a></li> --}}
                     <li><a class="nav-link" data-bs-toggle="tab" href="#account-details">Cài đặt tài khoản</a></li>
-                    <li><a class="nav-link" href="#">Đăng xuất</a></li>
+                    <li>
+                        <button id="logout_account" class="w-100 px-3 py-1 bg-red-500 text-white">Đăng xuất</button>
+                        <form id="logout_account_form" action="{{ route('logout')}}" method="post" hidden>
+                            @csrf
+                        </form>
+                    </li>
                 </ul>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-10">
                 <!-- Tab panes -->
                 <div class="tab-content dashboard-content mb-20">
-                    <div id="dashboard" class="tab-pane fade">
+                    {{-- <div id="dashboard" class="tab-pane fade">
                         <h3 class="last-title">Bảng điều khiển </h3>
                         <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
-                    </div> <!-- end of tab-pane -->
-                    <div id="orders" class="tab-pane fade active show">
+                    </div>  --}}
+                    <!-- end of tab-pane -->
+                    {{-- <div id="orders" class="tab-pane fade">
                         <h3 class="last-title">Đơn hàng</h3>
                         <div class="table-responsive">
                             <table class="table">
@@ -59,8 +65,9 @@ My Account area Start
                                 </tbody>
                             </table>
                         </div>
-                    </div> <!-- end of tab-pane -->
-                    <div id="downloads" class="tab-pane fade">
+                    </div>  --}}
+                    <!-- end of tab-pane -->
+                    {{-- <div id="downloads" class="tab-pane fade">
                         <h3 class="last-title">Downloads</h3>
                         <div class="table-responsive">
                             <table class="table">
@@ -88,8 +95,9 @@ My Account area Start
                                 </tbody>
                             </table>
                         </div>
-                    </div> <!-- end of tab-pane -->
-                    <div id="address" class="tab-pane">
+                    </div>  --}}
+                    <!-- end of tab-pane -->
+                    {{-- <div id="address" class="tab-pane">
                         <p>The following addresses will be used on the checkout page by default.</p>
                         <h4 class="billing-address">Địa chỉ</h4>
                         <a class="btn btn-secondary my-4" href="#">edit</a>
@@ -98,8 +106,9 @@ My Account area Start
                     </address>
                             <p>ITFirm</p>
                             <p>United State</p>
-                    </div> <!-- end of tab-pane -->
-                    <div id="account-details" class="tab-pane fade">
+                    </div>  --}}
+                    <!-- end of tab-pane -->
+                    <div id="account-details" class="tab-pane fade active show">
                         <h3 class="last-title">Cài đặt tài khoản</h3>
                         @include('theme.auth.partials.update-profile-information-form')
                         @include('theme.auth.partials.update-password-form')
@@ -171,5 +180,30 @@ My Account area Start
 <!--======================
 My Account area End
 ==========================-->
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
+        $('#logout_account').on('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "Bạn có chắc chắn muốn đăng xuất khỏi tài khoản ?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Đăng xuất",
+                cancelButtonText: "Quay lại"
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#logout_account_form').submit();
+                }   
+            });
+        });
+    });
+</script>
 @endsection

@@ -134,7 +134,7 @@ Product Details Area Start
                 <!-- Product Summery End -->
             </div>
         </div>
-        <div class="row mt-40">
+        <div class="row mt-20">
             <div class="col-lg-3 col-sm-3 col-md-2">
                 <!-- Product Description Tab Start -->
                 <div class="product-desc-tab">
@@ -150,26 +150,17 @@ Product Details Area Start
                 <div class="product-desc-tab-content">
                     <!-- Start Single Content -->
                     <div role="tabpanel" id="description" class="product_tab_content fade active show">
-                        <div class="product_description_wrap mt-20">
+                        <div class="product_description_wrap">
                             <div class="product_desc">
-                                <!-- <h2 class="last-title mb-20">Details</h2> -->
-                                {!! $product->description !!}
+                                <h2 class="last-title mb-20">Mô tả sản phẩm</h2>
+                                {!! json_decode($product->description) !!}
                             </div>
-                            <!-- <div class="pro__feature mt-20">
-                                <h2 class="last-title mb-20">Features</h2>
-                                <ul class="feature_list">
-                                    <li><a href="#"><i class="zmdi zmdi-play-circle"></i>Duis aute irure dolor in reprehenderit</a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-play-circle"></i>Irure dolor in reprehenderit in voluptate</a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-play-circle"></i>Sed do eiusmod tempor incididunt ut labore</a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-play-circle"></i>Nisi ut aliquip ex ea commodo consequat.</a></li>
-                                </ul>
-                            </div> -->
                         </div>
                     </div>
                     <!-- End Single Content -->
                     <!-- Start Single Content -->
                     <div role="tabpanel" id="sheet" class="product_tab_content fade">
-                        <div class="pro__feature mt-20">
+                        <div class="pro__feature">
                             <h2 class="last-title mb-20">Thông số kỹ thuật</h2>
                             <table class="table table-striped">
                                 <thead>

@@ -14,6 +14,16 @@ use Illuminate\Http\Request;
 class ClientController extends Controller
 {
     public function error() {
+        $categories = Category::all();
+        $arr = [
+            'id' => [],
+            'name' => []
+        ];
+        foreach($categories as $cate) {
+            array_push($arr['id'], $cate->id);
+            array_push($arr['name'], $cate->name);
+        }
+        var_dump($arr);die;
         return view('theme.404');
     }
     public function loginClient() {
