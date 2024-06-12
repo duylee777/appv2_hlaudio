@@ -23,19 +23,46 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderBy('id', 'ASC')->paginate(20);
+        $products = Product::where([
+            ['name', '!=', null],
+            [function ($query) use ($request) {
+                if($keyword = $request->keyword) {
+                    $query->orWhere('code', 'LIKE', '%' . $keyword . '%')
+                        ->orWhere('name', 'LIKE', '%' . $keyword . '%')
+                        ->get();
+                }
+            }]
+        ])->orderBy('id', 'ASC')->paginate(20);
         return view('admin.shop.product.index', compact('products'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    protected function getChilCate($cate) {
+        $cateIds = []; 
+    }
     public function create()
     {
         $brands = Brand::all();
-        $categories = Category::all();
+        
+        $cateIds = [];
+        $cates = Category::get();
+        $cateSanPham = Category::where('slug', 'san-pham')->first();
+        if(count($cateSanPham->childs) != 0) {
+            foreach($cateSanPham->childs as $cate) {
+                array_push($cateIds, $cate->id);
+                if(count($cate->childs) != 0) {
+                    foreach($cate->childs as $cateLv2) {
+                        array_push($cateIds, $cateLv2->id);
+                    }
+                }
+            }
+        }
+        $categories = Category::where('is_visible', true)->whereIn('id', $cateIds)->get();
+        
         $units = Unit::all();
         $discounts = Discount::all();
         return view('admin.shop.product.create', compact('brands', 'categories', 'units', 'discounts'));
@@ -72,40 +99,51 @@ class ProductController extends Controller
                 $thumbnails = '';
                 if($request->hasFile('thumb')) {
                     $request->validate([
-                        'thumb' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                        'thumb' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
                     ]);
 
                     $thumbnails = $request->code.'.'.$request->file('thumb')->getClientOriginalExtension();
                     // $thumbnails = $request->code.'.webp';
+                    
+                    $linkStorageThumbnails = storage_path('app/public')."/products/".$request->code."/thumbnails/";
+                    $request->thumb->move($linkStorageThumbnails, $thumbnails);
+                    Parent::webpImage($linkStorageThumbnails.$thumbnails, 90, true);
                 }
-                $linkStorageThumbnails = storage_path('app/public')."/products/".$request->code."/thumbnails/";
-                $request->thumb->move($linkStorageThumbnails, $thumbnails);
-                Parent::webpImage($linkStorageThumbnails.$thumbnails, 90, true);
+                
                 
                 $images = [];
                 if($request->hasFile('image')) {
                     foreach($request->file('image') as $imageFile) {
                         $requestImageName = time().'_'.$imageFile->getClientOriginalName();
-                        $imageNameSaveDB = pathinfo($requestImageName, PATHINFO_FILENAME).'.webp';
+                        //$imageNameSaveDB = pathinfo($requestImageName, PATHINFO_FILENAME).'.webp';
                         $linkStorageImage = storage_path('app/public')."/products/".$request->code."/image/";
                         $imageFile->move($linkStorageImage, $requestImageName);
-                        Parent::webpImage($linkStorageImage.$requestImageName, 80, true);
-                        $images[] = $imageNameSaveDB;
+                        //Parent::webpImage($linkStorageImage.$requestImageName, 80, true);
+                        //$images[] = $imageNameSaveDB;
+                        $images[] = $requestImageName;
                     }
                 }
                 $dataNewProduct['image'] = json_encode($images);
+               
 
                 $document = [];
                 if($request->hasFile('document')) {
                     foreach($request->file('document') as $file) {
                         $fileName = time().'_'.$file->getClientOriginalName();
-                        $linkStorageImage = "/products/".$request->code."/document/";
-                        $file->move(storage_path('app/public').$linkStorageImage, $fileName);
+                        $linkStorageDoc = storage_path('app/public')."/products/".$request->code."/document/";
+                        $file->move($linkStorageDoc, $fileName);
                         $document[] = $fileName;
                     }
                 }   
                 $dataNewProduct['document'] = json_encode($document);
 
+                // if($request->has('software_url')){
+                //     $dataNewProduct['software'] = json_encode($request->software_url);
+                // }
+                // else {
+                //     $dataNewProduct['software'] = json_encode("");
+                // }
+                
                 $software = [];
                 if($request->hasFile('software')) {
                     foreach($request->file('software') as $file) {
@@ -116,7 +154,15 @@ class ProductController extends Controller
                     }
                 }   
                 $dataNewProduct['software'] = json_encode($software);
+                
 
+                // if($request->has('driver_url')){
+                //     $dataNewProduct['driver'] = json_encode($request->driver_url);
+                // }
+                // else {
+                //     $dataNewProduct['driver'] = json_encode("");
+                // }
+                
                 $driver = [];
                 if($request->hasFile('driver')) {
                     foreach($request->file('driver') as $file) {
@@ -127,9 +173,11 @@ class ProductController extends Controller
                     }
                 }   
                 $dataNewProduct['driver'] = json_encode($driver);
-
+                
+                
                 $newInventory = Inventory::create(['quantity' => $request->inventory_count]);
                 $dataNewProduct['inventory_id'] = $newInventory->id;
+                
 
                 Product::create($dataNewProduct);
                 
@@ -152,11 +200,27 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = Product::where('id', $id)->first();
+        // var_dump($product);die;
+        // $product = Product::where('id', $id)->first();
         $brands = Brand::all();
-        $categories = Category::all();
+        
+        $cateIds = [];
+        $cates = Category::get();
+        $cateSanPham = Category::where('slug', 'san-pham')->first();
+        if(count($cateSanPham->childs) != 0) {
+            foreach($cateSanPham->childs as $cate) {
+                array_push($cateIds, $cate->id);
+                if(count($cate->childs) != 0) {
+                    foreach($cate->childs as $cateLv2) {
+                        array_push($cateIds, $cateLv2->id);
+                    }
+                }
+            }
+        }
+        $categories = Category::where('is_visible', true)->whereIn('id', $cateIds)->get();
+        
         $units = Unit::all();
         $discounts = Discount::all();
         $inventory = Inventory::all();
@@ -187,8 +251,11 @@ class ProductController extends Controller
             ];
 
             if($request->hasFile('thumb')) {
-                $linkStorage = storage_path('app/public')."/products/".$product->code."/thumbnails/";
+                
+                $linkStorage = storage_path('app/public')."/products/".$product->code."/thumbnails";
+            
                 if (is_dir($linkStorage) && file_exists($linkStorage.'/'.$product->code.'.webp')) {
+                    
                     unlink($linkStorage.'/'.$product->code.'.webp');
                 }
 
@@ -197,6 +264,8 @@ class ProductController extends Controller
                 ]);
                 // $thumbnails = $product->code.'.webp';
                 $thumbnails = $product->code.'.'.$request->file('thumb')->getClientOriginalExtension();
+                // var_dump($thumbnails);
+                // die;
                 $linkStorageThumbnails = storage_path('app/public')."/products/".$product->code."/thumbnails/";
                 $request->thumb->move($linkStorageThumbnails, $thumbnails);
                 Parent::webpImage($linkStorageThumbnails.$thumbnails, 90, true);
@@ -215,11 +284,12 @@ class ProductController extends Controller
 
                 foreach($request->file('image') as $imageFile) {
                     $requestImageName = time().'_'.$imageFile->getClientOriginalName();
-                    $imageNameSaveDB = pathinfo($requestImageName, PATHINFO_FILENAME).'.webp';
+                    // $imageNameSaveDB = pathinfo($requestImageName, PATHINFO_FILENAME).'.webp';
                     $linkStorageImage = storage_path('app/public')."/products/".$product->code."/image/";
                     $imageFile->move($linkStorageImage, $requestImageName);
-                    Parent::webpImage($linkStorageImage.$requestImageName, 80, true);
-                    $images[] = $imageNameSaveDB;
+                    //Parent::webpImage($linkStorageImage.$requestImageName, 80, true);
+                    //$images[] = $imageNameSaveDB;
+                    $images[] = $requestImageName;
                 }
                 $dataUpdateProduct['image'] = json_encode($images);
             }
@@ -373,6 +443,7 @@ class ProductController extends Controller
             unlink($linkStorageThumb.'/'.$product->code.'.webp');
             rmdir($linkStorageThumb);
         }
+
         $linkStorageImage = storage_path('app/public').'/products/'.$product->code.'/image/';
         if (is_dir($linkStorageImage)) {
             foreach(json_decode($product->image) as $image) {
@@ -402,7 +473,10 @@ class ProductController extends Controller
             rmdir($linkStorageDriver);
         }
 
-        rmdir(storage_path('app/public').'/products/'.$product->code);
+        if(is_dir(storage_path('app/public').'/products/'.$product->code)) {
+            rmdir(storage_path('app/public').'/products/'.$product->code);
+        }
+        
         $product->delete();
         $inventory->delete();
         return redirect()->route('product.index')->with(['msg' => 'Đã xóa thương hiệu !']);

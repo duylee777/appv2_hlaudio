@@ -1,6 +1,7 @@
 @extends('theme.layouts.index')
 @section('title','Trang chủ')
 @section('content')
+
 <!--=====================
 slider area start
 =========================-->
@@ -108,255 +109,92 @@ Product Area Start
                 <div class="tab-content">
                     <div class="tab-pane active" id="one" role="tabpanel" aria-labelledby="one-tab">
                         <div class="product-thing slick-custom slick-custom-default">
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-1.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
+                            @foreach($latestProducts as $latestProduct)
+                                @php
+                                    $images = json_decode($latestProduct->image);
+                                @endphp
+                                <!-- Single-Product-Start -->
+                                <div class="item-product">
+                                    <div class="product-thumb">
+                                        <a href="{{route('theme.product_detail', $latestProduct->slug)}}">
+                                            <img src="{{asset('../storage/products/'.$latestProduct->code.'/image/'.$images[0])}}" alt="{{ $latestProduct->name }}" class="img-fluid">
+                                        </a>
+                                        <div class="box-label">
+                                            <div class="label-product-new">
+                                                <span>Mới</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$30.00</span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
+                                        <div class="action-link">
+                                            <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#latest-product-{{$latestProduct->id}}" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
+                                            <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
+                                            <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
                                         </div>
+                                        
                                     </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-2.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
+                                
+                                    <div class="product-caption">
+                                        <div class="product-name">
+                                            <a href="{{route('theme.product_detail', $latestProduct->slug)}}">
+                                                {{ $latestProduct->name }}
+                                            </a>
                                         </div>
-                                    </div>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$30.00</span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
+                                        <div class="rating">
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                        </div>
+                                        <div class="price-box">
+                                            <span class="regular-price">
+                                                @if($latestProduct->odd_price == 0)
+                                                    Liên hệ
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div class="cart">
+                                            <div class="add-to-cart">
+                                                @if(auth()->check())
+                                                    <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $latestProduct->id)}}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @else
+                                                    <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-4.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
-                                        </div>
-                                        <div class="label-product-discount">
-                                            <span>-20%</span>
-                                        </div>
-                                    </div>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-5.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-6.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
+                                <!-- Single-Product-End -->
+                            @endforeach
                         </div>
                     </div>
                     <div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
                         <div class="product-thing slick-custom slick-custom-default">
+                            @foreach($bestSellerProducts as $bestSellerProduct)
+                            @php
+                                $images = json_decode($bestSellerProduct->image);
+                            @endphp
                             <!-- Single-Product-Start -->
                             <div class="item-product">
                                 <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-10.webp" alt="" class="img-fluid">
+                                    <a href="{{route('theme.product_detail', $bestSellerProduct->slug)}}">
+                                        <img src="{{asset('../storage/products/'.$bestSellerProduct->code.'/image/'.$images[0])}}" alt="{{ $bestSellerProduct->name }}" class="img-fluid">
                                     </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
+                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#bestseller-product-{{$bestSellerProduct->id}}" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
                                         <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
                                         <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
                                     </div>
                                 </div>
                                 <div class="product-caption">
                                     <div class="product-name">
-                                        <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
+                                        <a href="{{route('theme.product_detail', $bestSellerProduct->slug)}}">
+                                            {{ $bestSellerProduct->name }}
+                                        </a>
                                     </div>
                                     <div class="rating">
                                         <span class="yellow"><i class="fa fa-star"></i></span>
@@ -366,226 +204,57 @@ Product Area Start
                                         <span class="yellow"><i class="fa fa-star"></i></span>
                                     </div>
                                     <div class="price-box">
-                                        <span class="regular-price">$30.00</span>
+                                        <span class="regular-price">
+                                            @if($bestSellerProduct->odd_price == 0)
+                                                Liên hệ
+                                            @endif
+                                        </span>
                                     </div>
                                     <div class="cart">
                                         <div class="add-to-cart">
-                                            <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
+                                            @if(auth()->check())
+                                                <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $bestSellerProduct->id)}}">
+                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                </a>
+                                            @else
+                                                <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-11.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
-                                        </div>
-                                    </div>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$30.00</span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-7.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
-                                        </div>
-                                        <div class="label-product-discount">
-                                            <span>-20%</span>
-                                        </div>
-                                    </div>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-5.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-6.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
+                            @endforeach
                         </div>
                     </div>
                     <div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
                         <div class="product-thing slick-custom slick-custom-default">
+                            @foreach($featuredProducts as $featuredProduct)
+                            @php
+                                $images = json_decode($featuredProduct->image);
+                            @endphp
                             <!-- Single-Product-Start -->
                             <div class="item-product">
                                 <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-11.webp" alt="" class="img-fluid">
+                                    <a href="{{route('theme.product_detail', $featuredProduct->slug)}}">
+                                        <img src="{{asset('../storage/products/'.$featuredProduct->code.'/image/'.$images[0])}}" alt="{{ $featuredProduct->name }}" class="img-fluid">
                                     </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
-                                        </div>
-                                    </div>
+                                    {{-- <div class="label-product-discount">
+                                        <span>-20%</span>
+                                    </div> --}}
                                     <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
+                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#featured-product-{{$featuredProduct->id}}" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
                                         <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
                                         <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
                                     </div>
                                 </div>
                                 <div class="product-caption">
                                     <div class="product-name">
-                                        <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
+                                        <a href="{{route('theme.product_detail', $featuredProduct->slug)}}">
+                                            {{ $featuredProduct->name }}
+                                        </a>
                                     </div>
                                     <div class="rating">
                                         <span class="yellow"><i class="fa fa-star"></i></span>
@@ -595,202 +264,29 @@ Product Area Start
                                         <span class="yellow"><i class="fa fa-star"></i></span>
                                     </div>
                                     <div class="price-box">
-                                        <span class="regular-price">$30.00</span>
+                                        <span class="regular-price">
+                                            @if($featuredProduct->odd_price == 0)
+                                                Liên hệ
+                                            @endif
+                                        </span>
                                     </div>
                                     <div class="cart">
                                         <div class="add-to-cart">
-                                            <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
+                                            @if(auth()->check())
+                                                <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $featuredProduct->id)}}">
+                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                </a>
+                                            @else
+                                                <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-2.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
-                                        </div>
-                                    </div>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$30.00</span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-8.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="box-label">
-                                        <div class="label-product-new">
-                                            <span>New</span>
-                                        </div>
-                                        <div class="label-product-discount">
-                                            <span>-20%</span>
-                                        </div>
-                                    </div>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-5.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
-                            <!-- Single-Product-Start -->
-                            <div class="item-product">
-                                <div class="product-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/theme/images/product/product-6.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                                <div class="product-caption">
-                                    <div class="product-name">
-                                        <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                        <span class="yellow"><i class="fa fa-star"></i></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$50.67</span>
-                                        <span class="old-price"><del>$55.50</del></span>
-                                    </div>
-                                    <div class="cart">
-                                        <div class="add-to-cart">
-                                            <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single-Product-End -->
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -922,1406 +418,90 @@ Category Product Area Start
         <div class="row">
             <div class="col-lg-12">
                 <ul class="nav nav-tabs category-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="four-tab" data-bs-toggle="tab" href="#four">
-                            <span><img src="assets/theme/images/category/thumb-1.webp" alt="" class="img-fluid"></span>
-                            <span>Computer - Laptop</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="five-tab" data-bs-toggle="tab" href="#five">
-                            <span><img src="assets/theme/images/category/thumb-2.webp" alt="" class="img-fluid"></span>
-                            <span>Electronics</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="six-tab" data-bs-toggle="tab" href="#six">
-                            <span><img src="assets/theme/images/category/thumb-3.webp" alt="" class="img-fluid"></span>
-                            <span>Toys & Hobbies</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="seven-tab" data-bs-toggle="tab" href="#seven">
-                            <span><img src="assets/theme/images/category/thumb-4.webp" alt="" class="img-fluid"></span>
-                            <span>Sports & Outdores</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="eight-tab" data-bs-toggle="tab" href="#eight">
-                            <span><img src="assets/theme/images/category/thumb-5.webp" alt="" class="img-fluid"></span>
-                            <span>Smartphone & Tablets</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="nine-tab" data-bs-toggle="tab" href="#nine">
-                            <span><img src="assets/theme/images/category/thumb-6.webp" alt="" class="img-fluid"></span>
-                            <span>Health & Beauty</span>
-                        </a>
-                    </li>
+                    @foreach($productCategories as $key => $category)
+                        <li class="nav-item">
+                            <a class="nav-link {{$key == 0 ? 'active': ''}}" id="{{$category->slug}}-tab" data-bs-toggle="tab" href="#cate-{{$category->slug}}">
+                                {{-- <span><img src="assets/theme/images/category/thumb-1.webp" alt="" class="img-fluid"></span> --}}
+                                <img src="" alt="{{$category->name}}" class="img-fluid category_img" width="60" height="60">
+                                <span>{{$category->name}}</span>
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
                 <div class="tab-content">
-                    <div class="product-thing-tab slick-custom-default tab-pane fade show active" id="four">
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-1.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-2.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-4.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                    <div class="label-product-discount">
+                    @foreach($productCategories as $key => $category)
+                    <div class="product-thing-tab slick-custom-default tab-pane fade {{$key == 0 ? 'show active' : ''}}" id="cate-{{$category->slug}}">
+                        @php
+                            if($category->slug == 'loa-speaker') {
+                                $childs = [];
+                                foreach(App\Models\Category::where('is_visible', true)->where('parent_id', $category->id)->get() as $cate) {
+                                    array_push($childs, $cate->id);
+                                }
+
+                                $productOfCategories = App\Models\Product::where('is_active', true)->whereIn('category_id', $childs)->get()->take(5);
+                            }
+                            else {
+                                $productOfCategories = App\Models\Product::where('is_active', true)->where('category_id', $category->id)->get()->take(5);
+                            }
+                        @endphp
+                        @foreach($productOfCategories as $product)
+                            @php
+                                $images = json_decode($product->image);
+                            @endphp
+                            <!-- Single-Product-Start -->
+                            <div class="item-product">
+                                <div class="product-thumb">
+                                    <a href="{{route('theme.product_detail', $product->slug)}}">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid">
+                                    </a>
+                                    {{-- <div class="label-product-discount">
                                         <span>-20%</span>
+                                    </div> --}}
+                                    <div class="action-link">
+                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#product-of-cate-{{$product->id}}" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
+                                        <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
+                                        <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
                                     </div>
                                 </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
+                                <div class="product-caption">
+                                    <div class="product-name">
+                                        <a href="{{route('theme.product_detail', $product->slug)}}">
+                                            {{ $product->name }}
+                                        </a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-5.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
+                                    <div class="rating">
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="regular-price">
+                                            @if($product->odd_price == 0)
+                                                Liên hệ
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <div class="cart">
+                                        <div class="add-to-cart">
+                                            @if(auth()->check())
+                                                <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $product->id)}}">
+                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                </a>
+                                            @else
+                                                <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                </a>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-6.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
+                            <!-- Single-Product-End -->
+                        @endforeach
                     </div>
-                    <div class="product-thing-tab slick-custom-default tab-pane fade" id="five">
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-10.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-11.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-7.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                    <div class="label-product-discount">
-                                        <span>-20%</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-5.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-6.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                    </div>
-                    <div class="product-thing-tab slick-custom-default tab-pane fade" id="six">
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-1.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-12.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-4.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                    <div class="label-product-discount">
-                                        <span>-20%</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-10.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-6.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                    </div>
-                    <div class="product-thing-tab slick-custom-default tab-pane fade" id="seven">
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-11.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-2.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-8.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                    <div class="label-product-discount">
-                                        <span>-20%</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-5.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-6.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                    </div>
-                    <div class="product-thing-tab slick-custom-default tab-pane fade" id="eight">
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-10.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-2.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-4.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                    <div class="label-product-discount">
-                                        <span>-20%</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-9.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-6.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                    </div>
-                    <div class="product-thing-tab slick-custom-default tab-pane fade" id="nine">
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-9.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-2.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a class="cart-plus" href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-3.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="#">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-4.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="box-label">
-                                    <div class="label-product-new">
-                                        <span>New</span>
-                                    </div>
-                                    <div class="label-product-discount">
-                                        <span>-20%</span>
-                                    </div>
-                                </div>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Natus erro at congue massa commodo sit dignissim</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shoppint-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-5.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Mirum est notare tellus eu nibh iaculis pretium</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                        <!-- Single-Product-Start -->
-                        <div class="item-product">
-                            <div class="product-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/product/product-8.webp" alt="" class="img-fluid">
-                                </a>
-                                <div class="action-link">
-                                    <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                    <a class="compare-add same-link" href="compare.html" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                    <a class="wishlist-add same-link" href="wishlist.html" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
-                                </div>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Porro quisquam eget feugiat pretium sodales</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$50.67</span>
-                                    <span class="old-price"><del>$55.50</del></span>
-                                </div>
-                                <div class="cart">
-                                    <div class="add-to-cart">
-                                        <a href="shopping-cart.html" title="Add to cart"><i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single-Product-End -->
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -2370,152 +550,59 @@ Feature Area Start
                     <h6>Sản phẩm mới</h6>
                 </div>
                 <div class="feature-carousel slick-custom slick-custom-default nav-top">
-                    <div class="product-list-content">
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-1.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-6.webp" alt="" class="img-fluid block-two">
-                                </a>
+                    @php
+                        $itemPerPage = 3;
+                        $pages = count($latestProducts) / $itemPerPage;
+                        $arr = [];
+                        for($i = 0; $i < $pages; $i++) {
+                            $arr[$i] = [];
+                            $count = 0;
+                            foreach($latestProducts as $key => $item) {
+                                $arr[$i][] = $item;
+                                $count++;
+                                if($count == $itemPerPage) {
+                                    $i++;
+                                    $count = 0;
+                                }
+                            }
+                        }
+                    @endphp
+                    @foreach($arr as $page => $items)
+                        <div class="product-list-content">
+                            @foreach($items as $key => $product)
+                            @php
+                                $images = json_decode($product->image);
+                            @endphp
+                            <div class="single-product-list {{$key == count($items)-1 ? '' : 'mb-20'}}">
+                                <div class="product-list-image">
+                                    <a href="{{route('theme.product_detail', $product->slug)}}">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one">
+                                        @if(!empty($images[1]))
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                        @else
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                        @endif
+                                    </a>
+                                </div>
+                                <div class="product-caption">
+                                    <div class="product-name">
+                                        <a href="{{route('theme.product_detail', $product->slug)}}">{{ $product->name }}</a>
+                                    </div>
+                                    <div class="rating">
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="regular-price">{{ $product->odd_price }}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">4k Camcorder 2214c002</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-2.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-5.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Wireless Over-Ear Headphones</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$32.67</span>
-                                    <span class="old-price"><del>$35.50</del></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-3.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-4.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">iOS 10 - Silver - Recertified</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$143.00</span>
-                                    <span class="old-price"><del>$156.00</del></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-list-content">
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-1.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-6.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">4k Camcorder 2214c002</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-2.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-5.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Wireless Over-Ear Headphones</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$32.67</span>
-                                    <span class="old-price"><del>$35.50</del></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-3.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-4.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">iOS 10 - Silver - Recertified</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$143.00</span>
-                                    <span class="old-price"><del>$156.00</del></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 mt-50">
@@ -2523,152 +610,59 @@ Feature Area Start
                     <h6>Sản phẩm nổi bật</h6>
                 </div>
                 <div class="feature-carousel slick-custom slick-custom-default nav-top">
-                    <div class="product-list-content">
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-1.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-6.webp" alt="" class="img-fluid block-two">
-                                </a>
+                    @php
+                        $itemPerPage = 3;
+                        $pages = count($featuredProducts) / $itemPerPage;
+                        $arr = [];
+                        for($i = 0; $i < $pages; $i++) {
+                            $arr[$i] = [];
+                            $count = 0;
+                            foreach($featuredProducts as $key => $item) {
+                                $arr[$i][] = $item;
+                                $count++;
+                                if($count == $itemPerPage) {
+                                    $i++;
+                                    $count = 0;
+                                }
+                            }
+                        }
+                    @endphp
+                    @foreach($arr as $page => $items)
+                        <div class="product-list-content">
+                            @foreach($items as $key => $product)
+                            @php
+                                $images = json_decode($product->image);
+                            @endphp
+                            <div class="single-product-list {{$key == count($items)-1 ? '' : 'mb-20'}}">
+                                <div class="product-list-image">
+                                    <a href="{{route('theme.product_detail', $product->slug)}}">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one">
+                                        @if(!empty($images[1]))
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                        @else
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                        @endif
+                                    </a>
+                                </div>
+                                <div class="product-caption">
+                                    <div class="product-name">
+                                        <a href="{{route('theme.product_detail', $product->slug)}}">{{ $product->name }}</a>
+                                    </div>
+                                    <div class="rating">
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="regular-price">{{ $product->odd_price }}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">4k Camcorder 2214c002</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-2.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-5.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Wireless Over-Ear Headphones</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$32.67</span>
-                                    <span class="old-price"><del>$35.50</del></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-3.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-4.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">iOS 10 - Silver - Recertified</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$143.00</span>
-                                    <span class="old-price"><del>$156.00</del></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-list-content">
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-1.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-6.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">4k Camcorder 2214c002</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-2.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-5.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Wireless Over-Ear Headphones</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$32.67</span>
-                                    <span class="old-price"><del>$35.50</del></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-3.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-4.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">iOS 10 - Silver - Recertified</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$143.00</span>
-                                    <span class="old-price"><del>$156.00</del></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 mt-50">
@@ -2676,152 +670,59 @@ Feature Area Start
                     <h6>Sản phẩm bán chạy</h6>
                 </div>
                 <div class="feature-carousel slick-custom slick-custom-default nav-top">
-                    <div class="product-list-content">
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-1.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-6.webp" alt="" class="img-fluid block-two">
-                                </a>
+                    @php
+                        $itemPerPage = 3;
+                        $pages = count($bestSellerProducts) / $itemPerPage;
+                        $arr = [];
+                        for($i = 0; $i < $pages; $i++) {
+                            $arr[$i] = [];
+                            $count = 0;
+                            foreach($bestSellerProducts as $key => $item) {
+                                $arr[$i][] = $item;
+                                $count++;
+                                if($count == $itemPerPage) {
+                                    $i++;
+                                    $count = 0;
+                                }
+                            }
+                        }
+                    @endphp
+                    @foreach($arr as $page => $items)
+                        <div class="product-list-content">
+                            @foreach($items as $key => $product)
+                            @php
+                                $images = json_decode($product->image);
+                            @endphp
+                            <div class="single-product-list {{$key == count($items)-1 ? '' : 'mb-20'}}">
+                                <div class="product-list-image">
+                                    <a href="{{route('theme.product_detail', $product->slug)}}">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one">
+                                        @if(!empty($images[1]))
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                        @else
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                        @endif
+                                    </a>
+                                </div>
+                                <div class="product-caption">
+                                    <div class="product-name">
+                                        <a href="{{route('theme.product_detail', $product->slug)}}">{{ $product->name }}</a>
+                                    </div>
+                                    <div class="rating">
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                        <span class="yellow"><i class="fa fa-star"></i></span>
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="regular-price">{{ $product->odd_price }}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">4k Camcorder 2214c002</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-2.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-5.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Wireless Over-Ear Headphones</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$32.67</span>
-                                    <span class="old-price"><del>$35.50</del></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-3.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-4.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">iOS 10 - Silver - Recertified</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$143.00</span>
-                                    <span class="old-price"><del>$156.00</del></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-list-content">
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-1.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-6.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">4k Camcorder 2214c002</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$30.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list mb-20">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-2.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-5.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">Wireless Over-Ear Headphones</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$32.67</span>
-                                    <span class="old-price"><del>$35.50</del></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-product-list">
-                            <div class="product-list-image">
-                                <a href="product-details.html">
-                                    <img src="assets/theme/images/feature/feature-3.webp" alt="" class="img-fluid block-one">
-                                    <img src="assets/theme/images/feature/feature-4.webp" alt="" class="img-fluid block-two">
-                                </a>
-                            </div>
-                            <div class="product-caption">
-                                <div class="product-name">
-                                    <a href="product-details.html">iOS 10 - Silver - Recertified</a>
-                                </div>
-                                <div class="rating">
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
-                                </div>
-                                <div class="price-box">
-                                    <span class="regular-price">$143.00</span>
-                                    <span class="old-price"><del>$156.00</del></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -2838,52 +739,15 @@ Brand Logo Area Start
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <div class="brand-logo">
-                    <div class="single-brand">
+                <div class="brand-logo" style="background: #408ED4; padding: 1rem 0;">
+                    @foreach($brands as $brand)
+                    <div class="single-brand" style="{{$brand->slug == 'enerlong' ? 'padding-right: 2rem;' : '' }}">
                         <a href="#">
-                            <img src="assets/theme/images/brand/3.webp" alt="" class="img-fluid">
+                            <img src="{{asset('../storage/brands/'.$brand->slug.'/'.$brand->image)}}" alt="{{$brand->name}}" class="img-fluid">
                         </a>
                     </div>
-                    <div class="single-brand">
-                        <a href="#">
-                            <img src="assets/theme/images/brand/2.webp" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#">
-                            <img src="assets/theme/images/brand/1.webp" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#">
-                            <img src="assets/theme/images/brand/4.webp" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#">
-                            <img src="assets/theme/images/brand/5.webp" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#">
-                            <img src="assets/theme/images/brand/6.webp" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#">
-                            <img src="assets/theme/images/brand/1.webp" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#">
-                            <img src="assets/theme/images/brand/3.webp" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#">
-                            <img src="assets/theme/images/brand/4.webp" alt="" class="img-fluid">
-                        </a>
-                    </div>
+                    @endforeach
+                    
                 </div>
             </div>
         </div>
@@ -2905,58 +769,44 @@ Latest Post Area Start
                     <h6>Bài viết</h6>
                 </div>
                 <div class="blog-post-carousel slick-custom slick-custom-default nav-top">
-                    <div class="blog-post-container">
-                        <div class="single_blog mb-35">
-                            <div class="blog_thumb single-banner">
-                                <a href="blog-fullwidth.html"><img src="assets/theme/images/blog/blog-post-1.webp" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="blog_content">
-                                <h6><a href="blog-fullwidth.html">This is Secound Post For XipBlog</a></h6>
-                                <div class="date_post mt-15 mb-15">
-                                    <span>01 Jan 2020</span>
+                    @php
+                        $itemPerPage = 2;
+                        $pages = count($news) / $itemPerPage;
+                        $arr = [];
+                        for($i = 0; $i < $pages; $i++) {
+                            $arr[$i] = [];
+                            $count = 0;
+                            foreach($news as $key => $item) {
+                                $arr[$i][] = $item;
+                                $count++;
+                                if($count == $itemPerPage) {
+                                    $i++;
+                                    $count = 0;
+                                }
+                            }
+                        }
+                    @endphp
+                    @foreach($arr as $page => $items)
+                        <div class="blog-post-container">
+                            @foreach($items as $key => $post)
+                            @php
+                                $link = asset('storage/posts/'.$post->id.'/'.$post->cover_image);
+                            @endphp
+                            <div class="single_blog {{$key == count($items)-1 ? '' : 'mb-35'}}">
+                                <div class="blog_thumb single-banner">
+                                    <a href="{{ route('theme.blog_detail', $post->slug) }}"><img src="{{ $link }}" alt="{{ $post->title }}" class="img-fluid"></a>
                                 </div>
-                                <p class="post-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ...</p>
-                            </div>
-                        </div>
-                        <div class="single_blog">
-                            <div class="blog_thumb single-banner">
-                                <a href="blog-fullwidth.html"><img src="assets/theme/images/blog/blog-post-2.webp" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="blog_content">
-                                <h6><a href="blog-fullwidth.html">This is Secound Post For XipBlog</a></h6>
-                                <div class="date_post mt-15 mb-15">
-                                    <span>01 Jan 2020</span>
+                                <div class="blog_content">
+                                    <h6><a class="post-title" href="{{ route('theme.blog_detail', $post->slug) }}">{{ $post->title }}</a></h6>
+                                    <div class="date_post mt-10 mb-10">
+                                        <span>{{ $post->created_at->format('Y/m/d') }}</span>
+                                    </div>
+                                    <p class="post-description">{!! $post->description !!}</p>
                                 </div>
-                                <p class="post-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ...</p>
                             </div>
+                            @endforeach
                         </div>
-                    </div>
-                    <div class="blog-post-container">
-                        <div class="single_blog mb-35">
-                            <div class="blog_thumb single-banner">
-                                <a href="blog-fullwidth.html"><img src="assets/theme/images/blog/blog-post-3.webp" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="blog_content">
-                                <h6><a href="blog-fullwidth.html">This is Secound Post For XipBlog</a></h6>
-                                <div class="date_post mt-15 mb-15">
-                                    <span>01 Jan 2020</span>
-                                </div>
-                                <p class="post-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ...</p>
-                            </div>
-                        </div>
-                        <div class="single_blog">
-                            <div class="blog_thumb single-banner">
-                                <a href="blog-fullwidth.html"><img src="assets/theme/images/blog/blog-post-4.webp" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="blog_content">
-                                <h6><a href="blog-fullwidth.html">This is Secound Post For XipBlog</a></h6>
-                                <div class="date_post mt-15 mb-15">
-                                    <span>01 Jan 2020</span>
-                                </div>
-                                <p class="post-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ...</p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <!-- Blog Post Area End -->
@@ -2966,58 +816,44 @@ Latest Post Area Start
                     <h6>Dự án</h6>
                 </div>
                 <div class="blog-post-carousel slick-custom slick-custom-default nav-top">
-                    <div class="blog-post-container">
-                        <div class="single_blog mb-35">
-                            <div class="blog_thumb single-banner">
-                                <a href="blog-fullwidth.html"><img src="assets/theme/images/blog/blog-post-1.webp" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="blog_content">
-                                <h6><a href="blog-fullwidth.html">This is Secound Post For XipBlog</a></h6>
-                                <div class="date_post mt-15 mb-15">
-                                    <span>01 Jan 2020</span>
+                    @php
+                        $itemPerPage = 2;
+                        $pages = count($projects) / $itemPerPage;
+                        $arr = [];
+                        for($i = 0; $i < $pages; $i++) {
+                            $arr[$i] = [];
+                            $count = 0;
+                            foreach($projects as $key => $item) {
+                                $arr[$i][] = $item;
+                                $count++;
+                                if($count == $itemPerPage) {
+                                    $i++;
+                                    $count = 0;
+                                }
+                            }
+                        }
+                    @endphp
+                    @foreach($arr as $page => $items)
+                        <div class="blog-post-container">
+                            @foreach($items as $key => $post)
+                            @php
+                                $link = asset('storage/posts/'.$post->id.'/'.$post->cover_image);
+                            @endphp
+                            <div class="single_blog {{$key == count($items)-1 ? '' : 'mb-35'}}">
+                                <div class="blog_thumb single-banner">
+                                    <a href="{{ route('theme.project_detail', $post->slug) }}"><img src="{{ $link }}" alt="{{ $post->title }}" class="img-fluid"></a>
                                 </div>
-                                <p class="post-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ...</p>
-                            </div>
-                        </div>
-                        <div class="single_blog">
-                            <div class="blog_thumb single-banner">
-                                <a href="blog-fullwidth.html"><img src="assets/theme/images/blog/blog-post-2.webp" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="blog_content">
-                                <h6><a href="blog-fullwidth.html">This is Secound Post For XipBlog</a></h6>
-                                <div class="date_post mt-15 mb-15">
-                                    <span>01 Jan 2020</span>
+                                <div class="blog_content">
+                                    <h6><a class="post-title" href="{{ route('theme.project_detail', $post->slug) }}">{{ $post->title }}</a></h6>
+                                    <div class="date_post mt-10 mb-10">
+                                        <span>{{ $post->created_at->format('Y/m/d') }}</span>
+                                    </div>
+                                    <p class="post-description">{!! $post->description !!}</p>
                                 </div>
-                                <p class="post-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ...</p>
                             </div>
+                            @endforeach
                         </div>
-                    </div>
-                    <div class="blog-post-container">
-                        <div class="single_blog mb-35">
-                            <div class="blog_thumb single-banner">
-                                <a href="blog-fullwidth.html"><img src="assets/theme/images/blog/blog-post-3.webp" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="blog_content">
-                                <h6><a href="blog-fullwidth.html">This is Secound Post For XipBlog</a></h6>
-                                <div class="date_post mt-15 mb-15">
-                                    <span>01 Jan 2020</span>
-                                </div>
-                                <p class="post-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ...</p>
-                            </div>
-                        </div>
-                        <div class="single_blog">
-                            <div class="blog_thumb single-banner">
-                                <a href="blog-fullwidth.html"><img src="assets/theme/images/blog/blog-post-4.webp" alt="" class="img-fluid"></a>
-                            </div>
-                            <div class="blog_content">
-                                <h6><a href="blog-fullwidth.html">This is Secound Post For XipBlog</a></h6>
-                                <div class="date_post mt-15 mb-15">
-                                    <span>01 Jan 2020</span>
-                                </div>
-                                <p class="post-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been ...</p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <!-- Project Post Area End -->
@@ -3113,5 +949,100 @@ Latest Testimonial Area Start
 <!-- ================
 Latest Testimonial Area End
 =====================-->
+@include('theme.modals.prod-of-cate')
+@include('theme.modals.latest-product')
+@include('theme.modals.bestseller-product')
+@include('theme.modals.featured-product')
 
+<script>
+    $(document).ready(function () {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let categoryImages = [
+            'assets/theme/images/icon/icon-line-array.png',
+            'assets/theme/images/icon/icon-loa-speaker.png',
+            'assets/theme/images/icon/icon-cong-suat-amplifier.png',
+            'assets/theme/images/icon/icon-microphone.png',
+            'assets/theme/images/icon/icon-vang-mixer.png',
+            'assets/theme/images/icon/icon-quan-ly-nguon-dien.png',
+            'assets/theme/images/icon/icon-phu-kien-am-thanh.png',
+            'assets/theme/images/icon/icon-dan-loa-karaoke.png',
+        ];
+        $.each($('.category_img'), function(index) {
+            $(this).attr('src', categoryImages[index]);
+        })
+        $.each($('.quick-view'), function(index) {
+            $(this).on("click", function(e) {
+                console.log('1')
+            })
+        })
+
+        $.each($('.add_to_cart_btn'), function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).data('route'),
+                    data: {
+                        quantity: 1,
+                    },
+                    success: function(results) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: results,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        
+                        setTimeout(function(){
+                            location.reload();
+                        },2000);
+                    },
+                    error: function(results) {
+                        Swal.fire({
+                            title: results.responseText,
+                            icon: "error",
+                        });
+                    },
+                });
+
+            });
+        });
+
+        $.each($('.prod_alert_login'), function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+                let url = $(this).data('route');
+                Swal.fire({
+                    title: "<strong>Xin lưu ý !</strong>",
+                    icon: "info",
+                    html: `
+                        Bạn cần <strong>Đăng nhập</strong> để thêm sản phẩm vào giỏ hàng !
+                    `,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText: `
+                        <a href="`+url+`">
+                            <i class="fa fa-thumbs-up"></i> Đăng nhập!
+                        </a>
+                    `,
+                    confirmButtonAriaLabel: "Đăng nhập",
+                    cancelButtonText: `
+                        <i class="fa fa-thumbs-down"></i>
+                    `,
+                    cancelButtonAriaLabel: "Thumbs down"
+                });
+            });
+        });
+    });
+
+</script>
 @endsection

@@ -2757,16 +2757,19 @@ ul.category-mega li.cat-mega-title ul li:hover a {
 }
 .product-thumb .label-product-new {
   position: absolute;
-  top: 9px !important;
-  left: 9px;
+  /* top: 9px !important;
+  left: 9px; */
+  top: 35px !important;
+  left: 10px;
   display: inline-block;
   background: #408ed4;
   color: #FFFFFF;
   border-radius: 100% 100% 100% 0%;
   text-align: center;
-  line-height: 32px;
-  height: 32px;
-  width: 32px;
+  /* 32px */
+  line-height: 27px;
+  height: 27px;
+  width: 27px;
   font-size: 11px;
   font-weight: 700;
 }
@@ -3810,6 +3813,20 @@ ul.category-mega li.cat-mega-title ul li:hover a {
 =          19. Blog CSS Start          =
 ========================================*/
 /*-----=====----- Blog Grid Css Start-----=====-----*/
+.post-title {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.post-description {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .blog-image a {
   display: block;
 }
@@ -4340,6 +4357,13 @@ ul.category-mega li.cat-mega-title ul li:hover a {
   font-size: 18px;
   margin-bottom: 20px;
   display: block;
+}
+.product-summery .product-description {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .product-summery .product-description p {
   margin-bottom: 30px;
@@ -5666,7 +5690,9 @@ ul.category-mega li.cat-mega-title ul li:hover a {
 
 .modal_tab_button ul {
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+      /* justify-content: space-around; */
+      justify-content: flex-start;
+      gap: 0.5rem;
 }
 .modal_tab_button ul li a {
   padding: 0;

@@ -41,7 +41,16 @@ class ClientController extends Controller
 
     public function home() {
         $categories = Category::all();
-        return view('theme.home', compact('categories'));
+        $latestProducts = Product::where('is_active', true)->orderBy('created_at', 'DESC')->get()->take(6);
+        $bestSellerProducts = Product::where('is_active', true)->get()->take(6);
+        $featuredProducts = Product::where('is_active', true)->where('is_featured', true)->orderBy('created_at', 'DESC')->get()->take(6);
+        $productCategories = Category::where('slug', 'san-pham')->first()->children()->get();
+        $brands = Brand::orderBy('id', 'ASC')->get();
+        $categoryProject = Category::where('slug', 'du-an-hoan-thanh')->first();
+        $projects = Post::where('category_id', $categoryProject->id)->orderBy('id', 'DESC')->take(4)->get();
+        $categoryNews = Category::where('slug', 'bai-viet-mac-dinh')->first();
+        $news = Post::where('category_id', $categoryNews->id)->orderBy('id', 'DESC')->take(4)->get();
+        return view('theme.home', compact('categories', 'latestProducts', 'bestSellerProducts', 'featuredProducts', 'productCategories', 'brands', 'projects', 'news'));
     }
 
     public function about() {

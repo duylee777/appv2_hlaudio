@@ -46,18 +46,25 @@
                     <h2 class="text-black text-2xl font-semibold">Danh sách sản phẩm</h2>
                 </div>
 
+                <div class="">
+                    <a href="{{route('product.index')}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" height="20" width="20">
+                            <path d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z"/>
+                        </svg>
+                    </a>
+                </div>
                 <!-- Search form -->
                 <div class="flex-1">
-                    <div class="flex items-center max-w-lg mx-auto">   
+                    <form method="GET" action="{{route('product.index')}}" class="flex items-center max-w-lg mx-auto">   
                         <div class="relative w-full"> 
-                            <input type="text" id="product-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5" placeholder="Tìm mã sản phẩm ..." required />
+                            <input type="text" id="product-search" name="keyword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5" placeholder="Tìm mã sản phẩm ..." />
                             <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
                                 <svg class="w-4 h-4 me-2 text-blue-500 hover:text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3"> 
@@ -107,8 +114,15 @@
                                 <input id="checkbox-product-{{$product->id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                             </td> -->
                             <td class="px-4 py-3">
+                                <?php 
+                                    $listImg = json_decode($product->image);
+                                ?>
                                 <div class="w-24 h-24 overflow-hidden flex items-center justify-center rounded-md shadow">
-                                    <img id="" class="w-full" src="{{asset('../storage/products/'.$product->code.'/thumbnails/'.$product->code.'.webp')}}" alt="Extra large image">
+                                    @if(!empty($listImg))
+                                    <img id="" class="w-full" src="{{asset('../storage/products/'.$product->code.'/image/'.$listImg[0])}}" alt="Extra large image">
+                                    @else
+                                    <img id="" class="w-full" src="https://images.pexels.com/photos/4841450/pexels-photo-4841450.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Extra large image">
+                                    @endif
                                 </div>
                             </td>
                             <td class="product-code px-4 py-3">{{ $product->code }}</td>
@@ -163,7 +177,9 @@
                     </tbody>
                 </table>
             </div>
-            {{ $products->links() }}
+            <div class="p-4">
+                {{ $products->links() }}
+            </div>
         </div>
     </div>
 </section>
@@ -178,8 +194,9 @@
         e.preventDefault();
         let filter = this.value.toLowerCase();
         for(let i=0; i<row.length; i++) {
-            let txtValue = code[i].innerHTML || name[i].innerHTML;
-            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+            let txtValueCode = code[i].innerHTML;
+            let txtValueName = name[i].innerHTML;
+            if (txtValueCode.toLowerCase().indexOf(filter) > -1 || txtValueName.toLowerCase().indexOf(filter) > -1) {
                 row[i].classList.remove('hidden');
             } else {
                 row[i].classList.add('hidden');
