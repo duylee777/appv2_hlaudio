@@ -8,7 +8,7 @@ Header Area Start
             <div class="row">
                 <div class="col-lg-4 col-12">
                     <div class="header-top-left">
-                        <p><span>Dịch vụ khách hàng: </span> (800) 123 456 789</p>
+                        <p><span>Dịch vụ khách hàng: </span> 0913 012 736</p>
                     </div>
                 </div>
                 <div class="col-lg-8 col-12">
@@ -36,8 +36,9 @@ Header Area Start
                                     @if(auth()->user())
                                         <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
                                         <li><a href="#">Thanh toán</a></li>
-                                    @endif
+                                    @else
                                     <li><a href="{{route('theme.login_client')}}">Đăng nhập</a></li>
+                                    @endif
                                 </ul>
                             </li>
                         </ul>
@@ -53,7 +54,7 @@ Header Area Start
             <div class="row align-items-center">
                 <div class="col-lg-3 col-6">
                     <div class="logo">
-                        <a href="{{ route('theme.home') }}"><img src="/assets/theme/images/logo/pos-circle-logo.webp" alt="" class="img-fluid"></a>
+                        <a href="{{ route('theme.home') }}"><img src="/assets/theme/images/logo/hienluongaudio.png" alt="" class="img-fluid"></a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-6">
@@ -227,7 +228,9 @@ Header Area Start
                     <div class="header-menu add-sticky">
                         <div class="sticky-container">
                             <div class="logo">
-                                <a href="{{ route('theme.home') }}"><img src="/assets/theme/images/logo/pos-circle-logo.webp" alt="" class="img-fluid"></a>
+                                <a href="{{ route('theme.home') }}">
+                                    <img src="/assets/theme/images/logo/hienluongaudio.png" alt="" class="img-fluid" style="height: 3.5rem;">
+                                </a>
                             </div>
                             <nav class="main-menu">
                                 <ul>

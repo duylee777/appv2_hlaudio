@@ -12,32 +12,17 @@ slider area start
             </div>
             <div class="col-lg-9">
                 <div class="slider_area slider-one mt-30">
-                    <!-- Single Slider Start -->
-                    <div class="single_slider">
-                        <img src="assets/theme/images/slider/slider-1.webp" alt="" class="img-fluid">
-                        <div class="slider_content color_one">
-                            <h5>The Hottest <br> Trend</h5>
-                                <h2>Laptop <br> Tablets Outlet</h2>
-                                    <div class="pt-des">
-                                        <p><span>25%</span>Starting at <span>$340.00</span></p>
-                                    </div>
-                                    <a href="shop.html">Shop Now</a>
-                        </div>
-                    </div>
-                    <!-- Single Slider End -->
-                    <!-- Single Slider Start -->
-                    <div class="single_slider">
-                        <img src="assets/theme/images/slider/slider-2.webp" alt="" class="img-fluid">
-                        <div class="slider_content color_two">
-                            <h5>The Hottest <br> Trend</h5>
-                                <h2>Cellphone <br> Smartphone Not 2</h2>
-                                    <div class="pt-des">
-                                        <p><span>35%</span>Starting at <span>$120.00</span></p>
-                                    </div>
-                                    <a href="shop.html">Shop Now</a>
-                        </div>
-                    </div>
-                    <!-- Single Slider End -->
+                    @foreach($featuredProducts as $product)
+                        @if(File::exists('storage/products/'.$product->code.'/thumbnails/'.$product->code.'.webp'))
+                            <!-- Single Slider Start -->
+                            <div class="single_slider">
+                                <a href="{{ route('theme.product_detail',  $product->slug) }}">
+                                    <img src="{{ asset('storage/products/'.$product->code.'/thumbnails/'.$product->code.'.webp') }}" alt="{{ $product->name }}" class="img-fluid">
+                                </a>
+                            </div>
+                            <!-- Single Slider End -->
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -400,7 +385,9 @@ Sale Offer Area Start
             </div>
             <div class="col-lg-3 col-12 text-center">
                 <div class="single-banner mt-40">
-                    <a href="#"><img src="assets/theme/images/banner/banner-1.webp" alt="" class="img-fluid"></a>
+                    <a href="/san-pham/dla-series">
+                        <img src="assets/theme/images/banner/shop-banner-1.png" alt="DLA Series" class="img-fluid">
+                    </a>
                 </div>
             </div>
         </div>
@@ -519,17 +506,17 @@ Banner Area Start
         <div class="row">
             <div class="col-lg-4 col-md-4 col-12 text-center">
                 <div class="single-banner mt-40">
-                    <a href="#"><img src="assets/theme/images/banner/banner-2.webp" alt="" class="img-fluid"></a>
+                    <a href="/san-pham/next-nx-1"><img src="assets/theme/images/banner/shop-banner-2.png" alt="next-nx-1" class="img-fluid"></a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-12 text-center">
                 <div class="single-banner mt-40">
-                    <a href="#"><img src="assets/theme/images/banner/banner-3.webp" alt="" class="img-fluid"></a>
+                    <a href="/san-pham/nsub-18"><img src="assets/theme/images/banner/shop-banner-3.png" alt="nsub-18" class="img-fluid"></a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-12 text-center">
                 <div class="single-banner mt-40">
-                    <a href="#"><img src="assets/theme/images/banner/banner-4.webp" alt="" class="img-fluid"></a>
+                    <a href="/san-pham/ct-one"><img src="assets/theme/images/banner/shop-banner-4.png" alt="ct-one" class="img-fluid"></a>
                 </div>
             </div>
         </div>
@@ -747,7 +734,6 @@ Brand Logo Area Start
                         </a>
                     </div>
                     @endforeach
-                    
                 </div>
             </div>
         </div>
@@ -857,41 +843,6 @@ Latest Post Area Start
                 </div>
             </div>
             <!-- Project Post Area End -->
-            <!-- Testimonial Area Start -->
-            <!-- <div class="col-lg-6 col-12">
-                <div class="block-title">
-                    <h6>Đánh giá của khách hàng</h6>
-                </div>
-                <div class="testimonial-carousel slick-custom slick-custom-default nav-top">
-                    <div class="single_testimonial text-center">
-                        <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feuga</p>
-                        <img src="assets/theme/images/testimonial/testimonial-1.webp" alt="" class="img-fluid">
-                        <span class="name">Kathy Young</span>
-                        <span class="job_title">CEO of SunPark</span>
-                        <div class="rating">
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                        </div>
-                    </div>
-                    <div class="single_testimonial text-center">
-                        <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feuga</p>
-                        <img src="assets/theme/images/testimonial/testimonial-2.webp" alt="" class="img-fluid">
-                        <span class="name">Alex Aya</span>
-                        <span class="job_title">Art Director</span>
-                        <div class="rating">
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- Testimonial Area End -->
             
         </div>
     </div>
@@ -900,55 +851,6 @@ Latest Post Area Start
 Latest Post Area End
 =====================-->
 
-<!-- ================
-Latest Testimonial Area Start
-=====================-->
-<div class="latest-post-area mt-50">
-    <div class="container">
-        <div class="row">
-            <!-- Testimonial Area Start -->
-            <div class="col-lg-3 col-12"></div>
-            <div class="col-lg-6 col-12">
-                <div class="block-title">
-                    <h6>Đánh giá của khách hàng</h6>
-                </div>
-                <div class="testimonial-carousel slick-custom slick-custom-default nav-top">
-                    <div class="single_testimonial text-center">
-                        <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feuga</p>
-                        <img src="assets/theme/images/testimonial/testimonial-1.webp" alt="" class="img-fluid">
-                        <span class="name">Kathy Young</span>
-                        <span class="job_title">CEO of SunPark</span>
-                        <div class="rating">
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                        </div>
-                    </div>
-                    <div class="single_testimonial text-center">
-                        <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feuga</p>
-                        <img src="assets/theme/images/testimonial/testimonial-2.webp" alt="" class="img-fluid">
-                        <span class="name">Alex Aya</span>
-                        <span class="job_title">Art Director</span>
-                        <div class="rating">
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                            <span class="yellow"><i class="fa fa-star"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Testimonial Area End -->
-            <div class="col-lg-3 col-12"></div>
-        </div>
-    </div>
-</div>
-<!-- ================
-Latest Testimonial Area End
-=====================-->
 @include('theme.modals.prod-of-cate')
 @include('theme.modals.latest-product')
 @include('theme.modals.bestseller-product')
@@ -975,11 +877,6 @@ Latest Testimonial Area End
         ];
         $.each($('.category_img'), function(index) {
             $(this).attr('src', categoryImages[index]);
-        })
-        $.each($('.quick-view'), function(index) {
-            $(this).on("click", function(e) {
-                console.log('1')
-            })
         })
 
         $.each($('.add_to_cart_btn'), function() {

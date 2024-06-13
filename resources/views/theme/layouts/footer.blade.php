@@ -10,16 +10,16 @@
                         <div class="newsletter-inner d-flex align-items-center">
                             <i class="fa fa-envelope-open-o"></i>
                             <div class="newsletter-title">
-                                <h1 class="sign-title">Sign Up For Our Newsletter</h1>
-                                <p>Get e-mail updates about our latest shop and special offers.</p>
+                                <h1 class="sign-title">Đăng ký nhận bản tin của chúng tôi</h1>
+                                <p>Nhận thông tin cập nhật qua email về cửa hàng mới nhất của chúng tôi và các ưu đãi đặc biệt.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-12">
                         <div class="newsletter-box">
                             <form id="mc-form" class="mc-form">
-                                <input type="email" id="mc-email" class="email-box" placeholder="enter your email" name="EMAIL">
-                                <button id="mc-submit" class="newsletter-btn" type="submit">Subscribe</button>
+                                <input type="email" id="mc-email" class="email-box" placeholder="nhập địa chỉ email của bạn" name="email">
+                                <button id="mc-submit" class="newsletter-btn" type="submit">Đăng ký</button>
                             </form>
                             <!-- mailchimp-alerts Start -->
                             <div class="mailchimp-alerts text-centre">
@@ -40,14 +40,16 @@
                     <div class="col-lg-4">
                         <div class="footer-single-widget">
                             <div class="footer-logo mb-40">
-                                <a href="index.html"><img src="/assets/theme/images/logo/pos-circle-logo.webp" alt=""></a>
+                                <a href="{{ route('theme.home') }}">
+                                    <img src="/assets/theme/images/logo/hienluongaudio.png" alt="Thương hiệu Âm thanh Hiền Lương" style="height: 3.5rem;">
+                                </a>
                             </div>
                             <div class="widget-body">
-                                <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram.</p>
+                                <p>Âm thanh ánh sáng, karaoke, gia đình, âm thanh sân khấu, hội trường, nhà hàng, khu du lịch. Chất lượng tốt nhất, bảo hành theo quy định nhà sản xuất. Mở cửa 7h30 đến 21h các ngày trong tuần.</p>
                                 <div class="widget-address mt-30 mb-20">
-                                    <p><strong>Address:</strong> 123 Main Street, Anytown, CA 12345 USA.</p>
-                                    <p><strong>Number Phone:</strong> (800) 123 456 - (800) 123 456.</p>
-                                    <p><strong>Address Email:</strong> support@circleshop.com</p>
+                                    <p><strong>Địa chỉ:</strong> Số 289 đường Nguyễn Thái Học, TP.Hà Giang</p>
+                                    <p><strong>Số điện thoại:</strong> 0913012736</p>
+                                    <p><strong>Email:</strong> hiendientuhg123@gmail.com</p>
                                 </div>
                             </div>
                             <div class="footer_social">
@@ -63,54 +65,41 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-6">
+                            <div class="col-lg-4 col-md-4 col-6">
                                 <div class="widgets_container">
-                                    <h6>Information</h6>
+                                    <h6>Về chúng tôi</h6>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="contact.html"> Contact us</a></li>
-                                            <li><a href="#"> Privecy Policy</a></li>
-                                            <li><a href="#">Terms & Conditions</a></li>
+                                            <li><a href="{{ route('theme.about') }}">Giới thiệu</a></li>
+                                            <li><a href="{{ route('theme.blog') }}">Bài viết</a></li>
+                                            <li><a href="{{ route('theme.project') }}">Dự án</a></li>
+                                            <li><a href="{{ route('theme.contact') }}">Liên hệ</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-6">
+                            <div class="col-lg-4 col-md-4 col-6">
                                 <div class="widgets_container">
-                                    <h6>My Account</h6>
+                                    <h6>Tài khoản</h6>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="#">My Account</a></li>
-                                            <li><a href="#">Older History</a></li>
-                                            <li><a href="#">Wishlist</a></li>
-                                            <li><a href="#">Newslatter</a></li>
+                                            <li><a href="#">Tài khoản của tôi</a></li>
+                                            <li><a href="#">Danh sách yêu thích</a></li>
+                                            <li><a href="#">Bản tin</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-6">
+                            <div class="col-lg-4 col-md-4 col-6">
                                 <div class="widgets_container">
-                                    <h6>Find It Fast</h6>
+                                    <h6>Chính sách</h6>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="#">Desktop</a></li>
-                                            <li><a href="#">Laptop & Mobile</a></li>
-                                            <li><a href="#">Components</a></li>
-                                            <li><a href="#">Terms & Conditions</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-6">
-                                <div class="widgets_container">
-                                    <h6>Customer Service</h6>
-                                    <div class="footer_menu">
-                                        <ul>
-                                            <li><a href="#">Sitemap</a></li>
-                                            <li><a href="#">My Account</a></li>
-                                            <li><a href="#">Contact Us</a></li>
-                                            <li><a href="#">Delivery Information</a></li>
+                                            <li><a href="#">Chính sách bán hàng</a></li>
+                                            <li><a href="#">Chính sách giao hàng</a></li>
+                                            <li><a href="#">Chính sách thanh toán</a></li>
+                                            <li><a href="#">Chính sách bảo hành và đổi trả</a></li>
+                                            <li><a href="#">Chính sách tuyển dụng</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -120,47 +109,25 @@
                             <div class="col-lg-12">
                                 <div class="widget-box mt-30">
                                     <div class="widget-single-box">
-                                        <p><strong>Address:</strong></p>
-                                        <ul>
-                                            <li><a href="#">Order</a></li>
-                                            <li><a href="#">Affiliate</a></li>
-                                            <li><a href="#">Marketing</a></li>
-                                            <li><a href="#">Sourcing</a></li>
-                                            <li><a href="#">Gadgets</a></li>
-                                            <li><a href="#">Accessories</a></li>
+                                        <p style="min-width: max-content;"><strong>Sản phẩm:</strong></p>
+                                        <ul style="display: flex; flex-wrap:wrap;">
+                                            @foreach(App\Models\Category::get() as $category)
+                                                @if(!empty($category->parent) && $category->parent->slug == 'san-pham')
+                                                    <li>
+                                                        <a href="{{ route('theme.category', $category->slug) }}">{{$category->name}}</a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
                                         </ul>
                                     </div>
                                     <div class="widget-single-box">
-                                        <p><strong>Headphones:</strong></p>
-                                        <ul>
-                                            <li><a href="#">Beats</a></li>
-                                            <li><a href="#">Headphone Bose</a></li>
-                                            <li><a href="#">Headphone Nocx</a></li>
-                                            <li><a href="#">Wireless</a></li>
-                                            <li><a href="#">Headphone</a></li>
-                                            <li><a href="#">Headphone Mini</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="widget-single-box">
-                                        <p><strong>Computers:</strong></p>
-                                        <ul>
-                                            <li><a href="#">Mini Laptops</a></li>
-                                            <li><a href="#">Computers</a></li>
-                                            <li><a href="#">Laptop Mouse</a></li>
-                                            <li><a href="#">Laptop Pad</a></li>
-                                            <li><a href="#">GB Laptop</a></li>
-                                            <li><a href="#">XL Laptop</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="widget-single-box">
-                                        <p><strong>Camera:</strong></p>
-                                        <ul>
-                                            <li><a href="#">Lense Camera</a></li>
-                                            <li><a href="#">Frame Camera</a></li>
-                                            <li><a href="#">Box Camera</a></li>
-                                            <li><a href="#">Mini Camera</a></li>
-                                            <li><a href="#">XL Camera</a></li>
-                                            <li><a href="#">Point shoot camera</a></li>
+                                        <p style="min-width: max-content;"><strong>Thương hiệu:</strong></p>
+                                        <ul style="display: flex; flex-wrap:wrap;">
+                                            @foreach(App\Models\Brand::get() as $brand)
+                                                <li>
+                                                    <a href="{{ route('theme.brand', $brand->slug) }}">{{$brand->name}}</a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -178,7 +145,7 @@
                     <div class="col-lg-5 col-md-12 col-12">
                         <div class="footer-bottom-content">
                             <div class="footer-copyright">
-                                <p>© 2021 Copyright <strong>CIRCLESHOP</strong> Made With <i class="fa fa-heart text-danger"></i> by <a href="https://hasthemes.com/"> <strong>HasThemes</strong></a></p>
+                                <p>© 2024 Copyright <strong>HLAUDIO</strong> Made With <i class="fa fa-heart text-danger"></i> by <a href="#"> <strong>Duy Le</strong></a></p>
                             </div>
                         </div>
                     </div>

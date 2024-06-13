@@ -127,10 +127,11 @@ class ClientController extends Controller
         }
         
         if($isChildCate != 0) {
-            foreach($category->children as $childCate) {
-                $productByChildCates =  Product::where('is_active', true)->where('category_id', $childCate->id)->paginate($paginate);
-                $products = $productByCates->merge($productByChildCates);
+            $idChildCates = [];
+            foreach($category->children as $key => $childCate) {
+                array_push($idChildCates, $childCate->id);
             }  
+            $products =  Product::where('is_active', true)->whereIn('category_id', $idChildCates)->paginate($paginate);
         } else {
             $products = $productByCates;
         }

@@ -138,7 +138,7 @@ Shop area Start
                     </div>
                     <!-- Shop Banner Start -->
                     <div class="single-banner text-center mt-50 mb-30">
-                        <a href="#"><img src="/assets/theme/images/banner/shop-banner-2.webp" alt="" class="img-fluid"></a>
+                        <a href="/san-pham/dk-6000pro"><img src="/assets/theme/images/banner/shop-banner-5.png" alt="" class="img-fluid"></a>
                     </div>
                     <!-- Shop Banner End -->
                 </aside>
@@ -146,7 +146,7 @@ Shop area Start
             <div class="col-lg-9 order-first order-lg-last">
                 <!-- Shop Banner Start -->
                 <div class="single-banner mt-50 mb-50">
-                    <a href="#"><img src="/assets/theme/images/banner/shop-banner-1.webp" alt="" class="img-fluid"></a>
+                    <a href="/san-pham/dk-6000pro"><img src="/assets/theme/images/banner/shop-banner-6.png" alt="" class="img-fluid"></a>
                 </div>
                 <!-- Shop Banner End -->
                 <!-- Shop Toolbar Start -->

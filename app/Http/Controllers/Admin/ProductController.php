@@ -209,11 +209,11 @@ class ProductController extends Controller
         $cateIds = [];
         $cates = Category::get();
         $cateSanPham = Category::where('slug', 'san-pham')->first();
-        if(count($cateSanPham->childs) != 0) {
-            foreach($cateSanPham->childs as $cate) {
+        if(count($cateSanPham->children) != 0) {
+            foreach($cateSanPham->children as $cate) {
                 array_push($cateIds, $cate->id);
-                if(count($cate->childs) != 0) {
-                    foreach($cate->childs as $cateLv2) {
+                if(count($cate->children) != 0) {
+                    foreach($cate->children as $cateLv2) {
                         array_push($cateIds, $cateLv2->id);
                     }
                 }
