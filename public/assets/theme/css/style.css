@@ -2775,8 +2775,8 @@ ul.category-mega li.cat-mega-title ul li:hover a {
 }
 .product-thumb .label-product-discount {
   position: absolute;
-  top: 9px !important;
-  right: 9px;
+  top: 50px !important;
+  right: 10px;
   display: inline-block;
   background: #e12e2e;
   color: #FFFFFF;

@@ -15,13 +15,8 @@ Header Area Start
                     <div class="box-right">
                         <ul>
                             <li class="settings">
-                                <a href="#">So sánh (2)</a>
-                            </li>
-                            
-                            <li class="settings">
                                 <a  class="drop-toggle">
                                     <i class="fa fa-globe" aria-hidden="true"></i>
-                                    <!-- <i class="fa fa-angle-down"></i> -->
                                 </a>
                                 <ul class="box-dropdown drop-dropdown">
                                     <li class="gtranslate_wrapper"></li>
@@ -35,6 +30,7 @@ Header Area Start
                                 <ul class="box-dropdown drop-dropdown">
                                     @if(auth()->user())
                                         <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
+                                        <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
                                         <li><a href="#">Thanh toán</a></li>
                                     @else
                                     <li><a href="{{route('theme.login_client')}}">Đăng nhập</a></li>
@@ -178,9 +174,9 @@ Header Area Start
                 <div class="col-lg-3 col-10">
                     <!-- Category Menu Start -->
                     <div class="categoryes-menu-bar">
-                        <div class="categoryes-menu-btn category-toggle">
+                        <div id="show_menu" class="categoryes-menu-btn category-toggle">
                             <div class="float-left w-100">
-                                <a>Tất cả danh mục</a>
+                                <a style="color: white;">Sản phẩm</a>
                             </div>
                             <div class="float-right">
                                 <i class="fa fa-bars"></i>
@@ -290,13 +286,13 @@ Header Area Start
                                 <a type="button"><i class="zmdi zmdi-close"></i></a>
                             </div>
                             <div class="welcome_text text-center mb-10">
-                                <p><span>Dịch vụ khách hàng: </span> (800) 123 456 789</p>
+                                <p><span>Dịch vụ khách hàng: </span>  0913 012 736</p>
                             </div>
                             <div class="box-right text-center mb-20">
                                 <ul>
-                                    <li class="settings">
+                                    {{-- <li class="settings">
                                         <a href="compare.html">So sánh (2)</a>
-                                    </li>
+                                    </li> --}}
                                     <li class="settings">
                                         <a  class="drop-toggle">
                                             <i class="fa fa-globe" aria-hidden="true"></i>
@@ -315,6 +311,7 @@ Header Area Start
                                             <li><a href="{{ route('theme.login_client') }}">Đăng nhập</a></li>
                                             @if(Auth::check() == true)
                                             <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
+                                            <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
                                             <li><a href="{{ route('theme.checkout') }}">Thanh toán</a></li>
                                             @endif
                                         </ul>

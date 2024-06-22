@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ProductsImport;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -237,10 +238,6 @@ class ClientController extends Controller
         return view('theme.wishlist');
     }
 
-    public function compare() {
-        return view('theme.compare');
-    }
-
     public function search(Request $request) {
         $keyword = ($request->input('keyword')) ? $request->query('keyword') : "";
         $keyword = trim(strip_tags($keyword));
@@ -258,7 +255,85 @@ class ClientController extends Controller
         return view('theme.search', compact('key', 'products'));
     }
 
-    public function brand() {
-        return view('theme.brand');
+    public function brand($slug_brand, Request $request) {
+        $paginate = 9;
+        $brand = Brand::where('slug', $slug_brand)->first();
+
+        $categoryIds = [];
+        foreach(Category::get() as $category) {
+            if(isset($category->parent) && $category->parent->slug == 'san-pham') {
+                array_push($categoryIds, $category->id);
+            }
+        }
+        $categories = Category::whereIn('id', $categoryIds)->get();
+
+        $products = (object)[];
+
+        $page = $request->has('page') ? $request->page : 1;
+        $soft = ($request->has('soft') && $request->soft != "all") ? $request->soft : 'all';
+        $filterCategories = ($request->has('filter_category') && $request->filter_category != "all") ? $request->filter_category : "all";
+
+        if($filterCategories != "all") {
+            $ids = [];
+            $categorySlugs = explode(',', $filterCategories);
+            foreach($categorySlugs as $slug) {
+                $cate = Category::where('slug', $slug)->first();
+                $ids[] = $cate->id;
+                if(isset($cate->children)) {
+                    foreach($cate->children as $child) {
+                        $ids[] = $child->id;
+                    }
+                }
+            }
+        }
+
+        if(isset($soft) && $soft == 'name_asc') {
+            if($filterCategories != "all") {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->whereIn('category_id', $ids)->orderBy('name', 'ASC')->paginate($paginate);
+            }
+            else {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->orderBy('name', 'ASC')->paginate($paginate);
+            }
+            
+        }        
+        elseif(isset($soft) && $soft == 'name_desc') {
+            if($filterCategories != "all") {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->whereIn('category_id', $ids)->orderBy('name', 'DESC')->paginate($paginate);
+            }
+            else {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->orderBy('name', 'DESC')->paginate($paginate);
+            }
+            
+        }        
+        elseif(isset($soft) && $soft == 'price_asc') {
+            if($filterCategories != "all") {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->whereIn('category_id', $ids)->orderBy('odd_price', 'ASC')->paginate($paginate);
+            }
+            else {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->orderBy('name', 'DESC')->paginate($paginate);
+            }
+            
+        }        
+        elseif(isset($soft) && $soft == 'price_desc') {
+            if($filterCategories != "all") {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->whereIn('category_id', $ids)->orderBy('odd_price', 'DESC')->paginate($paginate);
+            }
+            else {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->orderBy('name', 'DESC')->paginate($paginate);
+            }
+            
+        }        
+        else {
+            if($filterCategories != "all") {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->whereIn('category_id', $ids)->paginate($paginate);
+            }
+            else {
+                $productByCates = Product::where('is_active', true)->where('brand_id', $brand->id)->paginate($paginate);
+            }  
+        }
+
+        $products = $productByCates;
+
+        return view('theme.brand', compact('brand', 'categories', 'filterCategories', 'soft', 'page', 'products'));
     }
 }

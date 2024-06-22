@@ -1,20 +1,8 @@
 <!-- modal area start-->
-@foreach($productCategories as $key => $category)
-    @php
-        if($category->slug == 'loa-speaker') {
-            $childs = [];
-            foreach(App\Models\Category::where('is_visible', true)->where('parent_id', $category->id)->get() as $cate) {
-                array_push($childs, $cate->id);
-            }
+@foreach($categories as $key => $category)
 
-            $productOfCategories = App\Models\Product::where('is_active', true)->whereIn('category_id', $childs)->get()->take(5);
-        }
-        else {
-            $productOfCategories = App\Models\Product::where('is_active', true)->where('category_id', $category->id)->get()->take(5);
-        }
-    @endphp
-    @foreach($productOfCategories as $product)
-    <div class="modal fade" id="product-of-cate-{{$product->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    @foreach($products as $product)
+    <div class="modal fade" id="product-{{$product->id}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -74,7 +62,7 @@
                                     </div>
                                     <div class="product-buttons grid_list">
                                         <div class="action-link">
-                                            <a  class="compare-add-product-of-category" 
+                                            <a  class="compare-add-product" 
                                                 data-action="{{ $product->id }}" 
                                                 data-category ="{{$product->category_id}}"
                                                 data-image="{{ asset('../storage/products/' . $product->code . '/image/' . $images[0]) }}"
@@ -92,7 +80,7 @@
                                                     <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
                                                 </a>
                                             @endif
-                                            
+
                                             @if (auth()->check())
                                                 @php
                                                     if (

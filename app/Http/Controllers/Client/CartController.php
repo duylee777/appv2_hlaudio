@@ -59,6 +59,16 @@ class CartController extends Controller
         return response('Đã thêm vào giỏ hàng',200);
     }
 
+    public function addSelected (Request $request){
+        $product_ids = $request -> product_ids;
+        $temp = 1;
+        foreach ($product_ids as $key => $product_id) {
+            $product = Product::find($product_id);
+            $this->addToCart($request,$product);
+        }
+        return response('Đã thêm lựa chọn vào giỏ hàng',200);
+    }
+
     public function updateCartItem(Request $request, Product $product) {
         $userId = auth()->user()->id;
         $cart = Cart::where('user_id',  $userId)->first();

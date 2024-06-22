@@ -60,9 +60,17 @@
                                 </div>
                                 <div class="product-buttons grid_list">
                                     <div class="action-link">
-                                        <a href="#" title="Add to compare"><i class="zmdi zmdi-refresh-alt"></i></a>
+                                        <a  class="compare-add-featured-product" 
+                                            data-action="{{ $featuredProduct->id }}" 
+                                            data-category ="{{$featuredProduct->category_id}}"
+                                            data-image="{{ asset('../storage/products/' . $featuredProduct->code . '/image/' . $images[0]) }}"
+                                            data-name ="{{ $featuredProduct->name }}" 
+                                            title="Add to compare">
+                                            <i class="zmdi zmdi-refresh-alt"></i>
+                                        </a>
+
                                         @if(auth()->check())
-                                            <a class="add_to_cart_btn" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $product->id)}}">
+                                            <a class="add_to_cart_btn" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $featuredProduct->id)}}">
                                                 <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
                                             </a>
                                         @else
@@ -70,7 +78,31 @@
                                                 <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
                                             </a>
                                         @endif
-                                        <a href="#" title="Add to wishlist"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
+                                        
+                                        @if (auth()->check())
+                                            @php
+                                                if (
+                                                    App\Models\Wishlist::where([
+                                                        'user_id' => Auth()->user()->id,
+                                                        'product_id' => $featuredProduct->id,
+                                                    ])->exists()
+                                                ) {
+                                                    $bg_temp = 'bg-danger';
+                                                } else {
+                                                    $bg_temp = '';
+                                                }
+                                            @endphp
+                                            <a title="Thêm vào yêu thích"
+                                                data-route="{{ route('addToWishlist', $featuredProduct->id) }}"
+                                                class="wishlist-add same-link {{ $bg_temp }} "
+                                                title="Add to wishlist"><i
+                                                    class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
+                                        @else
+                                            <a class="prod_alert_login" data-action="yêu thích"
+                                                data-route="{{ route('theme.login_client') }}">
+                                                <i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i>
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="product-meta">

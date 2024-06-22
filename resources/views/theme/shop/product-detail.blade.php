@@ -107,13 +107,47 @@ Product Details Area Start
                     </div>
                     <div class="product-buttons grid_list">
                         <div class="action-link">
-                            <a class="compare-add same-link" href="compare.html" title="So sánh"><i class="zmdi zmdi-refresh-alt"></i></a>
+                            @php
+                                $images = json_decode($product->image);
+                            @endphp
+                            <a  class="compare-add-product same-link" 
+                                data-action="{{ $product->id }}" 
+                                data-category ="{{$product->category_id}}"
+                                data-image="{{ asset('../storage/products/' . $product->code . '/image/' . $images[0]) }}"
+                                data-name ="{{ $product->name }}" 
+                                title="Add to compare">
+                                <i class="zmdi zmdi-refresh-alt"></i>
+                            </a>
                             @if(auth()->check())
                                 <button id="add_cart" class="btn-secondary" data-route="{{ route('theme.add_to_cart', $product->id)}}">Thêm vào giỏ hàng</button>
                             @else
                                 <button id="" class="btn-secondary prod_detail_alert_login" data-route="{{ route('theme.login_client')}}">Thêm vào giỏ hàng</button>
                             @endif
-                            <a class="wishlist-add same-link" href="wishlist.html" title="Yêu thích"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
+
+                            @if (auth()->check())
+                                @php
+                                    if (
+                                        App\Models\Wishlist::where([
+                                            'user_id' => Auth()->user()->id,
+                                            'product_id' => $product->id,
+                                        ])->exists()
+                                    ) {
+                                        $bg_temp = 'bg-danger';
+                                    } else {
+                                        $bg_temp = '';
+                                    }
+                                @endphp
+                                <a title="Thêm vào yêu thích"
+                                    data-route="{{ route('addToWishlist', $product->id) }}"
+                                    class="wishlist-add same-link {{ $bg_temp }} "
+                                    title="Add to wishlist"><i
+                                        class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
+                            @else
+                                <a class="prod_alert_login" data-action="yêu thích"
+                                    data-route="{{ route('theme.login_client') }}">
+                                    <i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i>
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <div class="product-meta">
@@ -295,9 +329,41 @@ Product Details Area Start
                                         </div>
                                     </div>
                                     <div class="action-link">
-                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#modal_box" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
-                                        <a class="compare-add same-link" href="#" title="So sánh"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                        <a class="wishlist-add same-link" href="wishlist.html" title="Yêu thích"><i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
+                                        <a class="quick-view same-link" href="#" title="Quick view" data-bs-toggle="modal" data-bs-target="#product-{{$relatedProduct->id}}" data-original-title="quick view"><i class="zmdi zmdi-eye zmdi-hc-fw"></i></a>
+
+                                        <a  class="compare-add-product same-link" 
+                                            data-action="{{ $relatedProduct->id }}" 
+                                            data-category ="{{$relatedProduct->category_id}}"
+                                            data-image="{{ asset('../storage/products/' . $relatedProduct->code . '/image/' . $images[0]) }}"
+                                            data-name ="{{ $relatedProduct->name }}" 
+                                            title="Add to compare">
+                                            <i class="zmdi zmdi-refresh-alt"></i>
+                                        </a>
+
+                                        @if (auth()->check())
+                                            @php
+                                                if (
+                                                    App\Models\Wishlist::where([
+                                                        'user_id' => Auth()->user()->id,
+                                                        'product_id' => $relatedProduct->id,
+                                                    ])->exists()
+                                                ) {
+                                                    $bg_temp = 'bg-danger';
+                                                } else {
+                                                    $bg_temp = '';
+                                                }
+                                            @endphp
+                                            <a title="Thêm vào yêu thích"
+                                                data-route="{{ route('addToWishlist', $relatedProduct->id) }}"
+                                                class="wishlist-add same-link {{ $bg_temp }} "
+                                                title="Add to wishlist"><i
+                                                    class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
+                                        @else
+                                            <a class="prod_alert_login" data-action="yêu thích"
+                                                data-route="{{ route('theme.login_client') }}">
+                                                <i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i>
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="product-caption">
@@ -341,6 +407,140 @@ Product Details Area Start
 <!-- ========================
 Product Details Area End 
 ===========================-->
+{{-- Compare start --}}
+@include('theme.modals.compare-theme')
+{{-- Compare end --}}
+@foreach($relatedProducts as $prod)
+<div class="modal fade" id="product-{{$prod->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="zmdi zmdi-close"></i></span>
+            </button>
+            <div class="modal_body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="modal_tab">
+                                <div class="tab-content product-details-large">
+                                    @php
+                                        $images = json_decode($prod->image);
+                                    @endphp
+                                    @foreach($images as $key => $image)
+                                    <div class="tab-pane fade {{$key == 0 ? 'show active': ''}}" id="tab-{{$prod->id}}-{{$key}}" role="tabpanel">
+                                        <div class="modal_tab_img">
+                                            <a href="{{route('theme.product_detail', $prod->slug)}}">
+                                                <img src="{{asset('../storage/products/'.$prod->code.'/image/'.$image)}}" alt="{{$prod->name}}" class="img-fluid">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <div class="modal_tab_button">
+                                    <ul class="nav product_navactive" role="tablist">
+                                        @foreach($images as $key => $image)
+                                        <li>
+                                            <a class="nav-link {{$key == 0 ? 'active': ''}}" data-bs-toggle="tab" href="#tab-{{$prod->id}}-{{$key}}" role="tab" aria-controls="tab-{{$prod->id}}-{{$key}}" aria-selected="false" style="width: 100px;">
+                                                <img src="{{asset('../storage/products/'.$prod->code.'/image/'.$image)}}" alt="{{$prod->name}}" class="img-fluid">
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <!-- Product Summery Start -->
+                            <div class="product-summery mt-50">
+                                <div class="product-head">
+                                    <h1 class="product-title">{{ $prod->name }}</h1>
+                                </div>
+                                <div class="price-box">
+                                    <span class="regular-price">{{ $prod->odd_price }}</span>
+                                </div>
+                                {{-- <div class="product-description">
+                                    <?= json_decode($prod->description) ?>
+                                </div> --}}
+                                <div class="product-tax mb-20">
+                                    <ul>
+                                        <li><span><strong>Mã sản phẩm : </strong>{{ $prod->code }}</span></li>
+                                        <li><span><strong>Thương hiệu : </strong>{{ $prod->brand->name }}</span></li>
+                                        <li><span><strong>Xuất xứ : </strong>{{ $prod->origin }}</span></li>
+                                        <li><span><strong>Tình trạng : </strong>{{$prod->inventory->quantity == 0 ? 'Liên hệ' : 'Còn hàng'}}</span></li>
+                                    </ul>
+                                </div>
+                                <div class="product-buttons grid_list">
+                                    <div class="action-link">
+                                        <a  class="compare-add-product" 
+                                            data-action="{{ $prod->id }}" 
+                                            data-category ="{{$prod->category_id}}"
+                                            data-image="{{ asset('../storage/products/' . $prod->code . '/image/' . $images[0]) }}"
+                                            data-name ="{{ $prod->name }}" 
+                                            title="Add to compare">
+                                            <i class="zmdi zmdi-refresh-alt"></i>
+                                        </a>
+
+                                        @if(auth()->check())
+                                            <a class="add_to_cart_btn" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $prod->id)}}">
+                                                <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                            </a>
+                                        @else
+                                            <a class="prod_alert_login" data-route="{{ route('theme.login_client') }}">
+                                                <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                            </a>
+                                        @endif
+
+                                        @if (auth()->check())
+                                            @php
+                                                if (
+                                                    App\Models\Wishlist::where([
+                                                        'user_id' => Auth()->user()->id,
+                                                        'product_id' => $prod->id,
+                                                    ])->exists()
+                                                ) {
+                                                    $bg_temp = 'bg-danger';
+                                                } else {
+                                                    $bg_temp = '';
+                                                }
+                                            @endphp
+                                            <a title="Thêm vào yêu thích"
+                                                data-route="{{ route('addToWishlist', $prod->id) }}"
+                                                class="wishlist-add same-link {{ $bg_temp }} "
+                                                title="Add to wishlist"><i
+                                                    class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i></a>
+                                        @else
+                                            <a class="prod_alert_login" data-action="yêu thích"
+                                                data-route="{{ route('theme.login_client') }}">
+                                                <i class="zmdi zmdi-favorite-outline zmdi-hc-fw"></i>
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="product-meta">
+                                    <div class="desc-content">
+                                        <div class="social_sharing d-flex">
+                                            <h5>Chia sẻ lên:</h5>
+                                            <ul>
+                                                <li>
+                                                    <a href="https://www.facebook.com/sharer.php?u={{route('theme.product_detail', $prod->slug)}}" rel="me" title="Facebook" target="_blank">
+                                                        <i class="fa fa-facebook"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Product Summery End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
 <script>
     $(document).ready(function() {
         $.ajaxSetup({
@@ -438,6 +638,256 @@ Product Details Area End
 
             });
         });
+
+        // add To Wishlist
+        $.each($('.wishlist-add'), function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).data('route'),
+                    data: {
+
+                    },
+                    success: function(results) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: results,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+
+                    },
+
+                    error: function(results) {
+                        Swal.fire({
+                            title: results.responseText,
+                            icon: "error",
+                        });
+                    },
+
+                });
+
+
+                if ($(this).hasClass("bg-danger")) {
+                    $(this).removeClass("bg-danger");
+                } else {
+                    $(this).addClass("bg-danger");
+                }
+            });
+        });
+
+        jQuery.fn.extend({
+            addToCompare: function(className) {
+                $.each($('.'+ className), function() {
+                    $(this).on("click", function(e) {
+                        e.preventDefault();
+                        let id = $(this).data('action');
+                        let image = $(this).data('image');
+                        let name = $(this).data('name');
+                        let category_id = $(this).data('category');
+                        let product = {
+                            id: id,
+                            image: image,
+                            name: name,
+                            category_id: category_id
+                        }
+                        let array_compare = JSON.parse(localStorage.getItem("compare"));
+                        $('#ss-now').css("display", "none");
+                        if (array_compare == null) {
+                            array_compare = [];
+                        }
+                        else{
+                            if (array_compare[0]['category_id']!== category_id) {
+                                localStorage.clear();
+                                console.log("clear");
+                                $(".i-item").attr("src", '/assets/theme/images/icon/empty.png');
+                                $('.h-item').html("Thêm sản phẩm");
+                                $(".remove-ic-compare").css("display", "none");
+                                $('.stickcompare').css("display","none");
+                                array_compare = [];
+                            }
+                        }
+                        if ($('.stickcompare').css("display")==="none") {
+                            $('.stickcompare').css("display","block");
+                        }
+                        if (array_compare.length >= 3) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Chỉ cho phép so sánh tối đa 3 sản phẩm",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        } 
+                        else {
+                            if ((array_compare.find(c => c.id === id))!== undefined) {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: "Đã tồn tại trong so sánh",
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                });
+                            } 
+                            else {
+                                array_compare.push(product);
+                                localStorage.setItem("compare", JSON.stringify(array_compare));
+                                $('.i-item').eq(array_compare.indexOf(product)).attr("src", product.image);
+                                $('.h-item').eq(array_compare.indexOf(product)).html(product.name);
+                                $('.remove-ic-compare').eq(array_compare.indexOf(product)).css("display", "block");
+                                $('.count-ss').html("(" + array_compare.length + ")");
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Thêm thành công",
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                });
+                            }
+                        }
+
+                    });
+                });
+            },
+
+        });
+
+        $(this).addToCompare('compare-add-product');
+
+        // list compare 
+        $('.stickcompare').each(function() {
+            let array_compare = JSON.parse(localStorage.getItem("compare"));
+            if (array_compare == null) {
+                $('.i-item').attr("src", '/assets/theme/images/icon/empty.png');
+                $('.h-item').html("Thêm sản phẩm");
+                $('.remove-ic-compare').css("display", "none");
+            } 
+            else {
+                $.each(array_compare, function(index, product) {
+                    $('.i-item').eq(index).attr("src", product.image);
+                    $('.h-item').eq(index).html(product.name);
+                    $('.remove-ic-compare').eq(index).css("display", "block");
+                    $('.count-ss').html("(" + array_compare.length + ")");
+                });
+            }
+        });
+
+        
+
+        //clearall
+        $('.clearall').each(function () {
+            $(this).on("click", function(e){
+                e.preventDefault();
+                let array_compare = JSON.parse(localStorage.getItem("compare"));
+                $('.stickcompare').css("display", "none");
+                $('#ss-now').css("display", "block");
+                $('.count-ss').html("(" + array_compare.length + ")");
+            })
+        });
+
+        $('#ss-now').each(function () {
+            let array_compare = JSON.parse(localStorage.getItem("compare"));
+            if(array_compare !== null){
+                $(this).css("display", "block");
+            }
+            else{
+                $(this).css("display", "none");
+            }
+            $(this).on("click", function(e){
+                e.preventDefault();
+                $('.stickcompare').css("display", "block");
+                $(this).css("display", "none");
+            })
+        });
+
+        // xóa 1 sản phẩm só sánh
+        $.each($('.remove-ic-compare'),function(){
+            $(this).on("click", function(e){
+                e.preventDefault();
+                let i = $(this).data('i');
+                let array_compare = JSON.parse(localStorage.getItem("compare"));
+                let length_arr = array_compare.length - 1;
+                array_compare.splice(i, 1);
+                $('.i-item').eq(length_arr).attr("src", '/assets/theme/images/icon/empty.png');
+                $('.h-item').eq(length_arr).html("Thêm sản phẩm");
+                $('.remove-ic-compare').eq(length_arr).css("display", "none");
+                $('.count-ss').html("(" + array_compare.length + ")");
+                if (array_compare.length === 0) {
+                    array_compare = null;
+                    $(".stickcompare").css("display", "none");
+                } 
+                else {
+                    $.each(array_compare, function(index, product) {
+                        $('.i-item').eq(index).attr("src", product.image);
+                        $('.h-item').eq(index).html(product.name);
+                        $('.remove-ic-compare').eq(index).css("display", "block");
+                    });
+                }
+                localStorage.setItem("compare", JSON.stringify(array_compare));
+            })
+        })
+
+        //xoa tất cả so sanh
+        $.each($('.txtremoveall'), function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+                localStorage.clear();
+                console.log("clear");
+                $(".i-item").attr("src", '/assets/theme/images/icon/empty.png');
+                $('.h-item').html("Thêm sản phẩm");
+                $(".remove-ic-compare").css("display", "none");
+                $('.stickcompare').css("display","none");
+                $('.count-ss').html("(" + array_compare.length + ")");
+            });
+        });
+
+        // start compare 
+        $.each($('.start-compare'), function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+                let array_compare = JSON.parse(localStorage.getItem("compare"));
+                // let array_compare = localStorage.getItem("compare");
+
+                if (array_compare == null) {
+                    array_compare = [];
+                }
+                console.log(array_compare['id']);
+                if (array_compare.length < 2) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Cần ít nhất 2 sản phẩm để so sánh.",
+                        showConfirmButton: false,
+                        timer: 3000,
+                    });
+                } else {
+                    $.ajax({
+                        type: 'GET',
+                        url: $(this).data('route'),
+                        data: {
+                            products: array_compare,
+                        },
+                        success: function(results) {
+                            window.location.href = "/so-sanh";
+                        },
+                        error: function(results) {
+                            Swal.fire({
+                                title: results.responseText,
+                                icon: "error",
+                            });
+                        },
+                    });
+
+                    // console.log($('#compare-all').val());
+                }
+
+            })
+        });
+
+
+        // end compare 
 
     });
 </script>

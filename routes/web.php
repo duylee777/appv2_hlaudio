@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ClientController;
+use App\Http\Controllers\Client\WishlistController;
+use App\Http\Controllers\Client\CompareController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,16 +60,15 @@ Route::get('/du-an/{slug_project?}', [ClientController::class, 'projectDetail'])
 
 Route::get('/gio-hang', [CartController::class, 'showCart'])->name('theme.show_cart');
 Route::post('/gio-hang/add/{product?}', [CartController::class, 'addToCart'])->name('theme.add_to_cart');
+Route::post('/gio-hang/add-selected', [CartController::class, 'addSelected'])->name('theme.add_selected');
 Route::post('/gio-hang/update/{product?}', [CartController::class, 'updateCartItem'])->name('theme.update_cart_item');
 Route::post('/gio-hang/delete/{product?}', [CartController::class, 'removeCartTable'])->name('theme.remove_item');
 Route::post('/gio-hang/clear', [CartController::class, 'clearCart'])->name('theme.clear_cart');
 Route::get('/thanh-toan', [ClientController::class, 'checkout'])->name('theme.checkout');
 
 Route::get('/faq', [ClientController::class, 'faq'])->name('theme.faq');
-Route::get('/yeu-thich', [ClientController::class, 'wishlist'])->name('theme.wishlist');
-Route::get('/so-sanh', [ClientController::class, 'compare'])->name('theme.compare');
 Route::get('/tim-kiem', [ClientController::class, 'search'])->name('theme.search');
-Route::get('/thuong-hieu', [ClientController::class, 'brand'])->name('theme.brand');
+Route::get('/thuong-hieu/{slug_brand?}', [ClientController::class, 'brand'])->name('theme.brand');
 
 // End Client
 
@@ -102,6 +103,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/yeu-thich', [WishlistController::class, 'index'])->name('theme.wishlist');
+    Route::post('/yeu-thich/xoa/{id?}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+    Route::post('/yeu-thich/xoa-da-chon', [WishlistController::class, 'destroy_selected'])->name('wishlist.destroy_selected');
 });
+
+//them|xoa sp yeu thich
+Route::post('/them-yeu-thich/{product_id}', [WishlistController::class, 'addToWishlist'])->name('addToWishlist');
+
+//so sánh
+Route::get('/so-sanh', [CompareController::class, 'showCompare'])->name('theme.compare');
+Route::get('so-sanh/them-san-pham', [CompareController::class, 'storeSession'])->name('storeSession');
 
 require __DIR__.'/auth.php';
