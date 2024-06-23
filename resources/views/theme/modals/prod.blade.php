@@ -1,5 +1,5 @@
 <!-- modal area start-->
-@foreach($categories as $key => $category)
+@foreach($category as $key => $category)
 
     @foreach($products as $product)
     <div class="modal fade" id="product-{{$product->id}}" tabindex="-1" role="dialog" aria-hidden="true">

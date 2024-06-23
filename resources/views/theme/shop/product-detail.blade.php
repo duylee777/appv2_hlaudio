@@ -175,7 +175,7 @@ Product Details Area Start
                     <ul class="nav flex-column" role="tablist">
                         <li><a class="active" href="#description" role="tab" data-bs-toggle="tab" aria-selected="false">Mô tả</a></li>
                         <li><a href="#sheet" role="tab" data-bs-toggle="tab" aria-selected="false">Thông số kỹ thuật</a></li>
-                        <li><a href="#reviews" role="tab" data-bs-toggle="tab" aria-selected="true">Đánh giá</a></li>
+                        <li><a href="#comments" role="tab" data-bs-toggle="tab" aria-selected="true">Đánh giá</a></li>
                     </ul>
                 </div>
                 <!-- Product Description Tab End -->
@@ -221,83 +221,127 @@ Product Details Area Start
                     </div>
                     <!-- End Single Content -->
                     <!-- Start Single Content -->
-                    <div role="tabpanel" id="reviews" class="product_tab_content fade">
+                    <div role="tabpanel" id="comments" data-route={{route('theme.comment',$product->id)}} class="product_tab_content fade">
                         <div class="review_address_inner mt-20">
                             <!-- Start Single Review -->
-                            <div class="pro_review">
-                                <div class="review_thumb">
-                                    <img src="/assets/theme/images/blog/comment/comment-3.webp" alt="review images">
-                                </div>
-                                <div class="review_details">
-                                    <div class="review_info">
-                                        <a class="last-title" href="#">Gerald Barnes</a>
-                                        <div class="rating">
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                        </div>
-                                        <div class="rating_send">
-                                            <a href="#"><i class="zmdi zmdi-mail-reply"></i></a>
-                                            <a href="#"><i class="zmdi zmdi-close"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="review_date">
-                                        <span>27 Jun, 2016 at 2:30pm</span>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
-                                </div>
+                            @if (count($comment->where('comment_id',0))=0)
+                            <div class="parent-product">
+                                <p style="padding-bottom: 8px;">Chưa có bình luận nào.</p>
                             </div>
-                            <!-- End Single Review -->
-                            <!-- Start Single Review -->
-                            <div class="pro_review pro-second">
-                                <div class="review_thumb">
-                                    <img src="/assets/theme/images/blog/comment/comment-3.webp" alt="review images">
-                                </div>
-                                <div class="review_details">
-                                    <div class="review_info">
-                                        <a class="last-title" href="#">Gerald Barnes</a>
-                                        <div class="rating">
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
-                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                            @else
+                            @foreach ($comment->where('comment_id',0) as $cmt)
+                            <div class="parent-product">
+                                <div class="pro_review pro-first">
+                                    <div class="review_thumb">
+                                        <img src="/assets/theme/images/blog/comment/comment-3.webp" alt="review images">
+                                    </div>
+                                    <div class="review_details">
+                                        <div class="review_info">
+                                            @php
+                                                $user = App\Models\User::find($cmt->user_id);
+                                            @endphp
+                                            <a class="last-title">{{$user->name}}</a>
+                                            <div class="rating_send">
+                                                @if (auth()->check())
+                                                    @if (auth()->user()->id == $cmt->user_id)
+                                                        <a class="edit-cmt"><i class="zmdi zmdi-edit"></i></a>
+                                                    @else
+                                                        <a class="reply-cmt"><i class="zmdi zmdi-mail-reply"></i></a>
+                                                    @endif
+                                                    @if (!auth()->user()->hasRole(config('global.default_roles.customer'))||auth()->user()->id == $cmt->user_id)
+                                                        <a class="delete-cmt" data-route="{{route('theme.hideComment',$cmt->id)}}""><i class="zmdi zmdi-close"></i></a>
+                                                    @endif
+                                                @else
+                                                    <a class="reply-cmt prod_detail_alert_login" data-route="{{ route('theme.login_client')}}"><i class="zmdi zmdi-mail-reply"></i></a>
+                                                @endif
+
+                                            </div>
                                         </div>
-                                        <div class="rating_send">
-                                            <a href="#"><i class="zmdi zmdi-mail-reply"></i></a>
-                                            <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                        <div class="review_date">
+                                            <span>{{date("d-m-Y", strtotime($cmt->created_at))}} lúc {{date("H:i", strtotime($cmt->created_at))}}</span>
+                                            {{-- <span>27 Jun, 2016 at 2:30pm</span> --}}
+                                        </div>
+                                        <p class="cmt-content">{{$cmt->body}}</p>
+                                        @if (auth()->check())
+                                            <div class="cmt-show" hidden>
+                                                <input type="text" class="cmt-input">
+                                                <button class="button reply-cmt-btn comment-btn" data-route="{{route('theme.storeComment',[$product->id,$cmt->id,0])}}" >Bình luận</button>
+                                                @if (auth()->user()->id == $cmt->user_id)
+                                                    <button class="button edit-cmt-btn" data-route="{{route('theme.editComment',$cmt->id)}}" >Sửa</button>
+                                                @endif
+                                                <button class="button cancel-cmt-btn" >Hủy</button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @foreach ($comment->where('comment_id',$cmt->id)->sortBy('created_at') as $item)
+                                    <div class="pro_review pro-second">
+                                        <div class="review_thumb">
+                                            <img src="/assets/theme/images/blog/comment/comment-3.webp" alt="review images">
+                                        </div>
+                                        <div class="review_details">
+                                            <div class="review_info">
+                                                @php
+                                                    $userRep = App\Models\User::find($item->user_id);
+                                                @endphp
+                                                <a class="last-title">{{$userRep->name}}</a>
+                                                <div class="rating_send">
+                                                    @if (auth()->check())
+                                                            
+                                                        @if (auth()->user()->id == $item->user_id)
+                                                            <a class="edit-cmt"><i class="zmdi zmdi-edit"></i></a>
+                                                        @else
+                                                            <a class="reply-cmt"><i class="zmdi zmdi-mail-reply"></i></a>
+                                                        @endif
+                                                        @if (!auth()->user()->hasRole(config('global.default_roles.customer'))||auth()->user()->id == $item->user_id)
+                                                            <a class="delete-cmt" data-route="{{route('theme.hideComment',$item->id)}}""><i class="zmdi zmdi-close"></i></a>
+                                                        @endif
+                                                    @else
+                                                        <a class="reply-cmt prod_detail_alert_login" data-route="{{ route('theme.login_client')}}"><i class="zmdi zmdi-mail-reply"></i></a>
+                                                    @endif
+
+                                                </div>
+                                            </div>
+                                            <div class="review_date">
+                                                <span>{{date("d-m-Y", strtotime($item->created_at))}} lúc {{date("H:i", strtotime($item->created_at))}}</span>
+                                                {{-- <span>27 Jun, 2016 at 2:30pm</span> --}}
+                                            </div>
+                                            <p class="cmt-content">{{$item->body}}</p>
+                                            @if (auth()->check())
+                                                <div class="cmt-show" hidden>
+                                                    <input type="text" class="cmt-input">
+                                                        <button class="button reply-cmt-btn comment-btn" data-route="{{route('theme.storeComment',[$product->id,$cmt->id,0])}}" >Bình luận</button>
+                                                    @if (auth()->user()->id == $item->user_id)
+                                                        <button class="button edit-cmt-btn" data-route="{{route('theme.editComment',$item->id)}}" >Sửa</button>
+                                                    @endif
+                                                    <button class="button cancel-cmt-btn" >Hủy</button>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="review_date">
-                                        <span>27 Jun, 2016 at 2:30pm</span>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
-                                </div>
+                                @endforeach 
                             </div>
-                            <!-- End Single Review -->
+                            @endforeach    
+                            @endif
+                            
+                            <!-- End Single Comment -->
+                        </div>
+                        <div id="show-more-cmt" >
+                            <button class="btn btn-primary btn-more-cmt" >Xem thêm</button>
                         </div>
                         <div class="comments_form">
-                            <h3>Leave a Reply </h3>
-                            <p>Your email address will not be published. Required fields are marked *</p>
-                            <form action="#">
+                            <form >
                                 <div class="row">
                                     <div class="col-12">
-                                        <label for="review_comment">Comment </label>
+                                        <label for="review_comment">Viết bình luận </label>
                                         <textarea name="comment" id="review_comment" spellcheck="false" data-gramm="false"></textarea>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <label for="author">Name</label>
-                                        <input id="author" type="text">
-
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <label for="email">Email </label>
-                                        <input id="email" type="text">
-                                    </div>
                                 </div>
-                                <button class="button" type="submit">Post Comment</button>
+                                @if(auth()->check())
+                                    <button class="button comment-btn" data-route="{{route('theme.storeComment',[$product->id,0,0])}}">Bình luận</button>  
+                                @else
+                                    <button class="button comment-button prod_detail_alert_login" data-route="{{ route('theme.login_client')}}">Bình luận</button>
+                                @endif
                             </form>
                         </div>
                     </div>
@@ -888,6 +932,239 @@ Product Details Area End
 
 
         // end compare 
+
+        // Comment start
+        $.each($('.parent-product'), function(){
+            let countShow = 3;
+                console.log($('.parent-product').length);
+            if($('.parent-product').length > countShow){
+                if ($('.parent-product').index(this) > countShow -1) {
+                    $(this).addClass("collapse");
+                }
+            }
+            else{
+                $('#show-more-cmt').css("display","none");
+            }
+            let childLength = $(this).children('.pro-second').length;
+            
+            $.each($(this).children('.pro-second'), function(){
+                let parentSecond = $(this).parent(".parent-product").children('.pro-second');
+                if (parentSecond.index(this) < childLength - countShow) {
+                    $(this).addClass("collapse");
+                    $(this).prev(".pro-first").after('<a class="more-cmt-reply btn-more-cmt" style="color: blue; padding: 0px 0px 8px 80px;" >Xem thêm</a>');
+                }
+            })
+        })
+
+        $.each($('.btn-more-cmt'), function(){
+            $(this).on("click", function(e){
+                if ($(this).hasClass("close-cmt")) {
+                    $.each($('.parent-product'), function(){
+                        if ($('.parent-product').index(this)>2) {
+                            $(this).addClass("collapse");
+                        }
+                    });
+                    $(this).removeClass("close-cmt");
+                    $(this).html("Xem thêm");
+                }
+                else{
+                    let cmtShow = 3;
+                    if ($(this).hasClass("more-cmt-reply")) {
+                        let proSecondHidden = $(this).siblings(".pro-second.collapse");
+                        proSecondHidden.removeClass("collapse");
+                        console.log(proSecondHidden);
+                        $(this).attr("hidden",true);
+                    } else {
+                        let countProFirst = $('.parent-product.collapse').length;
+                        console.log(countProFirst);
+                        if (countProFirst > cmtShow ) {
+                            for (let i = 0; i < cmtShow; i++) {
+                                $('.parent-product.collapse').eq(cmtShow - 1 -i).removeClass("collapse");
+                            }
+                        } else {
+                            $('.parent-product.collapse').removeClass("collapse");
+                            $(this).addClass("close-cmt");
+                            $(this).html("Thu gọn");
+                        }
+                    }
+                }
+            });
+        })
+
+        $.each($('.comment-btn'), function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+                let comment = $('#review_comment').val();
+                let user = '';
+                if ($(this).hasClass("reply-cmt-btn")) {
+                    user = '@' + $(this).text().replace('Trả lời ', '') + ' ';
+                    comment = user + $(this).prev('.cmt-input').val();
+                }
+                if ($.trim(comment)==$.trim(user)) {
+                    Swal.fire({
+                        title: "Bình luận không được để trống!",
+                        icon: "warning",
+                        cancelButtonColor: "#d33",
+                        cancelButtonText: "Quay lại",
+                    })
+                }
+                else{
+                    $.ajax({
+                    type: 'POST',
+                    url: $(this).data('route'),
+                    data: {
+                        comment: comment,
+                    },
+                    success: function(results) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: results,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        
+                        setTimeout(function(){
+                            location.reload();
+                            },2000);
+                    },
+                    error: function(results) {
+                        Swal.fire({
+                            title: results.responseText,
+                            icon: "error",
+                        });
+                    },
+                });
+                }
+                
+                
+
+            });
+        }); 
+        
+        $.each($('.delete-cmt'), function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+                Swal.fire({
+                title: "Bạn có chắc chắn muốn xóa bình luận này?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Xóa bình luận",
+                cancelButtonText: "Quay lại",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'PATCH',
+                            url: $(this).data('route'),
+                            success: function(results) {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: results,
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                });
+                                
+                                setTimeout(function(){
+                                    location.reload();
+                                },2000);
+                            },
+                            error: function(results) {
+                                Swal.fire({
+                                    title: results.responseText,
+                                    icon: "error",
+                                });
+                            },
+                        });
+                    }
+                });
+            });
+        });
+
+        $.each($('.reply-cmt'), function(){
+            $(this).on("click",function(e){
+                e.preventDefault();
+                let parentAll = $(this).parents('.review_details');
+                $('.cmt-show').attr("hidden",true);
+                $('.reply-cmt-btn').attr("hidden",false);
+                $('.cmt-content').attr("hidden",false);
+                $('.edit-cmt-btn').attr("hidden",false);
+                // $('.cmt-input').val("");
+                parentAll.find('.cmt-show').attr("hidden",false);
+                parentAll.find('.edit-cmt-btn').attr("hidden",true);
+                parentAll.find('.reply-cmt-btn').html("Trả lời " + parentAll.find('.last-title').text());
+                parentAll.find('.cmt-input').focus();
+            });
+        });
+
+        $.each($('.edit-cmt'), function(){
+            $(this).on("click",function(e){
+                e.preventDefault();
+                let parentAll = $(this).parents('.review_details');
+                $('.cmt-show').attr("hidden",true);
+                $('.reply-cmt-btn').attr("hidden",false);
+                $('.cmt-content').attr("hidden",false);
+                $('.edit-cmt-btn').attr("hidden",false);
+                $('.cmt-input').val("");
+                parentAll.find('.cmt-show').attr("hidden",false);
+                parentAll.find('.reply-cmt-btn').attr("hidden",true);
+                parentAll.find('.cmt-content').attr("hidden",true);
+                parentAll.find('.cmt-input').val(parentAll.find('.cmt-content').text()).focus();
+            });
+        });
+
+        $.each($('.cancel-cmt-btn'), function(){
+            $(this).on("click", function(e){
+                e.preventDefault();
+                let parentAll = $(this).parents('.review_details');
+                parentAll.find('.cmt-show').attr("hidden",true);
+                parentAll.find('.reply-cmt-btn').attr("hidden",false);
+                parentAll.find('.edit-cmt-btn').attr("hidden",false);
+                parentAll.find('.cmt-content').attr("hidden",false);
+                parentAll.find('.cmt-input').val("");
+            });
+        });
+
+        $.each($('.edit-cmt-btn'), function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+                let parentAll = $(this).parents('.review_details');
+                let dataUpdate = parentAll.find('.cmt-input').val();
+                if (dataUpdate.includes(parentAll.f)) {
+                    
+                }
+                $.ajax({
+                    type: 'PATCH',
+                    url: $(this).data('route'),
+                    data: {
+                        body: dataUpdate,
+                    },
+                    success: function(results) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: results,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        
+                        setTimeout(function(){
+                            location.reload();
+                        },2000);
+                    },
+                    error: function(results) {
+                        Swal.fire({
+                            title: results.responseText,
+                            icon: "error",
+                        });
+                    },
+                });
+            });
+        });
+
+        // Comment end
 
     });
 </script>

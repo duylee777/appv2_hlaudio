@@ -20,6 +20,7 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\WishlistController;
 use App\Http\Controllers\Client\CompareController;
+use App\Http\Controllers\Client\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,5 +116,12 @@ Route::post('/them-yeu-thich/{product_id}', [WishlistController::class, 'addToWi
 //so sánh
 Route::get('/so-sanh', [CompareController::class, 'showCompare'])->name('theme.compare');
 Route::get('so-sanh/them-san-pham', [CompareController::class, 'storeSession'])->name('storeSession');
+
+//comment
+Route::get('cmt/{id}', [CommentController::class, 'getPostComment'])->name('theme.comment');
+Route::post('cmt/{id}/{cmt_id}/{is_post}', [CommentController::class, 'store'])->name('theme.storeComment');
+Route::patch('hcmt/{id}', [CommentController::class, 'hideComment'])->name('theme.hideComment');
+Route::post('delcmt/{id}', [CommentController::class, 'destroy'])->name('theme.destroyComment');
+Route::patch('ecmt/{id}', [CommentController::class, 'update'])->name('theme.editComment');
 
 require __DIR__.'/auth.php';

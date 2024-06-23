@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Comment;
 
 use Illuminate\Http\Request;
 
@@ -145,7 +146,8 @@ class ClientController extends Controller
         $specs =  explode(";", json_decode($product->specifications));
         $category = Category::where('id', $product->category_id)->first();
         $relatedProducts = Product::where('category_id', $category->id)->where('is_active', true)->get();
-        return view('theme.shop.product-detail', compact('product', 'specs', 'category', 'relatedProducts'));
+        $comment = Comment::where('type_id',$product->id)->where('is_post',0)->where('status',1)->orderBy('created_at','DESC')->get();
+        return view('theme.shop.product-detail', compact('product', 'specs', 'category', 'relatedProducts', 'comment'));
     }
 
     public function blog() {
@@ -168,7 +170,8 @@ class ClientController extends Controller
         $recentPosts = Post::where('is_visible', true)->orderBy('created_at', 'DESC')->take(4)->get();
         $tagByPosts  = $post->tags()->where('is_visible', true)->get();
         $tags = Tag::where('is_visible', true)->get();
-        return view('theme.blog.blog-detail', compact('post', 'recentPosts', 'tagByPosts', 'tags'));
+        $comment = Comment::where('type_id',$post->id)->where('is_post',1)->where('status',1)->orderBy('created_at','DESC')->get();
+        return view('theme.blog.blog-detail', compact('post', 'recentPosts', 'tagByPosts', 'tags', 'comment'));
     }
 
     public function project() {
