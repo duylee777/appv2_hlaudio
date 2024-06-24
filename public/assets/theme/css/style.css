@@ -4241,6 +4241,12 @@ ul.category-mega li.cat-mega-title ul li:hover a {
   }
 }
 
+#show-more-cmt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .comments_form h3 {
   font-size: 20px;
   margin: 0 0 20px;
@@ -4647,6 +4653,7 @@ ul.category-mega li.cat-mega-title ul li:hover a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding-bottom: 20px;
 }
 .pro_review .review_thumb {
   margin-right: 30px;
@@ -4655,6 +4662,10 @@ ul.category-mega li.cat-mega-title ul li:hover a {
   .pro_review .review_thumb {
     margin-right: 10px;
   }
+}
+
+.review_details{
+  width: 100%;
 }
 
 .review_info {
@@ -4666,7 +4677,6 @@ ul.category-mega li.cat-mega-title ul li:hover a {
   font-size: 20px;
   line-height: 16px;
   padding-right: 30px;
-  text-transform: uppercase;
 }
 @media only screen and (max-width: 767px) {
   .review_info .last-title {
@@ -4709,7 +4719,7 @@ ul.category-mega li.cat-mega-title ul li:hover a {
 }
 
 .pro_review.pro-second {
-  padding: 40px 0px 20px 80px;
+  padding: 0px 0px 20px 80px;
 }
 @media only screen and (max-width: 575px) {
   .pro_review.pro-second {

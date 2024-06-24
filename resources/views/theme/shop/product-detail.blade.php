@@ -224,7 +224,7 @@ Product Details Area Start
                     <div role="tabpanel" id="comments" data-route={{route('theme.comment',$product->id)}} class="product_tab_content fade">
                         <div class="review_address_inner mt-20">
                             <!-- Start Single Review -->
-                            @if (count($comment->where('comment_id',0))=0)
+                            @if (count($comment->where('comment_id',0))==0)
                             <div class="parent-product">
                                 <p style="padding-bottom: 8px;">Chưa có bình luận nào.</p>
                             </div>
