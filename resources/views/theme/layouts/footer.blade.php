@@ -18,7 +18,7 @@
                     <div class="col-lg-6 col-12">
                         <div class="newsletter-box">
                             <form id="mc-form" class="mc-form">
-                                <input type="email" id="email" name="email" class="email-box" placeholder="nhập địa chỉ email của bạn" name="email">
+                                <input type="email" id="consultations-email" class="email-box" placeholder="nhập địa chỉ email của bạn" name="consultations-email">
                                 <button id="mc-submit" class="newsletter-btn consultations-btn" type="button">Đăng ký</button>
                             </form>
                             <!-- mailchimp-alerts Start -->
@@ -181,17 +181,12 @@
     
             $(".consultations-btn").click(function(e) {
                 e.preventDefault();
-    
-                var name = $("#name").val();
-                var email = $("#email").val();
-                var phone = $("#phone").val();
-                var message = $("#message").val();
-    
+
                 $.ajax({
                     type: 'POST',
                     url: "{{ route('theme.consultations') }}",
                     data: {
-                        "email": email, 
+                        "email":  $("#consultations-email").val(), 
                     },
                     success: function() {
                         Swal.fire({

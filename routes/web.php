@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\WishlistController;
@@ -106,6 +107,7 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
     Route::resource('/tag', TagController::class);
     Route::resource('/post', PostController::class);
     Route::resource('/agency', AgencyController::class);
+    Route::resource('/order', OrderController::class);
     Route::prefix('/excel')->group(function() {
         Route::post('/import-products', [ExcelController::class, 'importProducts'])->name('admin.excel.import-products');
         Route::get('/export-products', [ExcelController::class, 'exportProducts'])->name('admin.excel.export-products');
@@ -116,6 +118,9 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
         Route::post('/edit/{id}', [UserController::class, 'update'])->name('admin.user.update');
         Route::post('/delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
     });
+    Route::get('/user-comment', function() {
+        return view('admin.comment');
+    })->name('admin.comnment.index');
 
 });
 Route::middleware('auth')->group(function () {

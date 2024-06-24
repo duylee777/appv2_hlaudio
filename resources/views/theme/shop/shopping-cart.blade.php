@@ -53,7 +53,7 @@ Shopping Cart area Start
                                                 <a href="{{route('theme.product_detail', $product->slug)}}">{{ $product->name }}</a>
                                             </td>
                                             <td class="product-price">
-                                                {{ $product->odd_price }}
+                                                {{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}
                                             </td>
                                             <td class="product-quantity">
                                                 <div class="input-group">
@@ -69,7 +69,7 @@ Shopping Cart area Start
                                                 @php
                                                     $count = (double)($item->quantity) * $product->odd_price;
                                                 @endphp
-                                                {{ $count }}
+                                                {{ Illuminate\Support\Number::currency($count, in: 'VND', locale: 'vi') }}
                                             </td>
                                             <td class="product-remove">
                                                 <a class="remove_item_btn" data-route="{{ route('theme.remove_item', $product->id) }}">
@@ -100,35 +100,25 @@ Shopping Cart area Start
                     <div class="coupon-area">
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
-                                <div class="coupon-code left">
+                                {{-- <div class="coupon-code left">
                                     <h3>Phiếu mua hàng</h3>
                                     <div class="coupon-inner">
                                         <p>Nhập mã phiếu giảm giá của bạn nếu bạn có.</p>
                                         <input placeholder="Coupon code" type="text">
                                         <button type="submit">Áp dụng</button>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="coupon-code right">
                                     <h3>Tổng số giỏ hàng</h3>
                                     <div class="coupon-inner">
                                         <div class="cart-subtotal">
-                                            <p>Subtotal</p>
-                                            <p class="cart-amount">£215.00</p>
-                                        </div>
-                                        <div class="cart-subtotal ">
-                                            <p>Shipping</p>
-                                            <p class="cart-amount"><span>Flat Rate:</span> £255.00</p>
-                                        </div>
-                                        <a href="#">Tính toán vận chuyển</a>
-
-                                        <div class="cart-subtotal">
-                                            <p>Total</p>
-                                            <p class="cart-amount">£215.00</p>
+                                            <p>Tổng tiền</p>
+                                            <p class="cart-amount">{{ Illuminate\Support\Number::currency($cart->total_price, in: 'VND', locale: 'vi') }}</p>
                                         </div>
                                         <div class="checkout-btn">
-                                            <a href="#">Proceed to Checkout</a>
+                                            <a href="{{ route('theme.checkout') }}">Thanh toán</a>
                                         </div>
                                     </div>
                                 </div>
