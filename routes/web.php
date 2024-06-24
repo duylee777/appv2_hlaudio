@@ -21,6 +21,7 @@ use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\WishlistController;
 use App\Http\Controllers\Client\CompareController;
 use App\Http\Controllers\Client\CommentController;
+use App\Http\Controllers\Client\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,9 @@ Route::get('/dang-ky', [ClientController::class, 'registerClient'])->name('theme
 Route::get('/tai-khoan', [ClientController::class, 'account'])->name('theme.account');
 
 Route::get('/gioi-thieu', [ClientController::class, 'about'])->name('theme.about');
+
 Route::get('/lien-he', [ClientController::class, 'contact'])->name('theme.contact');
+Route::post('/lien-he', [ClientController::class, 'contactPost'])->name('theme.contact_post');
 
 Route::get('/cua-hang', [ClientController::class, 'shop'])->name('theme.shop');
 Route::get('/danh-muc/{category_slug?}', [ClientController::class, 'category'])->name('theme.category');
@@ -68,8 +71,23 @@ Route::post('/gio-hang/clear', [CartController::class, 'clearCart'])->name('them
 Route::get('/thanh-toan', [ClientController::class, 'checkout'])->name('theme.checkout');
 
 Route::get('/faq', [ClientController::class, 'faq'])->name('theme.faq');
-Route::get('/tim-kiem', [ClientController::class, 'search'])->name('theme.search');
+Route::get('/tim-kiem', [SearchController::class, 'search'])->name('theme.search');
 Route::get('/thuong-hieu/{slug_brand?}', [ClientController::class, 'brand'])->name('theme.brand');
+Route::post('/dang-ky-nhan-ban-tin', [ClientController::class, 'consultations'])->name('theme.consultations');
+
+Route::get('/chinh-sach-ban-hang', function() {
+    return view('theme.policy.ban-hang');
+});
+Route::get('/chinh-sach-giao-hang', function() {
+    return view('theme.policy.giao-hang');
+});
+Route::get('/chinh-sach-thanh-toan', function() {
+    return view('theme.policy.thanh-toan');
+});
+Route::get('/chinh-sach-bao-hanh-va-doi-tra', function() {
+    return view('theme.policy.bao-hanh');
+});
+
 
 // End Client
 

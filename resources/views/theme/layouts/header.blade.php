@@ -232,7 +232,7 @@ Header Area Start
                                 <ul>
                                     <li><a href="{{ route('theme.home') }}">Trang chủ</a></li>
                                     <li>
-                                        <a href="{{ route('theme.shop') }}">Cửa hàng <i class="fa fa-angle-down"></i></a>
+                                        <a href="#">Cửa hàng <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown dropdown-width">
                                             @foreach(App\Models\Category::get() as $category)
                                                 @if(!empty($category->parent) && $category->parent->slug == 'san-pham')
@@ -308,23 +308,17 @@ Header Area Start
                                             <i class="fa fa-angle-down"></i>
                                         </a>
                                         <ul class="box-dropdown drop-dropdown">
-                                            <li><a href="{{ route('theme.login_client') }}">Đăng nhập</a></li>
                                             @if(Auth::check() == true)
-                                            <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
-                                            <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
-                                            <li><a href="{{ route('theme.checkout') }}">Thanh toán</a></li>
+                                                <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
+                                                <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
+                                                <li><a href="{{ route('theme.checkout') }}">Thanh toán</a></li>
+                                            @else
+                                                <li><a href="{{ route('theme.login_client') }}">Đăng nhập</a></li>
                                             @endif
                                         </ul>
                                     </li>
                                 </ul>
                             </div>
-                            <!-- <div class="widget-body">
-                                <div class="widget-address text-center mb-20">
-                                    <p><strong>ADDRESS</strong></p>
-                                    <p>123 Main Street, Anytown <br> CA 12345 USA.</p>
-                                        <p>(800) 123 456 - (800) 123 456.</p>
-                                </div>
-                            </div> -->
                             <div class="offcanvas-search-container mb-40">
                                 <form method="GET" action="{{route('theme.search')}}" name="keyword">
                                     <div class="search_box">
@@ -340,7 +334,7 @@ Header Area Start
                                         <a href="{{ route('theme.home') }}">Trang chủ</a>
                                     </li>
                                     <li class="menu-item-has-children">
-                                        <a href="{{ route('theme.shop') }}">Cửa hàng</a>
+                                        <a href="#">Cửa hàng</a>
                                         <ul class="sub-menu">
                                             @foreach(App\Models\Category::get() as $category)
                                                 @if(!empty($category->parent) && $category->parent->slug == 'san-pham')
@@ -374,7 +368,9 @@ Header Area Start
                             </div>
                             <!-- Offcanvas Menu End -->
                             <div class="offcanvas_footer">
-                                <span><a href="#"><i class="fa fa-envelope-o"></i> info@yourdomain.com</a></span>
+                                <span>
+                                    <a href="mailto:hiendientuhg123@gmail.com"><i class="fa fa-envelope-o"></i>hiendientuhg123@gmail.com</a>
+                                </span>
                                 <div class="footer_social">
                                     <ul class="d-flex">
                                         <li><a class="facebook" href="#"><i class="zmdi zmdi-facebook"></i></a></li>
