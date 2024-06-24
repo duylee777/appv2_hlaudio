@@ -18,8 +18,8 @@
                     <div class="col-lg-6 col-12">
                         <div class="newsletter-box">
                             <form id="mc-form" class="mc-form">
-                                <input type="email" id="mc-email" class="email-box" placeholder="nhập địa chỉ email của bạn" name="email">
-                                <button id="mc-submit" class="newsletter-btn" type="submit">Đăng ký</button>
+                                <input type="email" id="email" name="email" class="email-box" placeholder="nhập địa chỉ email của bạn" name="email">
+                                <button id="mc-submit" class="newsletter-btn consultations-btn" type="button">Đăng ký</button>
                             </form>
                             <!-- mailchimp-alerts Start -->
                             <div class="mailchimp-alerts text-centre">
@@ -83,9 +83,9 @@
                                     <h6>Tài khoản</h6>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="#">Tài khoản của tôi</a></li>
-                                            <li><a href="#">Danh sách yêu thích</a></li>
-                                            <li><a href="#">Bản tin</a></li>
+                                            <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
+                                            <li><a href="{{ route('theme.wishlist') }}">Danh sách yêu thích</a></li>
+                                            {{-- <li><a href="#">Bản tin</a></li> --}}
                                         </ul>
                                     </div>
                                 </div>
@@ -95,11 +95,10 @@
                                     <h6>Chính sách</h6>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="#">Chính sách bán hàng</a></li>
-                                            <li><a href="#">Chính sách giao hàng</a></li>
-                                            <li><a href="#">Chính sách thanh toán</a></li>
-                                            <li><a href="#">Chính sách bảo hành và đổi trả</a></li>
-                                            <li><a href="#">Chính sách tuyển dụng</a></li>
+                                            <li><a href="/chinh-sach-ban-hang">Chính sách bán hàng</a></li>
+                                            <li><a href="/chinh-sach-giao-hang">Chính sách giao hàng</a></li>
+                                            <li><a href="/chinh-sach-thanh-toan">Chính sách thanh toán</a></li>
+                                            <li><a href="/chinh-sach-bao-hanh-va-doi-tra">Chính sách bảo hành và đổi trả</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -171,5 +170,47 @@
         <i class="fa fa-angle-up"></i>
     </a>
     <!-- Scroll To Top End -->
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    
+            $(".consultations-btn").click(function(e) {
+                e.preventDefault();
+    
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var phone = $("#phone").val();
+                var message = $("#message").val();
+    
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('theme.consultations') }}",
+                    data: {
+                        "email": email, 
+                    },
+                    success: function() {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Đã đăng ký nhận bản tin !",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(function () {
+                            location.reload();
+                        });
+                        
+                    },
+                    error: function() {
+                        alert('Thông tin chưa được gửi đi !');
+                    }
+                })
+            });
+        });
+    </script>
 
     
