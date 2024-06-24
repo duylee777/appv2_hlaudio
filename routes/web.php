@@ -117,7 +117,7 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
         Route::post('/delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
     });
     Route::get('/user-comment', function() {
-        return view('admin.test');
+        return view('admin.comment');
     })->name('admin.comnment.index');
 
 });

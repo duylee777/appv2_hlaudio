@@ -32,8 +32,14 @@ Header Area Start
                                         <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
                                         <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
                                         <li><a href="#">Thanh toán</a></li>
+                                        <li>
+                                            <a id="logout_account">Đăng xuất</a>
+                                            <form id="logout_account_form" action="{{ route('logout')}}" method="post" hidden>
+                                                @csrf
+                                            </form>
+                                        </li>
                                     @else
-                                    <li><a href="{{route('theme.login_client')}}">Đăng nhập</a></li>
+                                    <li><a style="text-align: center" href="{{route('theme.login_client')}}">Đăng nhập</a></li>
                                     @endif
                                 </ul>
                             </li>
@@ -406,6 +412,29 @@ window.gtranslateSettings = {
 <script src="https://cdn.gtranslate.net/widgets/latest/ln.js" defer></script>
 <script>
     $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#logout_account').on('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "Bạn có chắc chắn muốn đăng xuất khỏi tài khoản ?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Đăng xuất",
+                cancelButtonText: "Quay lại"
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#logout_account_form').submit();
+                }   
+            });
+        });
+
         $('.alert_login').on("click", function(e) {
             e.preventDefault();
             let url = $(this).data('route');
