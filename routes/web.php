@@ -116,6 +116,9 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
         Route::post('/edit/{id}', [UserController::class, 'update'])->name('admin.user.update');
         Route::post('/delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
     });
+    Route::get('/user-comment', function() {
+        return view('admin.comment');
+    })->name('admin.comnment.index');
 
 });
 Route::middleware('auth')->group(function () {

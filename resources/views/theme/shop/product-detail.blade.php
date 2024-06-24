@@ -175,7 +175,7 @@ Product Details Area Start
                     <ul class="nav flex-column" role="tablist">
                         <li><a class="active" href="#description" role="tab" data-bs-toggle="tab" aria-selected="false">Mô tả</a></li>
                         <li><a href="#sheet" role="tab" data-bs-toggle="tab" aria-selected="false">Thông số kỹ thuật</a></li>
-                        <li><a href="#comments" role="tab" data-bs-toggle="tab" aria-selected="true">Đánh giá</a></li>
+                        <li><a href="#comments" role="tab" data-bs-toggle="tab" aria-selected="true">Bình luận</a></li>
                     </ul>
                 </div>
                 <!-- Product Description Tab End -->
@@ -363,8 +363,9 @@ Product Details Area Start
                                 <div class="product-thumb">
                                     @php
                                         $images = json_decode($relatedProduct->image);
+                                        // var_dump($relatedProduct->slug); die;
                                     @endphp
-                                    <a href="{{route('theme.product_detail', $relatedProduct->category->slug)}}">
+                                    <a href="{{route('theme.product_detail', $relatedProduct->slug)}}">
                                         <img src="{{asset('../storage/products/'.$relatedProduct->code.'/image/'.$images[0])}}" alt="" class="img-fluid">
                                     </a>
                                     <div class="box-label">

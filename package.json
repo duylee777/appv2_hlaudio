@@ -17,6 +17,6 @@
     },
     "dependencies": {
         "jquery": "^3.7.1",
-        "sweetalert2": "^11.10.5"
+        "sweetalert2": "^11.6.13"
     }
 }
