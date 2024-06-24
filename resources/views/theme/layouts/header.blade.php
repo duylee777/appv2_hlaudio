@@ -24,7 +24,11 @@ Header Area Start
                             </li>
                             <li class="settings">
                                 <a class="drop-toggle">
-                                    Tài khoản
+                                    @if (auth()->user())
+                                        {{auth()->user()->name}}
+                                    @else
+                                        Tài khoản
+                                    @endif
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="box-dropdown drop-dropdown">
@@ -309,8 +313,12 @@ Header Area Start
                                         </ul>
                                     </li>
                                     <li class="settings">
-                                        <a href="#" class="drop-toggle">
-                                            Tài khoản
+                                        <a class="drop-toggle">
+                                            @if (auth()->user())
+                                                {{auth()->user()->name}}
+                                            @else
+                                                Tài khoản
+                                            @endif
                                             <i class="fa fa-angle-down"></i>
                                         </a>
                                         <ul class="box-dropdown drop-dropdown">
@@ -318,6 +326,12 @@ Header Area Start
                                                 <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
                                                 <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
                                                 <li><a href="{{ route('theme.checkout') }}">Thanh toán</a></li>
+                                                <li>
+                                                    <a id="logout_account">Đăng xuất</a>
+                                                    <form id="logout_account_form" action="{{ route('logout')}}" method="post" hidden>
+                                                        @csrf
+                                                    </form>
+                                                </li>
                                             @else
                                                 <li><a href="{{ route('theme.login_client') }}">Đăng nhập</a></li>
                                             @endif
