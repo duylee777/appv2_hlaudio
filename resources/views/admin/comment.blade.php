@@ -64,6 +64,10 @@
         margin: 0 3px;
     }
 
+    #pagination li:hover {
+        background-color: #39f;
+    }
+
     #pagination li a {
         text-decoration: none;
         font-weight: 600;
@@ -150,7 +154,7 @@
                             <th scope="col" class="px-4 py-3">Ngày viết</th>
                             <th scope="col" class="px-4 py-3">Ngày sửa</th>
                             <th scope="col" class="px-4 py-3" colspan="2">
-                                <span ">Hành động</span>
+                                <span>Hành động</span>
                             </th>
                         </tr>
                     </thead>
@@ -247,22 +251,7 @@
                         <i class="fa fa-angle-left"></i>
                         </button>
                         <div id="pagination"> 
-                            {{-- <li class="pg-item active" data-page="1">
-                                <a class="pg-link" href="#">1</a>
-                            </li> <li class="pg-item " data-page="2">
-                                <a class="pg-link" href="#">2</a>
-                            </li> <li class="pg-item " data-page="3">
-                                <a class="pg-link" href="#">3</a>
-                            </li> <li class="pg-item " data-page="4">
-                                <a class="pg-link" href="#">4</a>
-                            </li> <li class="pg-item " data-page="5">
-                                <a class="pg-link" href="#">5</a>
-                            </li><li class="pg-item">
-                                <a class="pg-link">...</a>
-                            </li> 
-                            <li class="pg-item " data-page="10">
-                                <a class="pg-link" href="#">10</a>
-                            </li> --}}
+                            <!-- <li class="pg-item active" data-page="1"> -->
                         </div>
                         <button class="next-page">
                             <i class="fa fa-angle-right"></i>
@@ -277,8 +266,11 @@
         </div>
     </div>
 </section>
+
+
 <script>
     let row = document.querySelectorAll('.comment-item');
+    let rowSearch = document.querySelectorAll('.comment-item.search');
     let searchInput = document.getElementById('comment-search');
 
     let title = document.querySelectorAll('.cmt-title');
@@ -289,7 +281,6 @@
     searchInput.addEventListener('keyup', function(e) {
         e.preventDefault();
         let filter = this.value.toLowerCase();
-        console.log(filter);
         for(let i=0; i<row.length; i++) {
             let txtTitle = title[i].innerHTML;
             let txtType = type[i].innerHTML;
@@ -302,99 +293,135 @@
             ||txtBody.toLowerCase().indexOf(filter) > -1 
             ||txtReply.toLowerCase().indexOf(filter) > -1 ) {
                 row[i].classList.remove('hidden');
+                row[i].classList.add('search');
             } 
             else {
                 row[i].classList.add('hidden');
+                row[i].classList.remove('search');
             }
+            if (filter == '') {
+                row[i].classList.remove('search');
+            }
+        }
+        
+        rowSearch = document.querySelectorAll('.comment-item.search');
+        if (rowSearch.length != 0) {
+            let countPageSearch = Math.ceil(rowSearch.length/itemPerPage);
+            valuePage.totalPages = countPageSearch;
+            rowSearch.forEach(function (item, i) {
+                if (i>=itemPerPage) {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+        else{
+            if (filter != '') {
+                valuePage.totalPages = 0;
+            }
+            else{
+                valuePage.totalPages = countPage;
+                row.forEach(function (item, i) {
+                    if (i>=itemPerPage) {
+                        item.classList.add('hidden');
+                    }
+                });
+            }
+        }
+        
+        console.log(valuePage);
+        pagination(valuePage);
+        handleButtonLeft();
+        handleButtonRight();
+
+    });
+
+    //pagination
+    let itemPerPage = 3; // item per page
+    let countPage = Math.ceil(row.length/itemPerPage);
+    let pg = document.getElementById("pagination");
+    let pages = document.getElementById("pages");
+    let btnNextPg = document.querySelector("button.next-page");
+    let btnPrevPg = document.querySelector("button.prev-page");
+    let btnFirstPg = document.querySelector("button.first-page");
+    let btnLastPg = document.querySelector("button.last-page");
+
+    row.forEach(function (item, i) {
+        if (i>=itemPerPage) {
+            item.classList.add('hidden');
         }
     });
 
-
-    //pagination
-    var pg = document.getElementById("pagination");
-    var pages = document.getElementById("pages");
-    var curPage = document.getElementById("curpage");
-    var numLinksTwoSide = document.getElementById("delta");
-    var checks = document.querySelectorAll(".check");
-    var btnNextPg = document.querySelector("button.next-page");
-    var btnPrevPg = document.querySelector("button.prev-page");
-    var btnFirstPg = document.querySelector("button.first-page");
-    var btnLastPg = document.querySelector("button.last-page");
     // when page load
     // curPage.setAttribute('max', pages.value);
-    var valuePage = {
+    let valuePage = {
         truncate: true,
         curPage: 1,
         numLinksTwoSide: 1,
-        totalPages: 10
+        totalPages: countPage
     };
     pagination();
     pg.onclick = function(e) {
-        var ele = e.target;
+        let ele = e.target;
         if (ele.dataset.page) {
-            var pageNumber = parseInt(e.target.dataset.page, 10);
+            let pageNumber = parseInt(e.target.dataset.page, 10);
             valuePage.curPage = pageNumber;
-            curPage.value = pageNumber;
+
+
             pagination(valuePage);
             handleButtonLeft();
             handleButtonRight();
         }
     };
-    pages.onchange = function() {
-        valuePage.totalPages = parseInt(pages.value, 10);
-        handleCheckTruncate();
-        handleCurPage();
-        pagination();
-        handleButtonLeft();
-        handleButtonRight();
-    };
-    curPage.onchange = function() {
-        handleCurPage();
-        pagination();
-        handleButtonLeft();
-        handleButtonRight();
-    };
-    numLinksTwoSide.onchange = function() {
-        if (this.value > 5) {
-            this.value = 1;
-            valuePage.numLinksTwoSide = 1;
-        } else {
-            valuePage.numLinksTwoSide = parseInt(this.value, 10);
+
+    document.querySelector(".page-container").onclick = function(e) {
+        handleButton(e.target);
+        
+        let pageNumber = document.getElementsByClassName("pg-item active")[0].dataset.page;
+        let temp = row;
+        console.log(row.length);
+        if (rowSearch.length != 0) {
+            temp = rowSearch;
         }
-        pagination();
+        console.log(row.length);
+        temp.forEach(function (item, i) {
+            if (i>=itemPerPage*pageNumber - itemPerPage && i < itemPerPage*pageNumber) {
+                item.classList.remove('hidden');
+            }
+            else{
+                item.classList.add('hidden');
+            }
+        });
     };
-    checks.forEach(function(check) {
-        check.onclick = function(e) {
-            console.log(e.target);
-            handleCheckTruncate();
-            pagination();
-        }
-        ;
-    });
 
     // DYNAMIC PAGINATION
     function pagination() {
-        var _loopIt = 0;
-        var totalPages = valuePage.totalPages
+        let _loopIt = 0;
+        let totalPages = valuePage.totalPages
           , curPage = valuePage.curPage
           , truncate = valuePage.truncate
           , delta = valuePage.numLinksTwoSide;
-        var range = delta + 4;
+        let range = delta + 4;
         // use for handle visible number of links left side
-
-        var render = "";
-        var renderTwoSide = "";
-        var dot = "<li class=\"pg-item\"><a class=\"pg-link\">...</a></li>";
-        var countTruncate = 0;
+        let render = "";
+        let renderTwoSide = "";
+        let dot = "<li class=\"pg-item\"><a class=\"pg-link\">...</a></li>";
+        let countTruncate = 0;
         // use for ellipsis - truncate left side or right side
-
+        
         // use for truncate two side
-        var numberTruncateLeft = curPage - delta;
-        var numberTruncateRight = curPage + delta;
-        var active = "";
-        for (var pos = 1; pos <= totalPages; pos++) {
+        let numberTruncateLeft = curPage - delta;
+        let numberTruncateRight = curPage + delta;
+        let active = "";
+
+        if (totalPages <= 1) {
+            document.getElementsByClassName("paginate-comment")[0].style.display = 'none';
+        } else {
+            document.getElementsByClassName("paginate-comment")[0].style.display = 'flex';
+        }
+
+        for (let pos = 1; pos <= totalPages; pos++) {
             if (_loopIt++ > 10001) {
-                var csb_global = typeof window === 'undefined' ? self : window;
+                let csb_global = typeof window === 'undefined' ? self : window;
                 csb_global.infiniteLoopError = new RangeError('Potential infinite loop: exceeded ' + 10001 + ' iterations. You can disable this check by creating a sandbox.config.json file.');
                 throw csb_global.infiniteLoopError;
             }
@@ -428,9 +455,10 @@
         } else {
             pg.innerHTML = render;
         }
+        
     }
     function renderPage(index) {
-        var active = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+        let active = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
         return " <li class=\"pg-item ".concat(active, "\" data-page=\"").concat(index, "\">\n        <a class=\"pg-link\" href=\"#\">").concat(index, "</a>\n    </li>");
     }
     function handleCurPage() {
@@ -442,12 +470,12 @@
         }
     }
     function handleCheckTruncate() {
-        var truncate = document.querySelector("input[type=radio]:checked");
+        let truncate = document.querySelector("input[type=radio]:checked");
         if (truncate.id === "enable") {
             valuePage.truncate = true;
         } else {
             if (pages.value > 1000) {
-                var isTruncate = confirm("Are you sure you want to render all the links? number of pages: ".concat(pages.value));
+                let isTruncate = confirm("Are you sure you want to render all the links? number of pages: ".concat(pages.value));
                 // true => disable truncate
                 if (isTruncate) {
                     valuePage.truncate = false;
@@ -461,10 +489,6 @@
             }
         }
     }
-    document.querySelector(".page-container").onclick = function(e) {
-        handleButton(e.target);
-    }
-    ;
     function handleButton(element) {
         if (element.classList.contains("first-page")) {
             valuePage.curPage = 1;
@@ -502,7 +526,8 @@
             btnLastPg.disabled = false;
         }
     }
-
+    
+    // ajax
     $(document).ready(function() {
         $.ajaxSetup({
             headers: {
