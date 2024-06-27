@@ -69,6 +69,8 @@ class ClientController extends Controller
         $contact = [
             "name" => $request->name,
             "email" => $request->email,
+            "phone" => $request->phone,
+            "message" => $request->message,
             "status" => config('global.contact_status.new'),
         ];
         Contact::create($contact);
@@ -341,7 +343,6 @@ class ClientController extends Controller
             "status" => config('global.contact_status.new'),
         ];
         Consultations::create($consultations);
-        
         return response()->json();
     }
 }
