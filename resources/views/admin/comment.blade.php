@@ -328,8 +328,7 @@
             }
         }
         
-        console.log(valuePage);
-        pagination(valuePage);
+        pagination();
         handleButtonLeft();
         handleButtonRight();
 
