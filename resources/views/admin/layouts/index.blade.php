@@ -32,8 +32,9 @@
     @include('admin.layouts.footer')
 </footer>    
 </body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+{{-- <script src="./node_modules/flowbite/dist/flowbite.min.js"></script> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.4.1/flowbite.min.js"></script> --}}
 <script src="{{asset('../assets/admin/jquery-ui-1.13.2/jquery-ui.min.js')}}"></script>
 <!-- <script src="{{asset('../admin/ckeditor/ckeditor.js')}}"></script> -->
 <script>
