@@ -35,7 +35,7 @@ Header Area Start
                                     @if(auth()->user())
                                         <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
                                         <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
-                                        <li><a href="#">Thanh toán</a></li>
+                                        <li><a href="{{ route('theme.show_cart')}}">Thanh toán</a></li>
                                         <li>
                                             <a id="logout_account">Đăng xuất</a>
                                             <form id="logout_account_form" action="{{ route('logout')}}" method="post" hidden>
@@ -137,26 +137,14 @@ Header Area Start
                                                 <span class="product-name">
                                                 <a href="{{route('theme.product_detail', $product->slug)}}">{{ $product->name }}</a>
                                             </span>
-                                                <span class="product-price">{{ $product->odd_price }} VND</span>
+                                                <span class="product-price">{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</span>
                                                 {{-- <span class="product-size">Size:  S</span> --}}
                                             </div>
                                         </li>
                                         @endforeach
                                         <li>
-                                            <span class="subtotal-text">Tổng phụ</span>
-                                            <span class="subtotal-price">{{ $cart->total_price }}</span>
-                                        </li>
-                                        <li>
-                                            <span class="subtotal-text">Phí vận chuyển</span>
-                                            <span class="subtotal-price">20000</span>
-                                        </li>
-                                        <li>
-                                            <span class="subtotal-text">Thuế (10%)</span>
-                                            <span class="subtotal-price">20000</span>
-                                        </li>
-                                        <li>
                                             <span class="subtotal-text">Tổng tiền (VND)</span>
-                                            <span class="subtotal-price">{{ $cart->total_price }}</span>
+                                            <span class="subtotal-price">{{ Illuminate\Support\Number::currency($cart->total_price, in: 'VND', locale: 'vi') }}</span>
                                         </li>
                                     </ul>
                                     <div class="checkout-cart">
