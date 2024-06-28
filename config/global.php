@@ -87,5 +87,12 @@
             'read' => 'Đã đọc',
         ],
 
+        
+        'consultation_status' => [
+            'new' => 'Mới',
+            'unread' => 'Chưa đọc',
+            'read' => 'Đã đọc',
+        ],
+
     ];
 ?>

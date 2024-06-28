@@ -5757,40 +5757,6 @@ ul.category-mega li.cat-mega-title ul li:hover a {
   color: #555555;
 }
 
-/* search comment */
-.page-container button {
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-}
-
-.page-container button:disabled i {
-  color: #aaadc7;
-}
-
-.page-container button {
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-}
-
-#pagination {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-#pagination li {
-  list-style: none;
-  cursor: pointer;
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 0 3px;
-}
-
-#pagination li.active {
-  background-color: #39f;
-}
 
 
 /*======================================

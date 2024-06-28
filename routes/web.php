@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ConsultationController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\WishlistController;
@@ -109,6 +110,9 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
     Route::resource('/agency', AgencyController::class);
     Route::get('/contact', [ContactController::class, 'index'])->name('admin.contact');
     Route::post('/contact', [ContactController::class, 'update'])->name('admin.contact.update');
+    Route::get('/consultation', [ConsultationController::class, 'index'])->name('admin.consultation');
+    Route::post('/consultation', [ConsultationController::class, 'update'])->name('admin.consultation.update');
+    Route::post('/consultation/{id}', [ConsultationController::class, 'destroy'])->name('admin.consultation.destroy');
     Route::prefix('/excel')->group(function() {
         Route::post('/import-products', [ExcelController::class, 'importProducts'])->name('admin.excel.import-products');
         Route::get('/export-products', [ExcelController::class, 'exportProducts'])->name('admin.excel.export-products');
