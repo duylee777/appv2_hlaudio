@@ -18,7 +18,7 @@
                     <div class="col-lg-6 col-12">
                         <div class="newsletter-box">
                             <form id="mc-form" class="mc-form">
-                                <input type="email" id="consultations-email" class="email-box" placeholder="nhập địa chỉ email của bạn" name="consultations-email">
+                                <input id="emailSub" class="email-box" placeholder="nhập địa chỉ email của bạn" name="consultations-email">
                                 <button id="mc-submit" class="newsletter-btn consultations-btn" type="button">Đăng ký</button>
                             </form>
                             <!-- mailchimp-alerts Start -->
@@ -179,31 +179,38 @@
                 }
             });
     
-            $(".consultations-btn").click(function(e) {
+            $("#mc-form").on ("submit", function(e) {
                 e.preventDefault();
-
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('theme.consultations') }}",
-                    data: {
-                        "email":  $("#consultations-email").val(), 
-                    },
-                    success: function() {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Đã đăng ký nhận bản tin !",
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(function () {
-                            location.reload();
-                        });
-                        
-                    },
-                    error: function() {
-                        alert('Thông tin chưa được gửi đi !');
-                    }
-                })
+    
+                let email = $.trim($("#emailSub").val());
+                let checkDone = $('.mailchimp-success.text-success').is(':empty');
+                console.log(checkDone);
+                if (email.includes('@') && email.includes('.') && !email.includes(' ')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('theme.consultations') }}",
+                        data: {
+                            "email": email, 
+                        },
+                        success: function() {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Đã đăng ký nhận bản tin !",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                $("#emailSub").val('');
+                            });
+                            
+                        },
+                        error: function() {
+                            alert('Thông tin chưa được gửi đi !');
+                        }
+                    });
+                } else{
+                    alert('Định dạng mail chưa đúng!');
+                }
             });
         });
     </script>
