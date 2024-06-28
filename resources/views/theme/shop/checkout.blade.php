@@ -1,35 +1,16 @@
-@extends('theme.layouts.index')
+@extends('theme.layouts.page')
 @section('title','Thanh toán')
-@section('content')
-
-<!--=====================
-Breadcrumb Aera Start
-=========================-->
-<div class="breadcrumbs_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="breadcrumb_content">
-                    <ul>
-                        <li>
-                            <h1><a href="index.html">Home</a></h1>
-                        </li>
-                        <li>Checkout</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--=====================
-Breadcrumb Aera End
-=========================-->
+@section('category-url', '')
+@section('category-name', '')
+@section('page-name', 'Thanh toán')
+@section('page-content')
 
 <!--======================
 Checkout area Start
 ==========================-->
 <div class="checkout-area mt-50">
     <div class="container">
+        <!--
         <div class="row">
             <div class="col-12">
                 <div class="user-actions">
@@ -83,268 +64,112 @@ Checkout area Start
                 </div>
             </div>
         </div>
+        -->
         <div class="row">
             <div class="col-lg-6 col-md-6">
-                <form class="form-row row">
+                <div class="form-row row">
                     <div class="col-lg-12">
-                        <h5 class="form-head">Billing Details</h5>
-                    </div>
-                    <div class="form_group col-12 col-md-6 col-lg-6">
-                        <label class="form-label">First Name <span>*</span></label>
-                        <input class="input-form" type="text">
-                    </div>
-                    <div class="form_group col-12 col-md-6 col-lg-6">
-                        <label class="form-label">Last Name <span>*</span></label>
-                        <input class="input-form" type="text">
+                        <h5 class="form-head">Thông tin người nhận hàng</h5>
                     </div>
                     <div class="form_group col-12">
-                        <label class="form-label">Company Name <span>*</span></label>
-                        <input class="input-form" type="text">
-                    </div>
-                    <div class="form_group col-12">
-                        <label class="form-label" for="state">Country <span>*</span></label>
-                        <select class="niceselect-option nice-select select-option" name="country" id="state">
-                            <option value="2">Bangladesh</option>
-                            <option value="3">Algeria</option>
-                            <option value="4">Afghanistan</option>
-                            <option value="5">Ghana</option>
-                            <option value="6">Albania</option>
-                            <option value="7">Bahrain</option>
-                            <option value="8">Colombia</option>
-                            <option value="9">Dominican Republic</option>
-                        </select>
-                    </div>
-                    <div class="form_group col-12">
-                        <label class="form-label">Street Address <span>*</span></label>
-                        <input placeholder="House number and street name" class="input-form" type="text">
-                    </div>
-                    <div class="form_group col-12">
-                        <input placeholder="Apartment, suite, unit etc. (optional)" class="input-form" type="text">
-                    </div>
-                    <div class="form_group col-12">
-                        <label class="form-label">Town / City <span>*</span></label>
-                        <input class="input-form" type="text">
-                    </div>
-                    <div class="form_group col-12">
-                        <label class="form-label">State / County <span>*</span></label>
-                        <input class="input-form" type="text">
+                        <label class="form-label">Tên người nhận <span>*</span></label>
+                        <input class="input-form" type="text" name="delivery_name">
                     </div>
                     <div class="form_group col-12 col-md-6">
-                        <label class="form-label">Phone <span>*</span></label>
-                        <input class="input-form" type="text">
+                        <label class="form-label">Số điện thoại <span>*</span></label>
+                        <input class="input-form" type="text" name="delivery_phone">
                     </div>
                     <div class="form_group col-12 col-md-6">
-                        <label class="form-label">Email Address <span>*</span></label>
-                        <input class="input-form" type="text">
+                        <label class="form-label">Email <span>*</span></label>
+                        <input class="input-form" type="text"  name="delivery_email">
                     </div>
-                </form>
-                <div class="form-row">
-                    <div class="form-group col-12">
-                        <div class="form-check">
-                            <div class="custom-checkbox" data-bs-toggle="collapse" data-bs-target="#checkout-check" role="checkbox" aria-checked="false">
-                                <input class="form-check-input" type="checkbox" id="create_account">
-                                <span class="checkmark"></span>
-                                <label class="form-check-label" for="create_account">Create an account?</label>
-                            </div>
-                        </div>
-                        <div class="collapse" id="checkout-check">
-                            <div class="checkout_info">
-                                <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                                <form class="form-row" action="#">
-                                    <div class="form_group col-12">
-                                        <label class="form-label">Account Password <span>*</span></label>
-                                        <input class="input-form" type="text">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-12 col-md-12">
-                        <div class="form-check">
-                            <div class="custom-checkbox" data-bs-toggle="collapse" data-bs-target="#checkout-logs" role="checkbox" aria-checked="false">
-                                <input class="form-check-input" type="checkbox" id="ship-address">
-                                <span class="checkmark"></span>
-                                <label class="form-check-label" for="ship-address">Ship to a different address?</label>
-                            </div>
-                        </div>
-                        <div class="ship-box-info collapse" id="checkout-logs">
-                            <form class="form-row">
-                                <div class="form_group col-12 col-md-6">
-                                    <label class="form-label">First Name <span>*</span></label>
-                                    <input class="input-form" type="text">
-                                </div>
-                                <div class="form_group col-12 col-md-6">
-                                    <label class="form-label">Last Name <span>*</span></label>
-                                    <input class="input-form" type="text">
-                                </div>
-                                <div class="form_group col-12 col-md-6">
-                                    <label class="form-label">Company Name <span>*</span></label>
-                                    <input class="input-form" type="text">
-                                </div>
-                                <div class="form_group col-12 col-md-6">
-                                    <label class="form-label">Email Address <span>*</span></label>
-                                    <input class="input-form" type="text">
-                                </div>
-                                <div class="form_group col-12">
-                                    <label class="form-label" for="country">Country <span>*</span></label>
-                                    <select class="niceselect-option nice-select select-option" name="country" id="country">
-                                        <option value="2">Bangladesh</option>
-                                        <option value="3">Algeria</option>
-                                        <option value="4">Afghanistan</option>
-                                        <option value="5">Ghana</option>
-                                        <option value="6">Albania</option>
-                                        <option value="7">Bahrain</option>
-                                        <option value="8">Colombia</option>
-                                        <option value="9">Dominican Republic</option>
-                                    </select>
-                                </div>
-                                <div class="form_group col-12">
-                                    <label class="form-label">Street Address <span>*</span></label>
-                                    <input class="input-form" type="text">
-                                </div>
-                                <div class="form_group col-12">
-                                    <label class="form-label">Apartment/ suite, unit etc. (optional)</label>
-                                    <input class="input-form" type="text">
-                                </div>
-                                <div class="form_group col-12">
-                                    <label class="form-label">Town / City <span>*</span></label>
-                                    <input class="input-form" type="text">
-                                </div>
-                                <div class="form_group col-12">
-                                    <label class="form-label">Zip Code <span>*</span></label>
-                                    <input class="input-form" type="text">
-                                </div>
-                                <div class="form_group col-12">
-                                    <label class="form-label">Province <span>*</span></label>
-                                    <input class="input-form" type="text">
-                                </div>
-                            </form>
-                        </div>
+                    <div class="form_group col-12">
+                        <label class="form-label">Địa chỉ <span>*</span></label>
+                        <input class="input-form" type="text" name="delivery_address">
                     </div>
                 </div>
                 <div class="form-row mt-20 mb-15">
                     <div class="form_group mb-0 col-12">
-                        <label class="form-label" for="order-note">Order Notes <span>*</span></label>
-                        <textarea class="form-textarea" id="order-note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                        <label class="form-label" for="order-note">Chú thích <span>*</span></label>
+                        <textarea class="form-textarea" name="note" id="order-note" placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt để giao hàng."></textarea>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
-                <form class="form-row">
+                <div class="form-row">
                     <div class="col-lg-12">
-                        <h5 class="form-head rs-padding">Your Order</h5>
+                        <h5 class="form-head rs-padding">Đơn hàng của bạn</h5>
                     </div>
                     <div class="col-lg-12">
                         <div class="order_table table-responsive">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Total</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td> DSLR Cameras <strong> × 2</strong></td>
-
-
-
-                                        <td> $165.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td> Lense Camera <strong> × 2</strong></td>
-                                        <td> $50.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td> Digital Cameras <strong> × 2</strong></td>
-                                        <td> $50.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td> Mirrorless Cameras <strong> × 1</strong></td>
-                                        <td> $50.00</td>
-                                    </tr>
+                                    @if(auth()->check())
+                                        @php
+                                            $cart = App\Models\Cart::where('user_id', auth()->user()->id)->first();
+                                            $items = App\Models\CartItem::where('session_id', $cart->id)->get();
+                                        @endphp
+                                        @foreach($items as $item)
+                                            @php
+                                                $product = App\Models\Product::where('id', $item->product_id)->first();
+                                                $images = json_decode($product->image);
+                                            @endphp
+                                            <tr>
+                                                <input name="product-id" value="{{ $product->id }}" hidden multiple></input>
+                                                <td>{{ $product->name }}</td>
+                                                <td>{{$item->quantity}}</td>  
+                                                <td>
+                                                    @php
+                                                        $count = (double)($item->quantity) * $product->odd_price;
+                                                    @endphp
+                                                    {{ Illuminate\Support\Number::currency($count, in: 'VND', locale: 'vi') }}
+                                                </td>
+                                            </tr>   
+                                        @endforeach
+                                    @endif
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Cart Subtotal</th>
-                                        <td>$215.00</td>
+                                        <th>Tổng sản phẩm</th>
+                                        <td></td>
+                                        <td>{{ Illuminate\Support\Number::currency($cart->total_price, in: 'VND', locale: 'vi') }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Shipping</th>
-                                        <td><strong>$5.00</strong></td>
+                                        <th>Phí vận chuyển</th>
+                                        <td></td>
+                                        <td>{{ Illuminate\Support\Number::currency(50000, in: 'VND', locale: 'vi') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Thuế(10%)</th>
+                                        <td></td>
+                                        <td>
+                                            @php
+                                                $tax = $cart->total_price * 0.1;
+                                            @endphp
+                                            {{ Illuminate\Support\Number::currency($tax, in: 'VND', locale: 'vi') }}
+                                        </td>
                                     </tr>
                                     <tr class="order_total">
-                                        <th>Order Total</th>
-                                        <td><strong>$220.00</strong></td>
+                                        <th colspan="2">Tổng hóa đơn</th>
+                                        <td>
+                                            @php
+                                                $total = $cart->total_price + $tax + 50000;
+                                            @endphp
+                                            <strong>
+                                               <input type="number" name="total_price" value="{{$total}}" hidden>
+                                               {{ Illuminate\Support\Number::currency($total, in: 'VND', locale: 'vi') }}
+                                            </strong>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
-                        </div>
-                    </div>
-                </form>
-                <div class="form-row">
-                    <div class="form-group col-12">
-                        <div class="form-check">
-                            <div class="custom-checkbox" data-bs-toggle="collapse" data-bs-target="#checkout-check-2" role="checkbox" aria-checked="false">
-                                <input class="form-check-input" type="checkbox" id="create_account-2">
-                                <span class="checkmark"></span>
-                                <label class="form-check-label" for="create_account-2">Create an account</label>
-                            </div>
-                        </div>
-                        <div class="collapse" id="checkout-check-2">
-                            <div class="mt-10">
-                                <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-12">
-                        <div class="form-check">
-                            <div class="custom-checkbox" data-bs-toggle="collapse" data-bs-target="#bank-money" role="checkbox" aria-checked="false">
-                                <input class="form-check-input" type="checkbox" id="bank_check">
-                                <span class="checkmark"></span>
-                                <label class="form-check-label" for="bank_check">Check Payments</label>
-                            </div>
-                        </div>
-                        <div class="collapse" id="bank-money">
-                            <div class="mt-10">
-                                <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-12">
-                        <div class="form-check">
-                            <div class="custom-checkbox" data-bs-toggle="collapse" data-bs-target="#cash-money" role="checkbox" aria-checked="false">
-                                <input class="form-check-input" type="checkbox" id="bank_cash">
-                                <span class="checkmark"></span>
-                                <label class="form-check-label" for="bank_cash">Cash on Delivery</label>
-                            </div>
-                        </div>
-                        <div class="collapse" id="cash-money">
-                            <div class="mt-10">
-                                <p>Pay with cash upon delivery. </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-12">
-                        <div class="form-check">
-                            <div class="custom-checkbox" data-bs-toggle="collapse" data-bs-target="#bank-check" role="checkbox" aria-checked="false">
-                                <input class="form-check-input" type="checkbox" id="bank_account">
-                                <span class="checkmark"></span>
-                                <label class="form-check-label" for="bank_account">PayPal Express Checkout</label>
-                            </div>
-                        </div>
-                        <div class="collapse" id="bank-check">
-                            <div class="mt-10">
-                                <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account. </p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -354,13 +179,13 @@ Checkout area Start
                             <div class="custom-checkbox">
                                 <input class="form-check-input" type="checkbox" id="agree-condition">
                                 <span class="checkmark"></span>
-                                <label class="form-check-label" for="agree-condition">I agree to the <a href="#">terms of service</a> and will adhere to them unconditionally.</label>
+                                <label class="form-check-label" for="agree-condition"> Tôi đồng ý với <a href="#">các điều khoản dịch vụ</a> và sẽ tuân thủ chúng vô điều kiện.</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-row justify-content-end mt-20 mb-20">
-                    <input type="submit" class="btn-secondary" value="Continue to Payment">
+                    <button id="order_btn" type="button" class="btn-secondary">Đặt hàng</button>
                 </div>
             </div>
         </div>
@@ -369,6 +194,20 @@ Checkout area Start
 <!--======================
 Checkout area End
 ==========================-->
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
+        $('#order_btn').on('click', function(e) {
+            e.preventDefault();
+            alert('hello !');
+        });
+        
+    });
+</script>
 @endsection
 

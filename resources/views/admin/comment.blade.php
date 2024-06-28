@@ -328,7 +328,6 @@
             }
         }
         
-        console.log(valuePage);
         pagination();
         handleButtonLeft();
         handleButtonRight();
