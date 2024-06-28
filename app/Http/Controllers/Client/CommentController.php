@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 use App\Models\Comment;
 use App\Models\Product;
+use Spatie\Searchable\ModelSearchAspect;
 
 class CommentController extends Controller
 {
+    public function getAllComment(){
+        $comments = Comment::orderBy('created_at', 'DESC')->get();
+        return view('admin.comment', compact('comments'));
+    }
+
     public function store(Request $request, $post_id, $comment_id, $is_post)
     {
         $newComment = [
@@ -35,7 +41,13 @@ class CommentController extends Controller
     public function hideComment($id)
     {
         $comment = Comment::find($id);
-        $comment->status = 0;
+        
+        if ($comment->status) {
+            $comment->status = false;
+        }
+        else{
+            $comment->status = true;
+        }
         $comment->save();
         return response('Xóa thành công', 200);
     }
