@@ -18,7 +18,7 @@
                     <div class="col-lg-6 col-12">
                         <div class="newsletter-box">
                             <form id="mc-form" class="mc-form">
-                                <input id="emailSub" name="emailSub" class="email-box" placeholder="nhập địa chỉ email của bạn">
+                                <input id="emailSub" name="emailSub" class="email-box" placeholder="Nhập địa chỉ email của bạn">
                                 <button id="mc-submit" class="newsletter-btn consultations-btn" type="submit">Đăng ký</button>
                             </form>
                         </div>
