@@ -40,6 +40,15 @@
 	$('.drop-dropdown').on('click', function(e) {
 		e.stopPropagation();
 	});
+	
+	$(document).click(function(e) {
+		var dropdown = $(".drop-dropdown");
+		var toggleX = $('.drop-toggle');
+		if (!dropdown.is(e.target) && dropdown.has(e.target).length === 0 && !toggleX.is(e.target) && toggleX.has(e.target).length === 0)
+		{
+			dropdown.slideUp();
+		}
+	  });
 
 	// Nice Select
 	$('.select-option').niceSelect()
