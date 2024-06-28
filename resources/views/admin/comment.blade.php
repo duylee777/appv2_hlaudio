@@ -6,7 +6,7 @@
     /* search comment */
     .paginate-comment{
         width: 100%;
-        justify-content: center;
+        justify-content: right;
         display: flex;
     }
 
@@ -327,7 +327,7 @@
                 });
             }
         }
-        
+
         pagination();
         handleButtonLeft();
         handleButtonRight();
@@ -335,7 +335,7 @@
     });
 
     //pagination
-    let itemPerPage = 3; // item per page
+    let itemPerPage = 20; // item per page
     let countPage = Math.ceil(row.length/itemPerPage);
     let pg = document.getElementById("pagination");
     let pages = document.getElementById("pages");

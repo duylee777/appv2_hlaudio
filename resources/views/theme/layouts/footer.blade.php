@@ -18,15 +18,9 @@
                     <div class="col-lg-6 col-12">
                         <div class="newsletter-box">
                             <form id="mc-form" class="mc-form">
-                                <input id="emailSub" class="email-box" placeholder="nhập địa chỉ email của bạn" name="consultations-email">
-                                <button id="mc-submit" class="newsletter-btn consultations-btn" type="button">Đăng ký</button>
+                                <input id="emailSub" name="emailSub" class="email-box" placeholder="Nhập địa chỉ email của bạn">
+                                <button id="mc-submit" class="newsletter-btn consultations-btn" type="submit">Đăng ký</button>
                             </form>
-                            <!-- mailchimp-alerts Start -->
-                            <div class="mailchimp-alerts text-centre">
-                                <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
-                                <div class="mailchimp-success text-success"></div><!-- mailchimp-success end -->
-                                <div class="mailchimp-error text-danger"></div><!-- mailchimp-error end -->
-                            </div><!-- mailchimp-alerts end -->
                         </div>
                     </div>
                 </div>
