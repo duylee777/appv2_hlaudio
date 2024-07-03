@@ -243,10 +243,6 @@ class ClientController extends Controller
         return view('theme.project.project-detail', compact('project', 'tagByProjects', 'tags', 'recentProjects'));
     }
 
-    public function checkout() {
-        return view('theme.shop.checkout');
-    }
-
     public function faq() {
         return view('theme.faq');
     }

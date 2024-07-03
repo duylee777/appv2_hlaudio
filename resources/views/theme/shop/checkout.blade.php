@@ -65,7 +65,7 @@ Checkout area Start
             </div>
         </div>
         -->
-        <div class="row">
+        <form class="row">
             <div class="col-lg-6 col-md-6">
                 <div class="form-row row">
                     <div class="col-lg-12">
@@ -73,25 +73,29 @@ Checkout area Start
                     </div>
                     <div class="form_group col-12">
                         <label class="form-label">Tên người nhận <span>*</span></label>
-                        <input class="input-form" type="text" name="delivery_name">
+                        <input class="input-form" type="text" name="delivery_name" id="delivery_name" placeholder="vd: Nguyễn Văn An">
+                        <span class="err err-name" style="color: red; font-size: 0.875rem;">Tên người nhận không được để trống !</span>
                     </div>
                     <div class="form_group col-12 col-md-6">
                         <label class="form-label">Số điện thoại <span>*</span></label>
-                        <input class="input-form" type="text" name="delivery_phone">
+                        <input class="input-form" type="text" name="delivery_phone" id="delivery_phone" placeholder="vd: 0999888777">
+                        <span class="err err-phone" style="color: red; font-size: 0.875rem;">Số điện thoại không được để trống, tối đa 10 chữ số, không bao gồm chữ và kí tự đặc biệt</span>
                     </div>
                     <div class="form_group col-12 col-md-6">
                         <label class="form-label">Email <span>*</span></label>
-                        <input class="input-form" type="text"  name="delivery_email">
+                        <input class="input-form" type="text" name="delivery_email" id="delivery_email" placeholder="vd: khachhang@gmail.com">
+                        <span class="err err-email" style="color: red; font-size: 0.875rem;">Email không được để trống và phải đúng định dạng (phải có @)</span>
                     </div>
                     <div class="form_group col-12">
                         <label class="form-label">Địa chỉ <span>*</span></label>
-                        <input class="input-form" type="text" name="delivery_address">
+                        <input class="input-form" type="text" name="delivery_address" id="delivery_address" placeholder="vd: Số nhà X, đường Y, phường Z, Hà Nội">
+                        <span class="err err-address" style="color: red; font-size: 0.875rem;">Địa chỉ nhận hàng không được để trống !</span>
                     </div>
                 </div>
                 <div class="form-row mt-20 mb-15">
                     <div class="form_group mb-0 col-12">
-                        <label class="form-label" for="order-note">Chú thích <span>*</span></label>
-                        <textarea class="form-textarea" name="note" id="order-note" placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt để giao hàng."></textarea>
+                        <label class="form-label" for="order-note">Chú thích</label>
+                        <textarea class="form-textarea" name="note" id="order_note" placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt để giao hàng."></textarea>
                     </div>
                 </div>
             </div>
@@ -122,7 +126,7 @@ Checkout area Start
                                                 $images = json_decode($product->image);
                                             @endphp
                                             <tr>
-                                                <input name="product-id" value="{{ $product->id }}" hidden multiple></input>
+                                                <span class="product-info" data-id="{{ $product->id }}" data-quantity="{{ $item->quantity }}" hidden></span>
                                                 <td>{{ $product->name }}</td>
                                                 <td>{{$item->quantity}}</td>  
                                                 <td>
@@ -163,7 +167,7 @@ Checkout area Start
                                                 $total = $cart->total_price + $tax + 50000;
                                             @endphp
                                             <strong>
-                                               <input type="number" name="total_price" value="{{$total}}" hidden>
+                                               <input type="number" id="total_price" name="total_price" value="{{$total}}" hidden>
                                                {{ Illuminate\Support\Number::currency($total, in: 'VND', locale: 'vi') }}
                                             </strong>
                                         </td>
@@ -173,7 +177,7 @@ Checkout area Start
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
+                {{-- <div class="form-row">
                     <div class="form-group col-12">
                         <div class="form-check">
                             <div class="custom-checkbox">
@@ -183,9 +187,9 @@ Checkout area Start
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-row justify-content-end mt-20 mb-20">
-                    <button id="order_btn" type="button" class="btn-secondary">Đặt hàng</button>
+                    <button id="order_btn" type="button" class="btn-secondary" data-route="{{ route('theme.checkout_post') }}">Đặt hàng</button>
                 </div>
             </div>
         </div>
@@ -202,9 +206,144 @@ Checkout area End
             }
         });
 
+        $.fn.extend(
+        {
+            hideAllErr: function()
+            {
+                $('.err').each(function() {
+                    $(this).hide();
+                });
+            },
+
+            hideErr: function (classErr) 
+            {
+                $(this).on('click', function() {
+                    $(classErr).hide();
+                });
+            },
+
+            showErr: function()
+            {
+                $(this).show();
+            },
+
+            hideBorder: function (elementId) 
+            {
+                $(this).on('click',':not('+elementId+')', function() {
+                    if(!$(elementId).val()) {
+                        $(elementId).css('border', '1px solid #e4e3e3');
+                    }
+                })
+            },
+
+            showBorder: function()
+            {
+                $(this).css('border', '3px solid #408ed4');
+            }
+        });
+
+        //order form
+        $(this).hideAllErr();
+
+        $('#delivery_name').hideErr('.err-name');
+        $('#delivery_phone').hideErr('.err-phone');
+        $('#delivery_email').hideErr('.err-email');
+        $('#delivery_address').hideErr('.err-delivery_address');
+
+        $(this).hideBorder('#delivery_name');
+        $(this).hideBorder('#delivery_phone');
+        $(this).hideBorder('#delivery_email');
+        $(this).hideBorder('#delivery_address');
+        $(this).hideBorder('#order_note');
+
+        let items = [];
+        $('.product-info').each(function() {
+            items.push({product_id: $(this).data('id'), quantity: $(this).data('quantity')})
+        });
+        console.log(items);
+
         $('#order_btn').on('click', function(e) {
             e.preventDefault();
-            alert('hello !');
+
+            let delivery_name;
+            let delivery_phone;
+            let delivery_email;
+            let delivery_address;
+            let order_note;
+
+            if(!$('#delivery_name').val()) {
+                $('.err-name').showErr();
+            }
+            else {
+                $('#delivery_name').showBorder();
+                delivery_name = $('#delivery_name').val();
+            }
+
+            if(!$('#delivery_phone').val() || /^[0-9- ]*$/.test($('#delivery_phone').val()) == false || $('#delivery_phone').val().length != 10 ) {
+                $('.err-phone').showErr();
+            }
+            else {
+                $('#delivery_phone').showBorder();
+                delivery_phone = $('#delivery_phone').val();
+            }
+
+            if(!$('#delivery_email').val() || /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test($('#delivery_email').val()) == false) {
+                $('.err-email').showErr();
+            }
+            else {
+                $('#delivery_email').showBorder();
+                delivery_email = $('#delivery_email').val();
+            }
+
+            if(!$('#delivery_address').val()) {
+                $('.err-address').showErr();
+            }
+            else {
+                $('#delivery_address').showBorder();
+                delivery_address = $('#delivery_address').val();
+            }
+
+            if($('#order_note').val()) {
+                $('#order_note').showBorder();
+                order_note = $('#order_note').val()
+            }
+            
+            $.ajax({
+                type: 'POST',
+                url: $(this).data('route'),
+                data: {
+                    delivery_name: delivery_name,
+                    delivery_phone: delivery_phone,
+                    delivery_email: delivery_email,
+                    delivery_address: delivery_address,
+                    order_note: order_note,
+                    total_price: $('#total_price').val(),
+                    items: items
+                },
+                success: function(results) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: results,
+                        text: "Bạn sẽ được đưa về trang chủ",
+                        showConfirmButton: false,
+                        timer: 3000,
+                    });
+                    
+                    // setTimeout(function(){
+                    //     location.reload();
+                    // },2000);
+                },
+                error: function(results) {
+                    Swal.fire({
+                        title: results.responseText,
+                        icon: "error",
+                    });
+                },
+            },2000).then(function(){
+                window.location.href = '/'
+            });
+
         });
         
     });

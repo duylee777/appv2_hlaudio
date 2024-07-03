@@ -87,5 +87,15 @@
             'read' => 'Đã đọc',
         ],
 
+        'order_status' => [
+            'pending' => 'Chưa xử lý',
+            'awaiting_shipment' => 'Chờ vận chuyển',
+            'shipped' => 'Đã vận chuyển',
+            'completed' => 'Hoàn thành',
+            'cancelled' => 'Hủy bỏ',
+            'refunded' => 'Hoàn lại tiền',
+            'disputed' => 'Tranh chấp'
+        ],
+
     ];
 ?>
