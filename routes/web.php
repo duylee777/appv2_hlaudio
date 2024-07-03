@@ -24,6 +24,7 @@ use App\Http\Controllers\Client\WishlistController;
 use App\Http\Controllers\Client\CompareController;
 use App\Http\Controllers\Client\CommentController;
 use App\Http\Controllers\Client\SearchController;
+use App\Http\Controllers\Client\OrderController as OrderClient;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +71,9 @@ Route::post('/gio-hang/add-selected', [CartController::class, 'addSelected'])->n
 Route::post('/gio-hang/update/{product?}', [CartController::class, 'updateCartItem'])->name('theme.update_cart_item');
 Route::post('/gio-hang/delete/{product?}', [CartController::class, 'removeCartTable'])->name('theme.remove_item');
 Route::post('/gio-hang/clear', [CartController::class, 'clearCart'])->name('theme.clear_cart');
-Route::get('/thanh-toan', [ClientController::class, 'checkout'])->name('theme.checkout');
+
+Route::get('/thanh-toan', [OrderClient::class, 'checkout'])->name('theme.checkout');
+Route::post('/thanh-toan', [OrderClient::class, 'checkoutPost'])->name('theme.checkout_post');
 
 Route::get('/faq', [ClientController::class, 'faq'])->name('theme.faq');
 Route::get('/tim-kiem', [SearchController::class, 'search'])->name('theme.search');
