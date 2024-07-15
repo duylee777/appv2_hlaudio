@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OrderDetail extends Model
@@ -22,8 +23,8 @@ class OrderDetail extends Model
         'updated_at',
     ];
 
-    public function product(): HasOne
+    public function product():BelongsTo
     {
-        return $this->hasOne(Order::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

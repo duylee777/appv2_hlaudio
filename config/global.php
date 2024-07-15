@@ -87,6 +87,11 @@
             'read' => 'Đã đọc',
         ],
 
+        'order_permissions' => [
+            'view_orders' => 'Xem danh sách đơn hàng',
+            'update_order' => 'Cập nhật trạng thái đơn hàng',
+        ],
+
         'order_status' => [
             'pending' => 'Chưa xử lý',
             'awaiting_shipment' => 'Chờ vận chuyển',

@@ -261,14 +261,18 @@ Product Area Start
                                         </div>
                                         <div class="cart">
                                             <div class="add-to-cart">
-                                                @if(auth()->check())
-                                                    <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $latestProduct->id)}}">
-                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                    </a>
+                                                @if($latestProduct->inventory->quantity == 0)
+                                                    Hết hàng
                                                 @else
-                                                    <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
-                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                    </a>
+                                                    @if(auth()->check())
+                                                        <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $latestProduct->id)}}">
+                                                            <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                        </a>
+                                                    @else
+                                                        <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                            <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                        </a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -352,14 +356,18 @@ Product Area Start
                                     </div>
                                     <div class="cart">
                                         <div class="add-to-cart">
-                                            @if(auth()->check())
-                                                <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $bestSellerProduct->id)}}">
-                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                </a>
+                                            @if($bestSellerProduct->inventory->quantity == 0)
+                                                Hết hàng
                                             @else
-                                                <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
-                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                </a>
+                                                @if(auth()->check())
+                                                    <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $bestSellerProduct->id)}}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @else
+                                                    <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>
@@ -444,14 +452,18 @@ Product Area Start
                                     </div>
                                     <div class="cart">
                                         <div class="add-to-cart">
-                                            @if(auth()->check())
-                                                <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $featuredProduct->id)}}">
-                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                </a>
+                                            @if($featuredProduct->inventory->quantity == 0)
+                                                Hết hàng
                                             @else
-                                                <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
-                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                </a>
+                                                @if(auth()->check())
+                                                    <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $featuredProduct->id)}}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @else
+                                                    <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>

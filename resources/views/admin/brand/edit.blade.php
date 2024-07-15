@@ -1,7 +1,5 @@
 @extends('admin.layouts.index')
- 
 @section('title', 'Thương hiệu')
-
 @section('content')
 
 @if(Session::has('error'))
