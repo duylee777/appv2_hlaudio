@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -55,6 +56,22 @@ class RegisteredUserController extends Controller
         }
         else {
             Role::create(['name' => config('global.default_roles.customer')]);
+        }
+
+        $userId = $user->id;
+        $cart = Cart::where('user_id',  $userId)->first();
+        
+        //check user has cart ?
+        if(!$cart) {
+            $cart = Cart::create([
+                'user_id' => $userId,
+                'total_price' => 0,
+            ]);
+        }
+        else {
+            $cart->update([
+                'status' => true,
+            ]);
         }
 
         return redirect(RouteServiceProvider::HOME);

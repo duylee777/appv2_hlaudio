@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:'.config('global.order_permissions.view_orders'))->only('index');
+        $this->middleware('permission:'.config('global.order_permissions.update_order'))->only('update');
+        // $this->middleware('permission:'.config('global.order_permissions.create_order'))->only('store');
+        // $this->middleware('permission:'.config('global.order_permissions.delete_order'))->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -45,17 +52,26 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Order $order)
     {
-        //
+        return view('admin.order.edit', compact('order'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Order $order)
     {
-        //
+        if($request->status != $order->status) {
+            $order->update([
+                'status' => $request->status, 
+            ]);
+
+            return redirect()->route('order.edit',$order->id)->with(['msg' => 'Cập nhật trạng thái đơn hàng '.$order->order_code.' thành công !']);
+        }
+        else {
+            return redirect()->route('order.edit',$order->id)->with(['error' => 'Không có thông tin cập nhật !']);
+        }
     }
 
     /**

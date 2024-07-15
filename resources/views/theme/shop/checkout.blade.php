@@ -329,10 +329,6 @@ Checkout area End
                         showConfirmButton: false,
                         timer: 3000,
                     });
-                    
-                    // setTimeout(function(){
-                    //     location.reload();
-                    // },2000);
                 },
                 error: function(results) {
                     Swal.fire({

@@ -63,4 +63,13 @@ class OrderController extends Controller
 
         return response('Đặt hàng thành công', 200);
     }
+
+    public function delOrder(Request $request, $id) {
+        $order = Order::where('id', $id)->first();
+        $order->update([
+            'status' => $request->status,
+        ]);
+
+        return response('Bạn đã hủy đơn hàng thành công', 200);
+    }
 }
