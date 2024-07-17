@@ -5416,7 +5416,7 @@ ul.category-mega li.cat-mega-title ul li:hover a {
   border-right: 1px solid #ebebeb;
 }
 .compare-table .table tbody tr td.first-column {
-  min-width: 180px;
+  min-width: 50px;
   font-size: 17px;
   font-weight: 600;
   margin: 0;
@@ -5790,6 +5790,14 @@ ul.category-mega li.cat-mega-title ul li:hover a {
 
 #pagination li.active {
   background-color: #39f;
+}
+@media (max-width: 768px) {
+  .sub-left-menu{
+    display: none;
+  }
+  .icon-more{
+    display: none;
+  }
 }
 
 

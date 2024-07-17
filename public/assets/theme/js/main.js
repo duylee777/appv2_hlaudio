@@ -79,12 +79,15 @@
 	$('.slider-one').slick({
 		dots: true,
 		arrows: false,
+		autoplay:true,
+		autoplaySpeed :3000,
 	  });
 
 	// Slider Two Full Slider
 	$('.slider-two').slick({
 		dots: true,
 		arrows: false,
+		variableWidth: true,
 	  });
 
 	/*---------------------------------
@@ -93,6 +96,8 @@
 	$('.product-offer-slider').slick({
 		dots: false,
 		arrows: false,
+		autoplay:true,
+		autoplaySpeed:3000,
 	});
 	/*---------------------------------
 	Product Thing Carouse

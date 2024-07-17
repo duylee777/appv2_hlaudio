@@ -211,7 +211,6 @@ ul.listcompare {
     display: inline-block;
     vertical-align: middle;
     width: 25%;
-    margin-top: 21px;
 }
 
 .stickcompare.stickcompare_new a.clearall i {
@@ -337,4 +336,63 @@ a#ss-now span label {
 #table-compare tr td {
     text-align: left;
     padding: 5px 0  5px 10px !important;
+}
+
+@media (max-width: 7688px) {
+
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .stickcompare.stickcompare_new {
+        max-width: 768px;
+        top: unset;
+        bottom: 0;
+        border-radius: 0;
+        border-top: 1px solid #e5e5e5;
+    }
+
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .stickcompare.stickcompare_new {
+        max-width: 640px;
+        top: unset;
+        bottom: 0;
+        border-radius: 0;
+        border-top: 1px solid #e5e5e5;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .stickcompare.stickcompare_new {
+        max-width: 456px;
+        top: unset;
+        bottom: 0;
+        border-radius: 0;
+        border-top: 1px solid #e5e5e5;
+    }
+    .stickcompare.stickcompare_new ul.listcompare {
+        display: inline-flex;
+        width: 100%;
+        border: unset;
+        height: 105px;
+    }
+    .stickcompare.stickcompare_new .closecompare {
+        position: unset;
+        display: flex;
+        vertical-align: middle;
+        width: 100%;
+        height: 35px;
+    }
+    .closecompare a {
+        display: block;
+        text-align: center;
+        width: 50%;
+        padding: 12px 0;
+        border-radius: 10px;
+        font-size: 14px;
+        color: #2f80ed;
+        margin: 0;
+    }
+    .listcompare h3{
+        height: auto;
+    }
 }

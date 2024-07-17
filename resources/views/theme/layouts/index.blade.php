@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> --}}
     <title>Hien Luong Audio - @yield('title')</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="Hien Luong Audio - Pro Audio">
@@ -37,7 +37,7 @@
     <script src="/assets/theme/js/vendor/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- Alpinejs --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.4.2/cdn.min.js" integrity="sha512-Ggh9DYKMB04uOmJlra3yKB/Fk/mxjbehmixi/Jy+omCWFGNZEBwGkPz0+R+zgzZfGsHBGB8e4UsYedB32MJ/QQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.4.2/cdn.min.js" integrity="sha512-Ggh9DYKMB04uOmJlra3yKB/Fk/mxjbehmixi/Jy+omCWFGNZEBwGkPz0+R+zgzZfGsHBGB8e4UsYedB32MJ/QQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Scripts -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 </head>
