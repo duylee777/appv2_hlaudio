@@ -5791,7 +5791,7 @@ ul.category-mega li.cat-mega-title ul li:hover a {
 #pagination li.active {
   background-color: #39f;
 }
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .sub-left-menu{
     display: none;
   }
