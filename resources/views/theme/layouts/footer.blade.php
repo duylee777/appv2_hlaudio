@@ -18,15 +18,9 @@
                     <div class="col-lg-6 col-12">
                         <div class="newsletter-box">
                             <form id="mc-form" class="mc-form">
-                                <input type="email" id="mc-email" class="email-box" placeholder="nhập địa chỉ email của bạn" name="email">
-                                <button id="mc-submit" class="newsletter-btn" type="submit">Đăng ký</button>
+                                <input id="emailSub" name="emailSub" class="email-box" placeholder="Nhập địa chỉ email của bạn">
+                                <button id="mc-submit" class="newsletter-btn consultations-btn" type="submit">Đăng ký</button>
                             </form>
-                            <!-- mailchimp-alerts Start -->
-                            <div class="mailchimp-alerts text-centre">
-                                <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
-                                <div class="mailchimp-success text-success"></div><!-- mailchimp-success end -->
-                                <div class="mailchimp-error text-danger"></div><!-- mailchimp-error end -->
-                            </div><!-- mailchimp-alerts end -->
                         </div>
                     </div>
                 </div>
@@ -83,9 +77,9 @@
                                     <h6>Tài khoản</h6>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="#">Tài khoản của tôi</a></li>
-                                            <li><a href="#">Danh sách yêu thích</a></li>
-                                            <li><a href="#">Bản tin</a></li>
+                                            <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
+                                            <li><a href="{{ route('theme.wishlist') }}">Danh sách yêu thích</a></li>
+                                            {{-- <li><a href="#">Bản tin</a></li> --}}
                                         </ul>
                                     </div>
                                 </div>
@@ -95,11 +89,10 @@
                                     <h6>Chính sách</h6>
                                     <div class="footer_menu">
                                         <ul>
-                                            <li><a href="#">Chính sách bán hàng</a></li>
-                                            <li><a href="#">Chính sách giao hàng</a></li>
-                                            <li><a href="#">Chính sách thanh toán</a></li>
-                                            <li><a href="#">Chính sách bảo hành và đổi trả</a></li>
-                                            <li><a href="#">Chính sách tuyển dụng</a></li>
+                                            <li><a href="/chinh-sach-ban-hang">Chính sách bán hàng</a></li>
+                                            <li><a href="/chinh-sach-giao-hang">Chính sách giao hàng</a></li>
+                                            <li><a href="/chinh-sach-thanh-toan">Chính sách thanh toán</a></li>
+                                            <li><a href="/chinh-sach-bao-hanh-va-doi-tra">Chính sách bảo hành và đổi trả</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -171,5 +164,49 @@
         <i class="fa fa-angle-up"></i>
     </a>
     <!-- Scroll To Top End -->
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    
+            $("#mc-form").on ("submit", function(e) {
+                e.preventDefault();
+    
+                let email = $.trim($("#emailSub").val());
+                let checkDone = $('.mailchimp-success.text-success').is(':empty');
+                console.log(checkDone);
+                if (email.includes('@') && email.includes('.') && !email.includes(' ')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('theme.consultations') }}",
+                        data: {
+                            "email": email, 
+                        },
+                        success: function() {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Đã đăng ký nhận bản tin !",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                $("#emailSub").val('');
+                            });
+                            
+                        },
+                        error: function() {
+                            alert('Thông tin chưa được gửi đi !');
+                        }
+                    });
+                } else{
+                    alert('Định dạng mail chưa đúng!');
+                }
+            });
+        });
+    </script>
 
     

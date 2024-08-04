@@ -45,7 +45,7 @@
                                     <h1 class="product-title">{{ $featuredProduct->name }}</h1>
                                 </div>
                                 <div class="price-box">
-                                    <span class="regular-price">{{ $featuredProduct->odd_price }}</span>
+                                    <span class="regular-price">{{ Illuminate\Support\Number::currency($featuredProduct->odd_price, in: 'VND', locale: 'vi') }}</span>
                                 </div>
                                 {{-- <div class="product-description">
                                     <?= json_decode($featuredProduct->description) ?>
@@ -68,15 +68,16 @@
                                             title="Add to compare">
                                             <i class="zmdi zmdi-refresh-alt"></i>
                                         </a>
-
-                                        @if(auth()->check())
-                                            <a class="add_to_cart_btn" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $featuredProduct->id)}}">
-                                                <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                            </a>
-                                        @else
-                                            <a class="prod_alert_login" data-route="{{ route('theme.login_client') }}">
-                                                <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                            </a>
+                                        @if($featuredProduct->inventory->quantity != 0)
+                                            @if(auth()->check())
+                                                <a class="add_to_cart_btn" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $featuredProduct->id)}}">
+                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                </a>
+                                            @else
+                                                <a class="prod_alert_login" data-route="{{ route('theme.login_client') }}">
+                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                </a>
+                                            @endif
                                         @endif
                                         
                                         @if (auth()->check())

@@ -76,5 +76,31 @@
             'delete_post' => "Xóa bài viết",
         ],
 
+        'contact_permissions' => [
+            'view_contacts' => "Xem danh sách liên hệ",
+            'update_contact' => "Cập nhật trạng thái liên hệ",
+        ],
+
+        'contact_status' => [
+            'new' => 'Mới',
+            'unread' => 'Chưa đọc',
+            'read' => 'Đã đọc',
+        ],
+
+        'order_permissions' => [
+            'view_orders' => 'Xem danh sách đơn hàng',
+            'update_order' => 'Cập nhật trạng thái đơn hàng',
+        ],
+
+        'order_status' => [
+            'pending' => 'Chưa xử lý',
+            'awaiting_shipment' => 'Chờ vận chuyển',
+            'shipped' => 'Đã vận chuyển',
+            'completed' => 'Hoàn thành',
+            'cancelled' => 'Hủy bỏ',
+            'refunded' => 'Hoàn lại tiền',
+            'disputed' => 'Tranh chấp'
+        ],
+
     ];
 ?>

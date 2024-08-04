@@ -14,11 +14,11 @@ About Area Start
             <div class="offset-lg-2 col-lg-8 text-center">
                 <div class="about-head">
                     <h3 class="mb-20">Chào mừng đến với Âm thanh Hiền Lương</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia minima consequuntur nulla voluptate sunt accusamus error dolores laboriosam facere, et saepe, velit incidunt doloremque ab eius. Explicabo magnam iure et.</p>
+                    <p>Âm thanh ánh sáng, karaoke, gia đình, âm thanh sân khấu, hội trường, nhà hàng, khu du lịch. Chất lượng tốt nhất, bảo hành theo quy định nhà sản xuất. Mở cửa 7h30 đến 21h các ngày trong tuần.</p>
                 </div>
             </div>
         </div>
-        <div class="row align-items-center">
+        {{-- <div class="row align-items-center">
             <div class="col-lg-6 mt-40 text-center">
                 <div class="about-img">
                     <img src="assets/theme/images/about/about-1.webp" alt="" class="img-fluid">
@@ -93,14 +93,14 @@ About Area Start
                 </div>
             </div>
             <!-- Testimonial Area End -->
-        </div>
+        </div> --}}
         <div class="row mt-40 pb-15">
             <div class="col-lg-12 text-center">
                 <!-- Brand Logo Area Start -->
-                <div class="brand-logo">
+                <div class="brand-logo" style="background: #408ED4; padding: 1rem 0;">
                     @foreach($brands as $brand)
-                    <div class="single-brand">
-                        <a href="{{route('theme.brand')}}" style="height: 60px;" class="d-flex justify-content-center bg-dark overflow-hidden">
+                    <div class="single-brand" style="{{$brand->slug == 'enerlong' ? 'padding-right: 2rem;' : '' }}">
+                        <a href="{{route('theme.brand')}}" style="height: 60px;" class="d-flex justify-content-center overflow-hidden">
                             <img src="{{asset('../storage/brands/'.$brand->slug.'/'.$brand->image)}}" alt="" class="img-fluid">
                         </a>
                     </div>

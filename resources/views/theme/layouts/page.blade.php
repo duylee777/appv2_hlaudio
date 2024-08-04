@@ -12,9 +12,11 @@ Breadcrumb Aera Start
                         <li>
                             <h1><a href="{{route('theme.home')}}">Trang chủ</a></h1>
                         </li>
+                        @if (app()->view->getSections()['category-url'] != '')
                         <li>
                             <h1><a href="@yield('category-url')">@yield('category-name')</a></h1>
                         </li>
+                        @endif
                         <li>@yield('page-name')</li>
                     </ul>
                 </div>

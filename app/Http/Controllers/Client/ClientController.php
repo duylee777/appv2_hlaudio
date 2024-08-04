@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Comment;
+use App\Models\Contact;
+use App\Models\Consultations;
 
 use Illuminate\Http\Request;
 
@@ -25,7 +27,6 @@ class ClientController extends Controller
             array_push($arr['id'], $cate->id);
             array_push($arr['name'], $cate->name);
         }
-        var_dump($arr);die;
         return view('theme.404');
     }
     public function loginClient() {
@@ -62,6 +63,19 @@ class ClientController extends Controller
 
     public function contact() {
         return view('theme.contact');
+    }
+
+    public function contactPost(Request $request) {
+        $contact = [
+            "name" => $request->name,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "message" => $request->message,
+            "status" => config('global.contact_status.new'),
+        ];
+        Contact::create($contact);
+        
+        return response()->json();
     }
 
     public function shop() {
@@ -229,33 +243,12 @@ class ClientController extends Controller
         return view('theme.project.project-detail', compact('project', 'tagByProjects', 'tags', 'recentProjects'));
     }
 
-    public function checkout() {
-        return view('theme.shop.checkout');
-    }
-
     public function faq() {
         return view('theme.faq');
     }
 
     public function wishlist() {
         return view('theme.wishlist');
-    }
-
-    public function search(Request $request) {
-        $keyword = ($request->input('keyword')) ? $request->query('keyword') : "";
-        $keyword = trim(strip_tags($keyword));
-
-        if($request->select != "all"){
-            $category = Category::where('id', $request->select)->first();
-        }
-
-        if(isset($category)) {
-            $products = Product::where('category_id', $category->id)->where("name", "like", "%$keyword%")->get();     
-        }
-        $products = Product::where('is_active', true)->where("name", "like", "%$keyword%")->get();
-        $key = $request->input('keyword');
-        
-        return view('theme.search', compact('key', 'products'));
     }
 
     public function brand($slug_brand, Request $request) {
@@ -338,5 +331,14 @@ class ClientController extends Controller
         $products = $productByCates;
 
         return view('theme.brand', compact('brand', 'categories', 'filterCategories', 'soft', 'page', 'products'));
+    }
+
+    public function consultations(Request $request) {
+        $consultations = [
+            "email" => $request->email,
+            "status" => config('global.contact_status.new'),
+        ];
+        Consultations::create($consultations);
+        return response()->json();
     }
 }

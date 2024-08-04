@@ -175,7 +175,7 @@ Product Details Area Start
                     <ul class="nav flex-column" role="tablist">
                         <li><a class="active" href="#description" role="tab" data-bs-toggle="tab" aria-selected="false">Mô tả</a></li>
                         <li><a href="#sheet" role="tab" data-bs-toggle="tab" aria-selected="false">Thông số kỹ thuật</a></li>
-                        <li><a href="#comments" role="tab" data-bs-toggle="tab" aria-selected="true">Đánh giá</a></li>
+                        <li><a href="#comments" role="tab" data-bs-toggle="tab" aria-selected="true">Bình luận</a></li>
                     </ul>
                 </div>
                 <!-- Product Description Tab End -->
@@ -224,7 +224,7 @@ Product Details Area Start
                     <div role="tabpanel" id="comments" data-route={{route('theme.comment',$product->id)}} class="product_tab_content fade">
                         <div class="review_address_inner mt-20">
                             <!-- Start Single Review -->
-                            @if (count($comment->where('comment_id',0))=0)
+                            @if (count($comment->where('comment_id',0))==0)
                             <div class="parent-product">
                                 <p style="padding-bottom: 8px;">Chưa có bình luận nào.</p>
                             </div>
@@ -274,6 +274,9 @@ Product Details Area Start
                                         @endif
                                     </div>
                                 </div>
+                                @if (count($comment->where('comment_id',$cmt->id)->sortBy('created_at'))>3)
+                                    <a class="more-cmt-reply btn-more-cmt cursor-p" style="display: block; color: blue; padding: 0px 0px 8px 80px;" >Xem thêm</a>
+                                @endif
                                 @foreach ($comment->where('comment_id',$cmt->id)->sortBy('created_at') as $item)
                                     <div class="pro_review pro-second">
                                         <div class="review_thumb">
@@ -363,8 +366,9 @@ Product Details Area Start
                                 <div class="product-thumb">
                                     @php
                                         $images = json_decode($relatedProduct->image);
+                                        // var_dump($relatedProduct->slug); die;
                                     @endphp
-                                    <a href="{{route('theme.product_detail', $relatedProduct->category->slug)}}">
+                                    <a href="{{route('theme.product_detail', $relatedProduct->slug)}}">
                                         <img src="{{asset('../storage/products/'.$relatedProduct->code.'/image/'.$images[0])}}" alt="" class="img-fluid">
                                     </a>
                                     <div class="box-label">
@@ -936,7 +940,6 @@ Product Details Area End
         // Comment start
         $.each($('.parent-product'), function(){
             let countShow = 3;
-                console.log($('.parent-product').length);
             if($('.parent-product').length > countShow){
                 if ($('.parent-product').index(this) > countShow -1) {
                     $(this).addClass("collapse");
@@ -946,12 +949,10 @@ Product Details Area End
                 $('#show-more-cmt').css("display","none");
             }
             let childLength = $(this).children('.pro-second').length;
-            
             $.each($(this).children('.pro-second'), function(){
                 let parentSecond = $(this).parent(".parent-product").children('.pro-second');
                 if (parentSecond.index(this) < childLength - countShow) {
                     $(this).addClass("collapse");
-                    $(this).prev(".pro-first").after('<a class="more-cmt-reply btn-more-cmt" style="color: blue; padding: 0px 0px 8px 80px;" >Xem thêm</a>');
                 }
             })
         })
@@ -959,11 +960,21 @@ Product Details Area End
         $.each($('.btn-more-cmt'), function(){
             $(this).on("click", function(e){
                 if ($(this).hasClass("close-cmt")) {
-                    $.each($('.parent-product'), function(){
-                        if ($('.parent-product').index(this)>2) {
-                            $(this).addClass("collapse");
-                        }
-                    });
+                    if ($(this).hasClass("more-cmt-reply")) {
+                        let proSecond = $(this).siblings(".pro-second").length;
+                        $.each(($(this).siblings(".pro-second")), function(){
+                            if ($(this).index()< proSecond - 1) {
+                                $(this).addClass("collapse");
+                            }
+                        });
+                    }
+                    else{
+                        $.each($('.parent-product'), function(){
+                            if ($('.parent-product').index(this)>2) {
+                                $(this).addClass("collapse");
+                            }
+                        });
+                    }
                     $(this).removeClass("close-cmt");
                     $(this).html("Xem thêm");
                 }
@@ -972,8 +983,8 @@ Product Details Area End
                     if ($(this).hasClass("more-cmt-reply")) {
                         let proSecondHidden = $(this).siblings(".pro-second.collapse");
                         proSecondHidden.removeClass("collapse");
-                        console.log(proSecondHidden);
-                        $(this).attr("hidden",true);
+                        $(this).addClass("close-cmt");
+                        $(this).html("Thu gọn");
                     } else {
                         let countProFirst = $('.parent-product.collapse').length;
                         console.log(countProFirst);
@@ -1036,9 +1047,6 @@ Product Details Area End
                     },
                 });
                 }
-                
-                
-
             });
         }); 
         

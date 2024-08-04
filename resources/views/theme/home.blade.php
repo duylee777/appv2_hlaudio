@@ -65,6 +65,9 @@
         box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1);
         border-radius: 0 10px 10px 0; 
     }
+    .category-dropdown{
+        display: none;
+    }
 </style>
 <!--=====================
 slider area start
@@ -84,7 +87,7 @@ slider area start
                                         {{$category->name}}
                                     </span>
                                     @if(count($category->children) != 0)
-                                        <i class="fa fa-angle-right"></i>
+                                        <i class="icon-more fa fa-angle-right"></i>
                                     @endif
                                 </a>
                                 @if(count($category->children) != 0)
@@ -261,14 +264,18 @@ Product Area Start
                                         </div>
                                         <div class="cart">
                                             <div class="add-to-cart">
-                                                @if(auth()->check())
-                                                    <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $latestProduct->id)}}">
-                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                    </a>
+                                                @if($latestProduct->inventory->quantity == 0)
+                                                    Hết hàng
                                                 @else
-                                                    <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
-                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                    </a>
+                                                    @if(auth()->check())
+                                                        <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $latestProduct->id)}}">
+                                                            <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                        </a>
+                                                    @else
+                                                        <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                            <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                        </a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -352,14 +359,18 @@ Product Area Start
                                     </div>
                                     <div class="cart">
                                         <div class="add-to-cart">
-                                            @if(auth()->check())
-                                                <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $bestSellerProduct->id)}}">
-                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                </a>
+                                            @if($bestSellerProduct->inventory->quantity == 0)
+                                                Hết hàng
                                             @else
-                                                <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
-                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                </a>
+                                                @if(auth()->check())
+                                                    <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $bestSellerProduct->id)}}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @else
+                                                    <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>
@@ -444,14 +455,18 @@ Product Area Start
                                     </div>
                                     <div class="cart">
                                         <div class="add-to-cart">
-                                            @if(auth()->check())
-                                                <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $featuredProduct->id)}}">
-                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                </a>
+                                            @if($featuredProduct->inventory->quantity == 0)
+                                                Hết hàng
                                             @else
-                                                <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
-                                                    <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
-                                                </a>
+                                                @if(auth()->check())
+                                                    <a class="add_to_cart_btn cart-plus" title="Thêm vào giỏ hàng" data-route="{{route('theme.add_to_cart', $featuredProduct->id)}}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @else
+                                                    <a class="prod_alert_login cart-plus" title="Thêm vào giỏ hàng" data-route="{{ route('theme.login_client') }}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus zmdi-hc-fw"></i>
+                                                    </a>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>
@@ -1078,7 +1093,7 @@ Latest Post Area End
 {{-- Compare start --}}
 <div class="stickcompare stickcompare_new cp-desktop spaceInDown" >
     <a class="clearall"><i class="zmdi zmdi-close"></i>Thu gọn</a>
-    <ul class="listcompare" data-catename="Đồng hồ thời trang">
+    <ul class="listcompare">
         @for ($i = 0; $i < 3; $i++)
             <li class="compare_item">
                 <a>
@@ -1090,9 +1105,8 @@ Latest Post Area End
         @endfor
     </ul>
     <div class="closecompare doss">
-        <a href="" data-route="{{ route('storeSession') }}" class="start-compare">So sánh
-            ngay</a>
-        <a class="txtremoveall">Xóa tất cả sản phẩm</a>
+        <a href="" data-route="{{ route('storeSession') }}" class="start-compare">So sánh</a>
+        <a class="txtremoveall">Xóa tất cả</a>
     </div>
 </div>
 {{-- popup count  --}}
@@ -1101,6 +1115,7 @@ Latest Post Area End
         <span>So sánh <label class="count-ss"></label></span>
     </a>
 </div>
+
 {{-- Compare end --}}
 
 @include('theme.modals.prod-of-cate')

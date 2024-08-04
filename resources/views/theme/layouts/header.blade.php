@@ -24,16 +24,26 @@ Header Area Start
                             </li>
                             <li class="settings">
                                 <a class="drop-toggle">
-                                    Tài khoản
+                                    @if (auth()->user())
+                                        {{auth()->user()->name}}
+                                    @else
+                                        Tài khoản
+                                    @endif
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="box-dropdown drop-dropdown">
                                     @if(auth()->user())
                                         <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
                                         <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
-                                        <li><a href="#">Thanh toán</a></li>
+                                        <li><a href="{{ route('theme.show_cart')}}">Thanh toán</a></li>
+                                        <li>
+                                            <a id="logout_account">Đăng xuất</a>
+                                            <form id="logout_account_form" action="{{ route('logout')}}" method="post" hidden>
+                                                @csrf
+                                            </form>
+                                        </li>
                                     @else
-                                    <li><a href="{{route('theme.login_client')}}">Đăng nhập</a></li>
+                                    <li><a style="text-align: center" href="{{route('theme.login_client')}}">Đăng nhập</a></li>
                                     @endif
                                 </ul>
                             </li>
@@ -127,26 +137,14 @@ Header Area Start
                                                 <span class="product-name">
                                                 <a href="{{route('theme.product_detail', $product->slug)}}">{{ $product->name }}</a>
                                             </span>
-                                                <span class="product-price">{{ $product->odd_price }} VND</span>
+                                                <span class="product-price">{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</span>
                                                 {{-- <span class="product-size">Size:  S</span> --}}
                                             </div>
                                         </li>
                                         @endforeach
                                         <li>
-                                            <span class="subtotal-text">Tổng phụ</span>
-                                            <span class="subtotal-price">{{ $cart->total_price }}</span>
-                                        </li>
-                                        <li>
-                                            <span class="subtotal-text">Phí vận chuyển</span>
-                                            <span class="subtotal-price">20000</span>
-                                        </li>
-                                        <li>
-                                            <span class="subtotal-text">Thuế (10%)</span>
-                                            <span class="subtotal-price">20000</span>
-                                        </li>
-                                        <li>
                                             <span class="subtotal-text">Tổng tiền (VND)</span>
-                                            <span class="subtotal-price">{{ $cart->total_price }}</span>
+                                            <span class="subtotal-price">{{ Illuminate\Support\Number::currency($cart->total_price, in: 'VND', locale: 'vi') }}</span>
                                         </li>
                                     </ul>
                                     <div class="checkout-cart">
@@ -232,7 +230,7 @@ Header Area Start
                                 <ul>
                                     <li><a href="{{ route('theme.home') }}">Trang chủ</a></li>
                                     <li>
-                                        <a href="{{ route('theme.shop') }}">Cửa hàng <i class="fa fa-angle-down"></i></a>
+                                        <a href="#">Cửa hàng <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown dropdown-width">
                                             @foreach(App\Models\Category::get() as $category)
                                                 @if(!empty($category->parent) && $category->parent->slug == 'san-pham')
@@ -303,28 +301,32 @@ Header Area Start
                                         </ul>
                                     </li>
                                     <li class="settings">
-                                        <a href="#" class="drop-toggle">
-                                            Tài khoản
+                                        <a class="drop-toggle">
+                                            @if (auth()->user())
+                                                {{auth()->user()->name}}
+                                            @else
+                                                Tài khoản
+                                            @endif
                                             <i class="fa fa-angle-down"></i>
                                         </a>
                                         <ul class="box-dropdown drop-dropdown">
-                                            <li><a href="{{ route('theme.login_client') }}">Đăng nhập</a></li>
                                             @if(Auth::check() == true)
-                                            <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
-                                            <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
-                                            <li><a href="{{ route('theme.checkout') }}">Thanh toán</a></li>
+                                                <li><a href="{{ route('theme.account') }}">Tài khoản của tôi</a></li>
+                                                <li><a href="{{ route('theme.wishlist') }}">Yêu thích</a></li>
+                                                <li><a href="{{ route('theme.checkout') }}">Thanh toán</a></li>
+                                                <li>
+                                                    <a id="logout_account">Đăng xuất</a>
+                                                    <form id="logout_account_form" action="{{ route('logout')}}" method="post" hidden>
+                                                        @csrf
+                                                    </form>
+                                                </li>
+                                            @else
+                                                <li><a href="{{ route('theme.login_client') }}">Đăng nhập</a></li>
                                             @endif
                                         </ul>
                                     </li>
                                 </ul>
                             </div>
-                            <!-- <div class="widget-body">
-                                <div class="widget-address text-center mb-20">
-                                    <p><strong>ADDRESS</strong></p>
-                                    <p>123 Main Street, Anytown <br> CA 12345 USA.</p>
-                                        <p>(800) 123 456 - (800) 123 456.</p>
-                                </div>
-                            </div> -->
                             <div class="offcanvas-search-container mb-40">
                                 <form method="GET" action="{{route('theme.search')}}" name="keyword">
                                     <div class="search_box">
@@ -340,7 +342,7 @@ Header Area Start
                                         <a href="{{ route('theme.home') }}">Trang chủ</a>
                                     </li>
                                     <li class="menu-item-has-children">
-                                        <a href="{{ route('theme.shop') }}">Cửa hàng</a>
+                                        <a href="#">Cửa hàng</a>
                                         <ul class="sub-menu">
                                             @foreach(App\Models\Category::get() as $category)
                                                 @if(!empty($category->parent) && $category->parent->slug == 'san-pham')
@@ -374,7 +376,9 @@ Header Area Start
                             </div>
                             <!-- Offcanvas Menu End -->
                             <div class="offcanvas_footer">
-                                <span><a href="#"><i class="fa fa-envelope-o"></i> info@yourdomain.com</a></span>
+                                <span>
+                                    <a href="mailto:hiendientuhg123@gmail.com"><i class="fa fa-envelope-o"></i>hiendientuhg123@gmail.com</a>
+                                </span>
                                 <div class="footer_social">
                                     <ul class="d-flex">
                                         <li><a class="facebook" href="#"><i class="zmdi zmdi-facebook"></i></a></li>
@@ -410,6 +414,29 @@ window.gtranslateSettings = {
 <script src="https://cdn.gtranslate.net/widgets/latest/ln.js" defer></script>
 <script>
     $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#logout_account').on('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "Bạn có chắc chắn muốn đăng xuất khỏi tài khoản ?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Đăng xuất",
+                cancelButtonText: "Quay lại"
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#logout_account_form').submit();
+                }   
+            });
+        });
+
         $('.alert_login').on("click", function(e) {
             e.preventDefault();
             let url = $(this).data('route');

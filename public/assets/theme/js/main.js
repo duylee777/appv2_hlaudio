@@ -40,6 +40,15 @@
 	$('.drop-dropdown').on('click', function(e) {
 		e.stopPropagation();
 	});
+	
+	$(document).click(function(e) {
+		var dropdown = $(".drop-dropdown");
+		var toggleX = $('.drop-toggle');
+		if (!dropdown.is(e.target) && dropdown.has(e.target).length === 0 && !toggleX.is(e.target) && toggleX.has(e.target).length === 0)
+		{
+			dropdown.slideUp();
+		}
+	  });
 
 	// Nice Select
 	$('.select-option').niceSelect()
@@ -70,12 +79,15 @@
 	$('.slider-one').slick({
 		dots: true,
 		arrows: false,
+		autoplay:true,
+		autoplaySpeed :3000,
 	  });
 
 	// Slider Two Full Slider
 	$('.slider-two').slick({
 		dots: true,
 		arrows: false,
+		variableWidth: true,
 	  });
 
 	/*---------------------------------
@@ -84,6 +96,8 @@
 	$('.product-offer-slider').slick({
 		dots: false,
 		arrows: false,
+		autoplay:true,
+		autoplaySpeed:3000,
 	});
 	/*---------------------------------
 	Product Thing Carouse

@@ -131,6 +131,9 @@ Blog Details area Start
                                     @endif
                                 </div>
                             </div>
+                            @if (count($comment->where('comment_id',$cmt->id)->sortBy('created_at'))>3)
+                                <a class="more-cmt-reply btn-more-cmt cursor-p" style="display: block; color: blue; padding: 0px 0px 8px 80px;" >Xem thêm</a>
+                            @endif
                             @foreach ($comment->where('comment_id',$cmt->id)->sortBy('created_at') as $item)
                                 <div class="pro_review pro-second">
                                     <div class="review_thumb">
@@ -308,12 +311,10 @@ Blog Details area End
                 $('#show-more-cmt').css("display","none");
             }
             let childLength = $(this).children('.pro-second').length;
-            
             $.each($(this).children('.pro-second'), function(){
                 let parentSecond = $(this).parent(".parent-product").children('.pro-second');
                 if (parentSecond.index(this) < childLength - countShow) {
                     $(this).addClass("collapse");
-                    $(this).prev(".pro-first").after('<a class="more-cmt-reply btn-more-cmt" style="color: blue; padding: 0px 0px 8px 80px;" >Xem thêm</a>');
                 }
             })
         })
@@ -321,11 +322,21 @@ Blog Details area End
         $.each($('.btn-more-cmt'), function(){
             $(this).on("click", function(e){
                 if ($(this).hasClass("close-cmt")) {
-                    $.each($('.parent-product'), function(){
-                        if ($('.parent-product').index(this)>2) {
-                            $(this).addClass("collapse");
-                        }
-                    });
+                    if ($(this).hasClass("more-cmt-reply")) {
+                        let proSecond = $(this).siblings(".pro-second").length;
+                        $.each(($(this).siblings(".pro-second")), function(){
+                            if ($(this).index()< proSecond - 1) {
+                                $(this).addClass("collapse");
+                            }
+                        });
+                    }
+                    else{
+                        $.each($('.parent-product'), function(){
+                            if ($('.parent-product').index(this)>2) {
+                                $(this).addClass("collapse");
+                            }
+                        });
+                    }
                     $(this).removeClass("close-cmt");
                     $(this).html("Xem thêm");
                 }
@@ -334,8 +345,8 @@ Blog Details area End
                     if ($(this).hasClass("more-cmt-reply")) {
                         let proSecondHidden = $(this).siblings(".pro-second.collapse");
                         proSecondHidden.removeClass("collapse");
-                        console.log(proSecondHidden);
-                        $(this).attr("hidden",true);
+                        $(this).addClass("close-cmt");
+                        $(this).html("Thu gọn");
                     } else {
                         let countProFirst = $('.parent-product.collapse').length;
                         console.log(countProFirst);
@@ -398,9 +409,6 @@ Blog Details area End
                     },
                 });
                 }
-                
-                
-
             });
         }); 
         

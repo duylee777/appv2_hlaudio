@@ -16,11 +16,15 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\WishlistController;
 use App\Http\Controllers\Client\CompareController;
 use App\Http\Controllers\Client\CommentController;
+use App\Http\Controllers\Client\SearchController;
+use App\Http\Controllers\Client\OrderController as OrderClient;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +47,9 @@ Route::get('/dang-ky', [ClientController::class, 'registerClient'])->name('theme
 Route::get('/tai-khoan', [ClientController::class, 'account'])->name('theme.account');
 
 Route::get('/gioi-thieu', [ClientController::class, 'about'])->name('theme.about');
+
 Route::get('/lien-he', [ClientController::class, 'contact'])->name('theme.contact');
+Route::post('/lien-he', [ClientController::class, 'contactPost'])->name('theme.contact_post');
 
 Route::get('/cua-hang', [ClientController::class, 'shop'])->name('theme.shop');
 Route::get('/danh-muc/{category_slug?}', [ClientController::class, 'category'])->name('theme.category');
@@ -65,11 +71,29 @@ Route::post('/gio-hang/add-selected', [CartController::class, 'addSelected'])->n
 Route::post('/gio-hang/update/{product?}', [CartController::class, 'updateCartItem'])->name('theme.update_cart_item');
 Route::post('/gio-hang/delete/{product?}', [CartController::class, 'removeCartTable'])->name('theme.remove_item');
 Route::post('/gio-hang/clear', [CartController::class, 'clearCart'])->name('theme.clear_cart');
-Route::get('/thanh-toan', [ClientController::class, 'checkout'])->name('theme.checkout');
+
+Route::get('/thanh-toan', [OrderClient::class, 'checkout'])->name('theme.checkout');
+Route::post('/thanh-toan', [OrderClient::class, 'checkoutPost'])->name('theme.checkout_post');
+Route::post('/huy-don-hang/{id?}', [OrderClient::class, 'delOrder'])->name('theme.del_order');
 
 Route::get('/faq', [ClientController::class, 'faq'])->name('theme.faq');
-Route::get('/tim-kiem', [ClientController::class, 'search'])->name('theme.search');
+Route::get('/tim-kiem', [SearchController::class, 'search'])->name('theme.search');
 Route::get('/thuong-hieu/{slug_brand?}', [ClientController::class, 'brand'])->name('theme.brand');
+Route::post('/dang-ky-nhan-ban-tin', [ClientController::class, 'consultations'])->name('theme.consultations');
+
+Route::get('/chinh-sach-ban-hang', function() {
+    return view('theme.policy.ban-hang');
+});
+Route::get('/chinh-sach-giao-hang', function() {
+    return view('theme.policy.giao-hang');
+});
+Route::get('/chinh-sach-thanh-toan', function() {
+    return view('theme.policy.thanh-toan');
+});
+Route::get('/chinh-sach-bao-hanh-va-doi-tra', function() {
+    return view('theme.policy.bao-hanh');
+});
+
 
 // End Client
 
@@ -88,6 +112,9 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
     Route::resource('/tag', TagController::class);
     Route::resource('/post', PostController::class);
     Route::resource('/agency', AgencyController::class);
+    Route::get('/contact', [ContactController::class, 'index'])->name('admin.contact');
+    Route::post('/contact', [ContactController::class, 'update'])->name('admin.contact.update');
+    Route::resource('/order', OrderController::class);
     Route::prefix('/excel')->group(function() {
         Route::post('/import-products', [ExcelController::class, 'importProducts'])->name('admin.excel.import-products');
         Route::get('/export-products', [ExcelController::class, 'exportProducts'])->name('admin.excel.export-products');
@@ -98,9 +125,7 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
         Route::post('/edit/{id}', [UserController::class, 'update'])->name('admin.user.update');
         Route::post('/delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
     });
-    Route::get('/test', function() {
-        return view('admin.test');
-    });
+    Route::get('/user-comment', [CommentController::class, 'getAllComment'])->name('admin.comnment.index');
 
 });
 Route::middleware('auth')->group(function () {
@@ -111,20 +136,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/yeu-thich', [WishlistController::class, 'index'])->name('theme.wishlist');
     Route::post('/yeu-thich/xoa/{id?}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
     Route::post('/yeu-thich/xoa-da-chon', [WishlistController::class, 'destroy_selected'])->name('wishlist.destroy_selected');
+    
+    //them|xoa sp yeu thich
+    Route::post('/them-yeu-thich/{product_id}', [WishlistController::class, 'addToWishlist'])->name('addToWishlist');
+
+    //comment
+    Route::get('cmt/{id}', [CommentController::class, 'getPostComment'])->name('theme.comment');
+    Route::post('cmt/{id}/{cmt_id}/{is_post}', [CommentController::class, 'store'])->name('theme.storeComment');
+    Route::patch('hcmt/{id}', [CommentController::class, 'hideComment'])->name('theme.hideComment');
+    Route::post('delcmt/{id}', [CommentController::class, 'destroy'])->name('theme.destroyComment');
+    Route::patch('ecmt/{id}', [CommentController::class, 'update'])->name('theme.editComment');
 });
 
-//them|xoa sp yeu thich
-Route::post('/them-yeu-thich/{product_id}', [WishlistController::class, 'addToWishlist'])->name('addToWishlist');
 
 //so sánh
 Route::get('/so-sanh', [CompareController::class, 'showCompare'])->name('theme.compare');
 Route::get('so-sanh/them-san-pham', [CompareController::class, 'storeSession'])->name('storeSession');
-
-//comment
-Route::get('cmt/{id}', [CommentController::class, 'getPostComment'])->name('theme.comment');
-Route::post('cmt/{id}/{cmt_id}/{is_post}', [CommentController::class, 'store'])->name('theme.storeComment');
-Route::patch('hcmt/{id}', [CommentController::class, 'hideComment'])->name('theme.hideComment');
-Route::post('delcmt/{id}', [CommentController::class, 'destroy'])->name('theme.destroyComment');
-Route::patch('ecmt/{id}', [CommentController::class, 'update'])->name('theme.editComment');
 
 require __DIR__.'/auth.php';

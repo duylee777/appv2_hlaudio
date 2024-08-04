@@ -23,8 +23,8 @@
                             Không có sản phẩm nào để so sánh.
                         @else
                             <div class="compare-table">
-                                <div class="table ">
-                                    <table style="width:100%">
+                                <div class="table" style="width: 100%; overflow-x: scroll;">
+                                    <table class="compare-table">
                                         <tbody>
                                             <tr>
                                                 <td class="first-column">Hinh ảnh</td>
@@ -34,8 +34,7 @@
                                                     @endphp
                                                     <td class="product-image">
                                                         <a href="{{ route('theme.product_detail', $product->slug) }}">
-                                                            <img style="max-width: 300px;" src="{{ asset('../storage/products/' . $product->code . '/image/' . $images[0]) }}"
-                                                                alt="" class="img-fluid">
+                                                            <img class="img-fluid" src="{{ asset('../storage/products/' . $product->code . '/image/' . $images[0]) }}">
                                                         </a>
                                                     </td>
                                                 @endforeach
