@@ -12,7 +12,7 @@ use App\Models\Tag;
 use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\Consultations;
-
+use App\Models\SettingWeb;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -45,7 +45,17 @@ class ClientController extends Controller
     public function home() {
         $categories = Category::all();
         $latestProducts = Product::where('is_active', true)->orderBy('created_at', 'DESC')->get()->take(6);
-        $bestSellerProducts = Product::where('is_active', true)->get()->take(6);
+
+        // Best seller 
+        // $bestSellerProducts = Product::where('is_active', true)->get()->take(6);
+        $listBestSellers = json_decode(SettingWeb::where('type', 'best_seller')->first()->value);
+        $bestSellerProducts = Product::whereIn('code', $listBestSellers)->where('is_active', true)->get()->take(9);
+
+        // Sale Offer 
+        $listSaleOffer = json_decode(SettingWeb::where('type', 'sale_offer')->first()->value);
+        // $saleOfferProducts = Product::whereIn('code', array_column($listSaleOffer, 'code'))->where('is_active', true)->get();
+        // dd($saleOfferProducts); die;
+
         $featuredProducts = Product::where('is_active', true)->where('is_featured', true)->orderBy('created_at', 'DESC')->get()->take(6);
         $productCategories = Category::where('slug', 'san-pham')->first()->children()->get();
         $brands = Brand::orderBy('id', 'ASC')->get();
@@ -53,7 +63,9 @@ class ClientController extends Controller
         $projects = Post::where('category_id', $categoryProject->id)->orderBy('id', 'DESC')->take(4)->get();
         $categoryNews = Category::where('slug', 'bai-viet-mac-dinh')->first();
         $news = Post::where('category_id', $categoryNews->id)->orderBy('id', 'DESC')->take(4)->get();
-        return view('theme.home', compact('categories', 'latestProducts', 'bestSellerProducts', 'featuredProducts', 'productCategories', 'brands', 'projects', 'news'));
+
+
+        return view('theme.home', compact('categories', 'latestProducts', 'bestSellerProducts', 'featuredProducts', 'productCategories', 'brands', 'projects', 'news', 'listSaleOffer'));
     }
 
     public function about() {

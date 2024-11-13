@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ExcelController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SettingWebController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\OrderController;
@@ -109,6 +110,7 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
     Route::resource('/discount', DiscountController::class);
     Route::resource('/inventory', InventoryController::class);
     Route::resource('/product', ProductController::class);
+    Route::resource('/setting-web', SettingWebController::class);
     Route::resource('/tag', TagController::class);
     Route::resource('/post', PostController::class);
     Route::resource('/agency', AgencyController::class);

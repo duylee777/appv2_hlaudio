@@ -66,7 +66,19 @@ Product Details Area Start
                         <span class="d-block">Đơn vị tính: <strong>{{$product->unit->name}}</strong></span>
                     </div>
                     <div class="price-box">
-                        <span class="regular-price">{{$product->cost_price}} vnd</span>
+                        @php
+                            $discount = App\Models\Discount::find($product->discount_id);
+                        @endphp
+                        @if($product->odd_price == 0)
+                            <span class="regular-price">Liên hệ</span>
+                        @else
+                            @if ($discount->discount_percent != 0 && $discount->is_active)
+                            <span class="regular-price" style="display: inline-block">{{ Illuminate\Support\Number::currency($product->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                            <span class="old-price"><del>{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                            @else
+                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                            @endif
+                        @endif
                     </div>
                     
                     <!-- <div class="product-description"></div> -->
@@ -369,7 +381,7 @@ Product Details Area Start
                                         // var_dump($relatedProduct->slug); die;
                                     @endphp
                                     <a href="{{route('theme.product_detail', $relatedProduct->slug)}}">
-                                        <img src="{{asset('../storage/products/'.$relatedProduct->code.'/image/'.$images[0])}}" alt="" class="img-fluid">
+                                        <img src="{{asset('../storage/products/'.$relatedProduct->code.'/image/'.$images[0])}}" alt="" class="img-fluid" style="height: 250px; width: 100%; object-fit: contain;">
                                     </a>
                                     <div class="box-label">
                                         <div class="label-product-new">
@@ -426,7 +438,19 @@ Product Details Area Start
                                         <span class="yellow"><i class="fa fa-star"></i></span>
                                     </div>
                                     <div class="price-box">
-                                        <span class="regular-price">{{$relatedProduct->cost_price}} vnd</span>
+                                        @php
+                                            $discount = App\Models\Discount::find($relatedProduct->discount_id);
+                                        @endphp
+                                        @if($relatedProduct->odd_price == 0)
+                                            <span class="regular-price">Liên hệ</span>
+                                        @else
+                                            @if ($discount->discount_percent != 0 && $discount->is_active)
+                                            <span class="regular-price" style="display: inline-block">{{ Illuminate\Support\Number::currency($relatedProduct->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                            <span class="old-price"><del>{{ Illuminate\Support\Number::currency($relatedProduct->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                            @else
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($relatedProduct->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                            @endif
+                                        @endif
                                     </div>
                                     <div class="cart">
                                         <div class="add-to-cart">

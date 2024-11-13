@@ -189,13 +189,14 @@ Product Area Start
                         <div class="product-thing slick-custom slick-custom-default">
                             @foreach($latestProducts as $latestProduct)
                                 @php
+                                    $discount = App\Models\Discount::find($latestProduct->discount_id);
                                     $images = json_decode($latestProduct->image);
                                 @endphp
                                 <!-- Single-Product-Start -->
                                 <div class="item-product">
                                     <div class="product-thumb">
                                         <a href="{{route('theme.product_detail', $latestProduct->slug)}}">
-                                            <img src="{{asset('../storage/products/'.$latestProduct->code.'/image/'.$images[0])}}" alt="{{ $latestProduct->name }}" class="img-fluid">
+                                            <img src="{{asset('../storage/products/'.$latestProduct->code.'/image/'.$images[0])}}" alt="{{ $latestProduct->name }}" class="img-fluid" style="height: 200px; width: 100%; object-fit: contain;">
                                         </a>
                                         <div class="box-label">
                                             <div class="label-product-new">
@@ -259,6 +260,13 @@ Product Area Start
                                             <span class="regular-price">
                                                 @if($latestProduct->odd_price == 0)
                                                     Liên hệ
+                                                @else
+                                                    @if ($discount->discount_percent != 0 && $discount->is_active)
+                                                    <span class="regular-price">{{ Illuminate\Support\Number::currency($latestProduct->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                                    <span class="old-price"><del>{{ Illuminate\Support\Number::currency($latestProduct->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                                    @else
+                                                    <span class="regular-price">{{ Illuminate\Support\Number::currency($latestProduct->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                                    @endif
                                                 @endif
                                             </span>
                                         </div>
@@ -289,13 +297,14 @@ Product Area Start
                         <div class="product-thing slick-custom slick-custom-default">
                             @foreach($bestSellerProducts as $bestSellerProduct)
                             @php
+                                $discount = App\Models\Discount::find($bestSellerProduct->discount_id);
                                 $images = json_decode($bestSellerProduct->image);
                             @endphp
                             <!-- Single-Product-Start -->
                             <div class="item-product">
                                 <div class="product-thumb">
                                     <a href="{{route('theme.product_detail', $bestSellerProduct->slug)}}">
-                                        <img src="{{asset('../storage/products/'.$bestSellerProduct->code.'/image/'.$images[0])}}" alt="{{ $bestSellerProduct->name }}" class="img-fluid">
+                                        <img src="{{asset('../storage/products/'.$bestSellerProduct->code.'/image/'.$images[0])}}" alt="{{ $bestSellerProduct->name }}" class="img-fluid" style="height: 200px; width: 100%; object-fit: contain;">
                                     </a>
                                     
                                     <div class="action-link">
@@ -353,7 +362,14 @@ Product Area Start
                                     <div class="price-box">
                                         <span class="regular-price">
                                             @if($bestSellerProduct->odd_price == 0)
-                                                Liên hệ
+                                                    Liên hệ
+                                            @else
+                                                @if ($discount->discount_percent != 0 && $discount->is_active)
+                                                <span class="regular-price">{{ Illuminate\Support\Number::currency($bestSellerProduct->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                                <span class="old-price"><del>{{ Illuminate\Support\Number::currency($bestSellerProduct->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                                @else
+                                                <span class="regular-price">{{ Illuminate\Support\Number::currency($bestSellerProduct->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                                @endif
                                             @endif
                                         </span>
                                     </div>
@@ -384,13 +400,14 @@ Product Area Start
                         <div class="product-thing slick-custom slick-custom-default">
                             @foreach($featuredProducts as $featuredProduct)
                             @php
+                                $discount = App\Models\Discount::find($featuredProduct->discount_id);
                                 $images = json_decode($featuredProduct->image);
                             @endphp
                             <!-- Single-Product-Start -->
                             <div class="item-product">
                                 <div class="product-thumb">
                                     <a href="{{route('theme.product_detail', $featuredProduct->slug)}}">
-                                        <img src="{{asset('../storage/products/'.$featuredProduct->code.'/image/'.$images[0])}}" alt="{{ $featuredProduct->name }}" class="img-fluid">
+                                        <img src="{{asset('../storage/products/'.$featuredProduct->code.'/image/'.$images[0])}}" alt="{{ $featuredProduct->name }}" class="img-fluid" style="height: 200px; width: 100%; object-fit: contain;">
                                     </a>
                                     {{-- <div class="label-product-discount">
                                         <span>-20%</span>
@@ -449,7 +466,14 @@ Product Area Start
                                     <div class="price-box">
                                         <span class="regular-price">
                                             @if($featuredProduct->odd_price == 0)
-                                                Liên hệ
+                                                    Liên hệ
+                                            @else
+                                                @if ($discount->discount_percent != 0 && $discount->is_active)
+                                                <span class="regular-price">{{ Illuminate\Support\Number::currency($featuredProduct->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                                <span class="old-price"><del>{{ Illuminate\Support\Number::currency($featuredProduct->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                                @else
+                                                <span class="regular-price">{{ Illuminate\Support\Number::currency($featuredProduct->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                                @endif
                                             @endif
                                         </span>
                                     </div>
@@ -488,33 +512,36 @@ Product Area End
 <!-- ================
 Sale Offer Area Start
 =====================-->
-@php
-    $images = json_decode($featuredProducts[0]->image); 
-@endphp
 <div class="sales-offer-area mb-45 mt-10">
     <div class="container">
         <div class="row">
             <div class="col-lg-9 col-12">
                 <div class="product-offer-slider slick-custom-default">
+                    @foreach ($listSaleOffer as $saleOffer)
+                    @php
+                        $item = App\Models\Product::where('code', $saleOffer->code)->where('is_active', true)->first();
+                        $discount = App\Models\Discount::find($item->discount_id);
+                        $images = json_decode($item->image); 
+                    @endphp
                     <div class="flash-single-item">
                         <div class="product-item">
                             <span class="offer-bar">
                                 <img src="assets/theme/images/product/sale-offer.webp" alt="" style="width: 70%;">
                             </span>
                             <div class="product-thumb">
-                                <a href="{{route('theme.product_detail', $featuredProducts[0]->slug)}}">
-                                    <img src="{{asset('../storage/products/'.$featuredProducts[0]->code.'/image/'.$images[0])}}" alt="{{$featuredProducts[0]->name}}" class="img-fluid">
+                                <a href="{{route('theme.product_detail', $item->slug)}}">
+                                    <img src="{{asset('../storage/products/'.$item->code.'/image/'.$images[0])}}" alt="{{$item->name}}" class="img-fluid">
                                 </a>
                                 <div class="box-label">
                                     <div class="label-product-discount">
-                                        <span>-20%</span>
+                                        <span>-{{$discount->discount_percent * 1}}%</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="product-caption">
                                 <div class="product-name mb-20">
-                                    <a href="{{route('theme.product_detail', $featuredProducts[0]->slug)}}">
-                                        <h6>{{$featuredProducts[0]->name}}</h6>
+                                    <a href="{{route('theme.product_detail', $item->slug)}}">
+                                        <h6>{{$item->name}}</h6>
                                     </a>
                                 </div>
                                 <div class="rating">
@@ -522,28 +549,31 @@ Sale Offer Area Start
                                     <span class="yellow"><i class="fa fa-star"></i></span>
                                     <span class="yellow"><i class="fa fa-star"></i></span>
                                     <span class="yellow"><i class="fa fa-star"></i></span>
-                                    <span class="default-star"><i class="fa fa-star"></i></span>
+                                    <span class="yellow"><i class="fa fa-star"></i></span>
+                                    {{-- <span class="default-star"><i class="fa fa-star"></i></span> --}}
                                 </div>
                                 <div class="price-box mt-15 mb-15">
-                                    <span class="regular-price">{{$featuredProducts[0]->cost_price}}</span>
-                                    <span class="old-price"><del>{{$featuredProducts[0]->odd_price}}</del></span>
+                                    <span class="regular-price">{{ Illuminate\Support\Number::currency($item->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                    <span class="old-price"><del>{{ Illuminate\Support\Number::currency($item->odd_price, in: 'VND', locale: 'vi') }}</del></span>
                                 </div>
                                 <div class="product-pre-content mb-30">
-                                    <p>The Philips CSS 6002K Amplifier is considered one of the upcoming masterpieces that the Philips brand will launch in the audio market. With the perfect 3-in-1 integration between the features of the pusher, digital reverberation, and microphone, it provides outstanding sound processing capabilities and flexible connectivity for users with extremely interesting experiences.</p>
+                                    <p>{{$saleOffer->description}}</p>
                                 </div>
                                 <div class="countdown">
                                     <div class="box-countdown">
                                         <div class="title-countdown">
                                             <h6 class="mb-20">Hãy nhanh tay! Ưu đãi kết thúc sau:</h6>
                                         </div>
-                                        <div data-countdown="2024/7/1">
+                                        <div data-countdown="{{$discount->is_active ? date("Y-m-d H:i:s", strtotime($saleOffer->timeSale)) : "2000-1-1"}}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="flash-single-item">
+                    </div>    
+                    @endforeach
+                    
+                    {{-- <div class="flash-single-item">
                         <div class="product-item">
                             <span class="offer-bar"><img src="assets/theme/images/product/sale-offer.webp" alt=""></span>
                             <div class="product-thumb">
@@ -587,7 +617,7 @@ Sale Offer Area Start
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-lg-3 col-12 text-center">
@@ -640,13 +670,14 @@ Category Product Area Start
                         @endphp
                         @foreach($productOfCategories as $product)
                             @php
+                                $discount = App\Models\Discount::find($product->discount_id);
                                 $images = json_decode($product->image);
                             @endphp
                             <!-- Single-Product-Start -->
                             <div class="item-product">
                                 <div class="product-thumb">
                                     <a href="{{route('theme.product_detail', $product->slug)}}">
-                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid" style="height: 210px; width: 100%; object-fit: contain;">
                                     </a>
                                     {{-- <div class="label-product-discount">
                                         <span>-20%</span>
@@ -706,6 +737,13 @@ Category Product Area Start
                                         <span class="regular-price">
                                             @if($product->odd_price == 0)
                                                 Liên hệ
+                                            @else
+                                                @if ($discount->discount_percent != 0 && $discount->is_active)
+                                                <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                                <span class="old-price"><del>{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                                @else
+                                                <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                                @endif
                                             @endif
                                         </span>
                                     </div>
@@ -797,16 +835,17 @@ Feature Area Start
                         <div class="product-list-content">
                             @foreach($items as $key => $product)
                             @php
+                                $discount = App\Models\Discount::find($product->discount_id);
                                 $images = json_decode($product->image);
                             @endphp
                             <div class="single-product-list {{$key == count($items)-1 ? '' : 'mb-20'}}">
                                 <div class="product-list-image">
                                     <a href="{{route('theme.product_detail', $product->slug)}}">
-                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one" style="height: 100px; width: 100%; object-fit: contain;">
                                         @if(!empty($images[1]))
-                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two" style="height: 100px; width: 100%; object-fit: contain;">
                                         @else
-                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two" style="height: 100px; width: 100%; object-fit: contain;">
                                         @endif
                                     </a>
                                 </div>
@@ -822,7 +861,16 @@ Feature Area Start
                                         <span class="yellow"><i class="fa fa-star"></i></span>
                                     </div>
                                     <div class="price-box">
-                                        <span class="regular-price">{{ $product->odd_price }}</span>
+                                        @if($product->odd_price == 0)
+                                            <span class="regular-price">Liên hệ</span>
+                                        @else
+                                            @if ($discount->discount_percent != 0 && $discount->is_active)
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                            <span class="old-price"><del>{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                            @else
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -857,16 +905,17 @@ Feature Area Start
                         <div class="product-list-content">
                             @foreach($items as $key => $product)
                             @php
+                                $discount = App\Models\Discount::find($product->discount_id);
                                 $images = json_decode($product->image);
                             @endphp
                             <div class="single-product-list {{$key == count($items)-1 ? '' : 'mb-20'}}">
                                 <div class="product-list-image">
                                     <a href="{{route('theme.product_detail', $product->slug)}}">
-                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one" style="height: 100px; width: 100%; object-fit: contain;">
                                         @if(!empty($images[1]))
-                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two" style="height: 100px; width: 100%; object-fit: contain;">
                                         @else
-                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two" style="height: 100px; width: 100%; object-fit: contain;">
                                         @endif
                                     </a>
                                 </div>
@@ -882,7 +931,16 @@ Feature Area Start
                                         <span class="yellow"><i class="fa fa-star"></i></span>
                                     </div>
                                     <div class="price-box">
-                                        <span class="regular-price">{{ $product->odd_price }}</span>
+                                        @if($product->odd_price == 0)
+                                            <span class="regular-price">Liên hệ</span>
+                                        @else
+                                            @if ($discount->discount_percent != 0 && $discount->is_active)
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                            <span class="old-price"><del>{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                            @else
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -917,16 +975,17 @@ Feature Area Start
                         <div class="product-list-content">
                             @foreach($items as $key => $product)
                             @php
+                                $discount = App\Models\Discount::find($product->discount_id);
                                 $images = json_decode($product->image);
                             @endphp
                             <div class="single-product-list {{$key == count($items)-1 ? '' : 'mb-20'}}">
                                 <div class="product-list-image">
                                     <a href="{{route('theme.product_detail', $product->slug)}}">
-                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-one" style="height: 100px; width: 100%; object-fit: contain;">
                                         @if(!empty($images[1]))
-                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[1])}}" alt="{{ $product->name }}" class="img-fluid block-two" style="height: 100px; width: 100%; object-fit: contain;">
                                         @else
-                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two">
+                                            <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="{{ $product->name }}" class="img-fluid block-two" style="height: 100px; width: 100%; object-fit: contain;">
                                         @endif
                                     </a>
                                 </div>
@@ -942,7 +1001,16 @@ Feature Area Start
                                         <span class="yellow"><i class="fa fa-star"></i></span>
                                     </div>
                                     <div class="price-box">
-                                        <span class="regular-price">{{ $product->odd_price }}</span>
+                                        @if($product->odd_price == 0)
+                                            <span class="regular-price">Liên hệ</span>
+                                        @else
+                                            @if ($discount->discount_percent != 0 && $discount->is_active)
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                            <span class="old-price"><del>{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                            @else
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
                             </div>

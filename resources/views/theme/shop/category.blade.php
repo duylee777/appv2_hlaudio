@@ -186,6 +186,7 @@ Shop area Start
                     @if($countProd != 0)
                         @foreach($products as $key => $product)
                         @php
+                            $discount = App\Models\Discount::find($product->discount_id);
                             $images = json_decode($product->image);
                         @endphp
                         <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-20">
@@ -193,7 +194,7 @@ Shop area Start
                             <div data-brand="{{$product->brand_id}}" data-name="{{$product->name}}" class="item-product {{$key == 0 ? 'pt-0': ''}} {{$key == count((array)$products) - 1 ? 'pb-0 no-border-bottom': ''}}">
                                 <div class="product-thumb">
                                     <a href="{{route('theme.product_detail', $product->slug)}}">
-                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="" class="img-fluid">
+                                        <img src="{{asset('../storage/products/'.$product->code.'/image/'.$images[0])}}" alt="" class="img-fluid" style="height: 250px; width: 100%; object-fit: contain;">
                                     </a>
                                     {{-- <div class="box-label">
                                         <div class="label-product-new">
@@ -250,8 +251,16 @@ Shop area Start
                                         <span class="yellow"><i class="fa fa-star"></i></span>
                                     </div>
                                     <div class="price-box">
-                                        <span class="regular-price">{{$product->odd_price}}</span>
-                                        <span class="old-price"><del>{{$product->cost_price}}</del></span>
+                                        @if($product->odd_price == 0)
+                                            <span class="regular-price">Liên hệ</span>
+                                        @else
+                                            @if ($discount->discount_percent != 0 && $discount->is_active)
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price / 100 * (100 - $discount->discount_percent), in: 'VND', locale: 'vi') }}</span>
+                                            <span class="old-price"><del>{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</del></span>    
+                                            @else
+                                            <span class="regular-price">{{ Illuminate\Support\Number::currency($product->odd_price, in: 'VND', locale: 'vi') }}</span>    
+                                            @endif
+                                        @endif
                                     </div>
                                     <div class="cart">
                                         <div class="add-to-cart">
