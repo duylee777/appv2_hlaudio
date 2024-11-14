@@ -73,11 +73,11 @@
                 @endphp
                 <div class="p-4 mb-4 grid gap-4 grid-cols-1 lg:grid-cols-2 bg-white shadow-md sm:rounded-lg">
                     <div class="product-parent col-span-2 flex flex-row">
-                        <div class="w-[60%]">
+                        <div class="w-[50%]">
                             <label for="search-name1" class="block mb-2 text-sm font-medium text-gray-900">Sản phẩm 1</label>
                             <input type="text" id="search-name1" class="search-name input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Chọn sản phẩm ..." required="" value="{{$project1->name}} - {{$project1->code}}">
                             <input type="text" id="input-value1" name="nameValue1" class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 hidden" placeholder="Chọn sản phẩm ..." required="" required="" value="{{$project1->code}}">
-                            <div class="products-div max-h-[300px] w-[80%] overflow-y-auto hidden">
+                            <div class="products-div max-h-[300px] w-full overflow-y-auto hidden">
                                 <ul>
                                     @foreach ($productSales as $item)
                                         <li class="product-item">
@@ -91,7 +91,7 @@
                             
                             <div class="col-span-2 pt-5">
                                 <label for="product-des1" class="block mb-2 text-sm font-medium text-gray-900">Mô tả sản phẩm</label>
-                                <input type="text" id="product-des1" name="productDes1" class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Mô tả sản phẩm ..." required="" value="{{$listSaleOffer[0]->description}}">
+                                <textarea id="product-des1" name="productDes1" rows="3"  class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Mô tả sản phẩm ..." required="">{{$listSaleOffer[0]->description}}</textarea>
                             </div>
 
                             <div class="col-span-2 pt-5">
@@ -100,10 +100,10 @@
                             </div> 
                         </div>
 
-                        <div class="w-[40%] pl-5">
+                        <div class="w-[50%] pl-5">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Hình ảnh sản phẩm</label>
-                            <div class="w-[30%]">
-                                <img src="{{$project1->image == "[]" ? "https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" : asset('../storage/products/'.$project1->code.'/image/'.json_decode($project1->image)[0])}}" alt="product 1"> 
+                            <div class="w-full">
+                                <img class="w-[60%] mx-auto" src="{{$project1->image == "[]" ? "https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" : asset('../storage/products/'.$project1->code.'/image/'.json_decode($project1->image)[0])}}" alt="product 1"> 
                             </div>
                             
                         </div>
@@ -111,11 +111,11 @@
                 </div>
                 <div class="p-4 mb-4 grid gap-4 grid-cols-1 lg:grid-cols-2 bg-white shadow-md sm:rounded-lg">
                     <div class="product-parent col-span-2 flex flex-row">
-                        <div class="w-[60%]">
+                        <div class="w-[50%]">
                             <label for="search-name2" class="block mb-2 text-sm font-medium text-gray-900">Sản phẩm 2</label>
                             <input type="text" id="search-name2" class="search-name input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Chọn sản phẩm ..." required="" value="{{$project2->name}} - {{$project2->code}}">
                             <input type="text" id="input-value2" name="nameValue2" class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 hidden" placeholder="Chọn sản phẩm ..." required="" value="{{$project2->code}}">
-                            <div class="products-div max-h-[300px] w-[80%] overflow-y-auto hidden">
+                            <div class="products-div max-h-[300px] w-full overflow-y-auto hidden">
                                 <ul>
                                     @foreach ($productSales as $item)
                                         <li class="product-item">
@@ -129,7 +129,7 @@
                             
                             <div class="col-span-2 pt-5">
                                 <label for="product-des2" class="block mb-2 text-sm font-medium text-gray-900">Mô tả sản phẩm</label>
-                                <input type="text" id="product-des2" name="productDes2" class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Mô tả sản phẩm ..." required="" value="{{$listSaleOffer[1]->description}}">
+                                <textarea id="product-des2" name="productDes2" rows="3"  class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Mô tả sản phẩm ..." required="">{{$listSaleOffer[1]->description}}</textarea>
                             </div> 
                         
                             <div class="col-span-2 pt-5">
@@ -139,10 +139,10 @@
 
                         </div>
 
-                        <div class="w-[40%] pl-5">
+                        <div class="w-[50%] pl-5">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Hình ảnh sản phẩm</label>
-                            <div class="w-[30%]">
-                                <img src="{{$project2->image == "[]" ? "https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" : asset('../storage/products/'.$project2->code.'/image/'.json_decode($project2->image)[0])}}" alt=""> 
+                            <div class="w-full">
+                                <img class="w-[60%] mx-auto" src="{{$project2->image == "[]" ? "https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" : asset('../storage/products/'.$project2->code.'/image/'.json_decode($project2->image)[0])}}" alt=""> 
                             </div>
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                     $projectBestSeller = App\Models\Product::whereIn('code', $listBestSeller)->where('is_active', true)->get();
                 @endphp
                 <div class="p-4 mb-4 grid gap-4 grid-cols-1 lg:grid-cols-2 bg-white shadow-md sm:rounded-lg">
-                    <div class="product-parent col-span-2 flex flex-row">
+                    <div class="product-parent col-span-2 flex flex-row min-h-[350px]">
                         <div class="w-[50%]">
                             <div class="hidden">
                                 <label class="block mb-2 text-sm font-medium text-gray-900">Danh sách sản phẩm</label>
@@ -187,7 +187,7 @@
                             
                             <div class="products-div max-h-[160px] w-[80%] overflow-y-auto hidden">
                                 <ul>
-                                    @foreach ($productSales as $item)
+                                    @foreach ($products as $item)
                                         <li class="product-item">
                                             <div class="item-name item-bs p-2.5 hover:bg-[#1c64f2] cursor-pointer" data-code="{{$item->code}}" data-image="{{$item->image == "[]"? "https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" : asset('../storage/products/'.$item->code.'/image/'.json_decode($item->image)[0])}}">
                                                 {{$item->name}} - {{$item->code}} 
@@ -195,10 +195,23 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                            </div>  
+                            </div> 
+                            
+                            <div class="flex items-center flex-wrap gap-4 mt-10">
+                                <button type="submit" class="text-white inline-flex items-center bg-green-500 hover:bg-green-700 border-2 border-green-500 hover:border-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    <svg class="me-1 -ms-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
+                                        <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
+                                    </svg>
+                                    Cập nhật
+                                </button>
+                                
+                                <a href="{{ route('setting-web.index') }}" type="button" class="btn_cancel text-black inline-flex items-center border-2 bg-white rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Hủy bỏ
+                                </a>
+                            </div>
                         </div>
 
-                        <div class="w-[50%] pl-5">
+                        <div class="w-[50%] p-5">
                             <div class="list-best-seller flex flex-row flex-wrap gap-2.5">
                                 @foreach ($projectBestSeller as $item)
                                 <div class="item-best-seller relative w-[40%] max-w-[calc(50%-15px)] grow text-center m-[5px] p-[5px] border border-[#d1d5db]">
@@ -208,18 +221,6 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div>
-                    <div class="flex items-center flex-wrap gap-4">
-                        <button type="submit" class="text-white inline-flex items-center bg-green-500 hover:bg-green-700 border-2 border-green-500 hover:border-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                            <svg class="me-1 -ms-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
-                                <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
-                            </svg>
-                            Cập nhật
-                        </button>
-                        
-                        <a href="{{ route('setting-web.index') }}" type="button" class="btn_cancel text-black inline-flex items-center border-2 bg-white rounded-lg text-sm px-5 py-2.5 text-center">
-                            Hủy bỏ
-                        </a>
                     </div>
                 </div>
             </section>
@@ -298,7 +299,7 @@
     $.each($(".delete-best-seller"), function () {
         $(this).on("click", function () {
             let thisParent = $(this).parent(".item-best-seller");
-            removeElement(arrBestSeller, thisParent.find("p").text());
+            removeElement(arrBestSeller, $.trim(thisParent.find("p").text()));
             removeElement(arrBestSellerInput, $(this).data("code"));
             thisParent.remove();
             $('#input-value3').val(arrBestSellerInput);
@@ -324,7 +325,14 @@
                 $.each(arrBestSeller, function (index, value) {
                     thisListBestSeller.append('<div class="item-best-seller relative w-[40%] max-w-[calc(50%-15px)] grow text-center m-[5px] p-[5px] border border-[#d1d5db]"><p>'+ value + '</p><div class="delete-best-seller absolute bg-[#fff] -top-[0.8em] -right-[0.8em] w-[1.6em] rounded-full border border-[#d1d5db] rotate-45 cursor-pointer" data-code="'+ arrBestSellerInput[index] +'">+</div></div>');
                 })
-                
+                $.each($(".delete-best-seller"), function () {
+                    $(this).on("click", function () {
+                        let thisParent = $(this).parent(".item-best-seller");
+                        removeElement(arrBestSeller, thisParent.find("p").text());removeElement(arrBestSellerInput, $(this).data("code"));
+                        thisParent.remove();
+                        thisInputValue.val(arrBestSellerInput);
+                    })
+                })
                 thisInputValue.val(arrBestSellerInput);
                 // console.log(arrBestSellerInput.length);
             } else {

@@ -82,7 +82,7 @@
                 <h3 class="text-[24px] pt-2.5">Sale Offer</h3>
                 <div class="p-4 mb-4 grid gap-4 grid-cols-1 lg:grid-cols-2 bg-white shadow-md sm:rounded-lg">
                     <div class="product-parent col-span-2 flex flex-row">
-                        <div class="w-[60%]">
+                        <div class="w-[50%]">
                             <label for="search-name1" class="block mb-2 text-sm font-medium text-gray-900">Chọn sản phẩm</label>
                             <input type="text" id="search-name1" name="name1" class="search-name input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Chọn sản phẩm ..." required="">
                             <input type="text" id="input-value1" name="nameValue1" class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 hidden" placeholder="Chọn sản phẩm ..." required="">
@@ -100,7 +100,7 @@
                             
                             <div class="col-span-2 pt-5">
                                 <label for="product-des1" class="block mb-2 text-sm font-medium text-gray-900">Mô tả sản phẩm</label>
-                                <input type="text" id="product-des1" name="productDes1" class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Mô tả sản phẩm ..." required="">
+                                <textarea id="product-des1" name="productDes1" rows="3"  class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Mô tả sản phẩm ..." required=""></textarea>
                             </div>
 
                             <div class="col-span-2 pt-5">
@@ -109,10 +109,10 @@
                             </div> 
                         </div>
 
-                        <div class="w-[40%] pl-5">
+                        <div class="w-[50%] pl-5">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Hình ảnh sản phẩm</label>
-                            <div class="w-[30%]">
-                                <img src="https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt=""> 
+                            <div class="w-full">
+                                <img class="w-[60%] mx-auto" src="https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt=""> 
                             </div>
                             
                         </div>
@@ -120,7 +120,7 @@
                 </div>
                 <div class="p-4 mb-4 grid gap-4 grid-cols-1 lg:grid-cols-2 bg-white shadow-md sm:rounded-lg">
                     <div class="product-parent col-span-2 flex flex-row">
-                        <div class="w-[60%]">
+                        <div class="w-[50%]">
                             <label for="search-name2" class="block mb-2 text-sm font-medium text-gray-900">Chọn sản phẩm</label>
                             <input type="text" id="search-name2" name="name2" class="search-name input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Chọn sản phẩm ..." required="">
                             <input type="text" id="input-value2" name="nameValue2" class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 hidden" placeholder="Chọn sản phẩm ..." required="">
@@ -138,7 +138,7 @@
                             
                             <div class="col-span-2 pt-5">
                                 <label for="product-des2" class="block mb-2 text-sm font-medium text-gray-900">Mô tả sản phẩm</label>
-                                <input type="text" id="product-des2" name="productDes2" class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Mô tả sản phẩm ..." required="">
+                                <textarea id="product-des2" name="productDes1" rows="3"  class="input-value bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Mô tả sản phẩm ..." required=""></textarea>
                             </div> 
                         
                             <div class="col-span-2 pt-5">
@@ -148,10 +148,10 @@
 
                         </div>
 
-                        <div class="w-[40%] pl-5">
+                        <div class="w-[50%] pl-5">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Hình ảnh sản phẩm</label>
-                            <div class="w-[30%]">
-                                <img src="https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt=""> 
+                            <div class="w-full">
+                                <img class="w-[60%] mx-auto" src="https://images.pexels.com/photos/698275/pexels-photo-698275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt=""> 
                             </div>
                         </div>
                     </div>
@@ -168,7 +168,7 @@
                             <label for="search-name3" class="block mt-5  mb-2 text-sm font-medium text-gray-900">Chọn sản phẩm</label>
                             <input type="text" id="search-name3" name="name3" class="search-name bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Tìm sản phẩm ...">
                             
-                            <div class="products-div max-h-[160px] w-[80%] overflow-y-auto hidden">
+                            <div class="products-div max-h-[160px] w-full overflow-y-auto hidden">
                                 <ul>
                                     @foreach ($products as $item)
                                         <li class="product-item">
