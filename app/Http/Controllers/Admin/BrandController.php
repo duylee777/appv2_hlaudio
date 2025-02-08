@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\SEO;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -63,7 +65,40 @@ class BrandController extends Controller
                     "image" => $imageName,
                 ];
                 $newBrand = Brand::create($newBrandData);
-        
+                
+                $newSEOData = [
+                    'name' => json_encode('Thương hiệu id '.$newBrand->id),
+                    'type' => 'BRAND',
+                    'type_id' => $newBrand->id,
+                    'title' => is_null($request->seo_title)? null : json_encode($request->seo_title),
+                    'description' => is_null($request->seo_description)? null : json_encode($request->seo_description),
+                    'keywords' => is_null($request->seo_keywords)? null : json_encode($request->seo_keywords),
+                    'og_site_name' => is_null($request->seo_og_site_name)? null : json_encode($request->seo_og_site_name),
+                    'og_description' => is_null($request->seo_og_description)? null : json_encode($request->seo_og_description),
+                    'og_title' => is_null($request->seo_og_title)? null : json_encode($request->seo_og_title),
+                    'og_type' => is_null($request->seo_og_type)? null : json_encode($request->seo_og_type),
+                    'og_url' => is_null($request->seo_og_url)? null : json_encode($request->seo_og_url),
+                    'og_image' => is_null($request->seo_og_image)? null : json_encode($request->seo_og_image),
+                    'og_image_height' => is_null($request->seo_og_image_height)? null : json_encode($request->seo_og_image_height),
+                    'og_image_width' => is_null($request->seo_og_image_width)? null : json_encode($request->seo_og_image_width),
+                    'og_image_type' => is_null($request->seo_og_image_type)? null : json_encode($request->seo_og_image_type),
+                    'og_image_alt' => is_null($request->seo_og_image_alt)? null : json_encode($request->seo_og_image_alt),
+                    'twitter_site' => is_null($request->seo_twitter_site)? null : json_encode($request->seo_twitter_site),
+                    'twitter_card' => is_null($request->seo_twitter_card)? null : json_encode($request->seo_twitter_card),
+                    'twitter_creator' => is_null($request->seo_twitter_creator)? null : json_encode($request->seo_twitter_creator),
+                    'twitter_title' => is_null($request->seo_twitter_title)? null : json_encode($request->seo_twitter_title),
+                    'twitter_description' => is_null($request->seo_twitter_description)? null : json_encode($request->seo_twitter_description),
+                    'twitter_image' => is_null($request->seo_twitter_image)? null : json_encode($request->seo_twitter_image),
+                    'robots' => is_null($request->seo_robots)? null : json_encode($request->seo_robots),
+                    'og_locale' => is_null($request->seo_og_locale)? null : json_encode($request->seo_og_locale),
+                    'article_publisher' => is_null($request->seo_article_publisher)? null : json_encode($request->seo_article_publisher),
+                    'og_image_secure_url' => is_null($request->seo_og_image_secure_url)? null : json_encode($request->seo_og_image_secure_url),
+                    'twitter_label1' => is_null($request->seo_twitter_label1)? null : json_encode($request->seo_twitter_label1),
+                    'twitter_data1' => is_null($request->seo_twitter_data1)? null : json_encode($request->seo_twitter_data1)
+                ];
+
+                SEO::create($newSEOData);
+
                 $linkStorage = "/brands/".$newBrand->slug;
                 $request->image->move(storage_path('app/public').$linkStorage,$image);
                 Parent::webpImage(storage_path('app/public').$linkStorage."/".$image, 90, true);
@@ -92,6 +127,8 @@ class BrandController extends Controller
         $dataView = [];
         $brand = Brand::find($id);
         $dataView['brand'] = $brand;
+        $SEOData = SEO::where(['type' => 'BRAND', 'type_id' => $brand->id])->first();
+        $dataView['SEOData'] = $SEOData;
         return view('admin.brand.edit', $dataView);
     }
 
@@ -131,12 +168,19 @@ class BrandController extends Controller
                         Parent::webpImage($linkNewStorage.$requestImageName, 90, true);
 
                         // delete current file image, folder with current slug
-                        unlink(storage_path('app/public').'/brands/'.$brand->slug.'/'.$brand->image);
-                        rmdir(storage_path('app/public').'/brands/'.$brand->slug);
+                        if (Storage::exists(storage_path('app/public').'/brands/'.$brand->slug.'/'.$brand->image) || Storage::exists(storage_path('app/public').'/brands/'.$brand->slug)) {
+                            unlink(storage_path('app/public').'/brands/'.$brand->slug.'/'.$brand->image);
+                            rmdir(storage_path('app/public').'/brands/'.$brand->slug);
+                        }
+                        
 
                     }
                     else {
-                        rename(storage_path('app/public').'/brands/'.$brand->slug, storage_path('app/public').'/brands/'.Parent::toSlug($request->name));
+                        
+                        if (Storage::exists(storage_path('app/public').'/brands/'.$brand->slug)) {
+                            rename(storage_path('app/public').'/brands/'.$brand->slug, storage_path('app/public').'/brands/'.Parent::toSlug($request->name));
+                        }
+                        
                     }
                 }
                 else {
@@ -155,12 +199,88 @@ class BrandController extends Controller
                         Parent::webpImage($linkCurrentStorage.$requestImageName, 90, true);
 
                         // delete current file image
-                        unlink(storage_path('app/public').'/brands/'.$brand->slug.'/'.$brand->image);
+                        if (Storage::exists(storage_path('app/public').'/brands/'.$brand->slug.'/'.$brand->image)) {
+                            unlink(storage_path('app/public').'/brands/'.$brand->slug.'/'.$brand->image);
+                        }
                     }
                 }
 
-                if(isset($updateBrandData)) {
+                $SEOData = SEO::where(['type' => 'BRAND', 'type_id' => $brand->id])->first();
+                is_null($SEOData) ? $oldSEOData = [] : 
+                $oldSEOData = [
+                    'name' => $SEOData->name,
+                    'type' => $SEOData->type,
+                    'type_id' => $SEOData->type_id,
+                    'title' => $SEOData->title,
+                    'description' => $SEOData->description,
+                    'keywords' => $SEOData->keywords,
+                    'og_site_name' => $SEOData->og_site_name,
+                    'og_description' => $SEOData->og_description,
+                    'og_title' => $SEOData->og_title,
+                    'og_type' => $SEOData->og_type,
+                    'og_url' => $SEOData->og_url,
+                    'og_image' => $SEOData->og_image,
+                    'og_image_height' => $SEOData->og_image_height,
+                    'og_image_width' => $SEOData->og_image_width,
+                    'og_image_type' => $SEOData->og_image_type,
+                    'og_image_alt' => $SEOData->og_image_alt,
+                    'twitter_site' => $SEOData->twitter_site,
+                    'twitter_card' => $SEOData->twitter_card,
+                    'twitter_creator' => $SEOData->twitter_creator,
+                    'twitter_title' => $SEOData->twitter_title,
+                    'twitter_description' => $SEOData->twitter_description,
+                    'twitter_image' => $SEOData->twitter_image,
+                    'robots' => $SEOData->robots,
+                    'og_locale' => $SEOData->og_locale,
+                    'article_publisher' => $SEOData->article_publisher,
+                    'og_image_secure_url' => $SEOData->og_image_secure_url,
+                    'twitter_label1' => $SEOData->twitter_label1,
+                    'twitter_data1' => $SEOData->twitter_data1
+                ];
+                $updateSEOData = [
+                    'name' => json_encode('Thương hiệu id '.$brand->id),
+                    'type' => 'BRAND',
+                    'type_id' => $brand->id,
+                    'title' => is_null($request->seo_title)? null : json_encode($request->seo_title),
+                    'description' => is_null($request->seo_description)? null : json_encode($request->seo_description),
+                    'keywords' => is_null($request->seo_keywords)? null : json_encode($request->seo_keywords),
+                    'og_site_name' => is_null($request->seo_og_site_name)? null : json_encode($request->seo_og_site_name),
+                    'og_description' => is_null($request->seo_og_description)? null : json_encode($request->seo_og_description),
+                    'og_title' => is_null($request->seo_og_title)? null : json_encode($request->seo_og_title),
+                    'og_type' => is_null($request->seo_og_type)? null : json_encode($request->seo_og_type),
+                    'og_url' => is_null($request->seo_og_url)? null : json_encode($request->seo_og_url),
+                    'og_image' => is_null($request->seo_og_image)? null : json_encode($request->seo_og_image),
+                    'og_image_height' => is_null($request->seo_og_image_height)? null : json_encode($request->seo_og_image_height),
+                    'og_image_width' => is_null($request->seo_og_image_width)? null : json_encode($request->seo_og_image_width),
+                    'og_image_type' => is_null($request->seo_og_image_type)? null : json_encode($request->seo_og_image_type),
+                    'og_image_alt' => is_null($request->seo_og_image_alt)? null : json_encode($request->seo_og_image_alt),
+                    'twitter_site' => is_null($request->seo_twitter_site)? null : json_encode($request->seo_twitter_site),
+                    'twitter_card' => is_null($request->seo_twitter_card)? null : json_encode($request->seo_twitter_card),
+                    'twitter_creator' => is_null($request->seo_twitter_creator)? null : json_encode($request->seo_twitter_creator),
+                    'twitter_title' => is_null($request->seo_twitter_title)? null : json_encode($request->seo_twitter_title),
+                    'twitter_description' => is_null($request->seo_twitter_description)? null : json_encode($request->seo_twitter_description),
+                    'twitter_image' => is_null($request->seo_twitter_image)? null : json_encode($request->seo_twitter_image),
+                    'robots' => is_null($request->seo_robots)? null : json_encode($request->seo_robots),
+                    'og_locale' => is_null($request->seo_og_locale)? null : json_encode($request->seo_og_locale),
+                    'article_publisher' => is_null($request->seo_article_publisher)? null : json_encode($request->seo_article_publisher),
+                    'og_image_secure_url' => is_null($request->seo_og_image_secure_url)? null : json_encode($request->seo_og_image_secure_url),
+                    'twitter_label1' => is_null($request->seo_twitter_label1)? null : json_encode($request->seo_twitter_label1),
+                    'twitter_data1' => is_null($request->seo_twitter_data1)? null : json_encode($request->seo_twitter_data1)
+                ];
+
+                if(is_null($SEOData)){
+                    SEO::create($updateSEOData);
+                }
+                else{
+                    if ($oldSEOData != $updateSEOData){
+                        $SEOData->update($updateSEOData);
+                    }
+                }
+                if(count($updateBrandData) != 0) {
                     $brand->update($updateBrandData);
+                }
+
+                if(count($updateBrandData) != 0||$oldSEOData != $updateSEOData) {
                     return redirect()->route('brand.index')->with(['msg' => 'Cập nhật thương hiệu thành công !']);
                 }
 
@@ -177,12 +297,14 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
+        $SEOData = SEO::where(['type' => 'BRAND', 'type_id' => $brand->id])->first();
         $linkStorage = storage_path('app/public').'/brands/'.$brand->slug;
         if (is_dir($linkStorage)) {
             unlink($linkStorage.'/'.$brand->image);
             rmdir($linkStorage);
         }
         $brand->delete();
+        !is_null($SEOData) ? $SEOData->delete() : true;
         return redirect()->route('brand.index')->with(['msg' => 'Đã xóa thương hiệu !']);
     }
 }

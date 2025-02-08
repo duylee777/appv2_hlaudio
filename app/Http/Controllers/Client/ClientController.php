@@ -12,6 +12,7 @@ use App\Models\Tag;
 use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\Consultations;
+use App\Models\SEO;
 use App\Models\SettingWeb;
 use Illuminate\Http\Request;
 
@@ -64,17 +65,19 @@ class ClientController extends Controller
         $categoryNews = Category::where('slug', 'bai-viet-mac-dinh')->first();
         $news = Post::where('category_id', $categoryNews->id)->orderBy('id', 'DESC')->take(4)->get();
 
-
-        return view('theme.home', compact('categories', 'latestProducts', 'bestSellerProducts', 'featuredProducts', 'productCategories', 'brands', 'projects', 'news', 'listSaleOffer'));
+        $metaTag = SEO::where('type', 'home')->first();
+        return view('theme.home', compact('categories', 'latestProducts', 'bestSellerProducts', 'featuredProducts', 'productCategories', 'brands', 'projects', 'news', 'listSaleOffer', 'metaTag'));
     }
 
     public function about() {
         $brands = Brand::get();
-        return view('theme.about', compact('brands'));
+        $metaTag = SEO::where('type', 'about')->first();
+        return view('theme.about', compact('brands', 'metaTag'));
     }
 
     public function contact() {
-        return view('theme.contact');
+        $metaTag = SEO::where('type', 'contact')->first();
+        return view('theme.contact', compact('metaTag'));
     }
 
     public function contactPost(Request $request) {
@@ -163,8 +166,8 @@ class ClientController extends Controller
         } else {
             $products = $productByCates;
         }
-
-        return view('theme.shop.category', compact('category', 'products', 'page', 'soft', 'filterBrand'));
+        $metaTag = SEO::where(['type' => 'CATEGORY', 'type_id' => $category->id])->first();
+        return view('theme.shop.category', compact('category', 'products', 'page', 'soft', 'filterBrand', 'metaTag'));
     }
 
     public function productDetail($product_slug) {
@@ -173,14 +176,16 @@ class ClientController extends Controller
         $category = Category::where('id', $product->category_id)->first();
         $relatedProducts = Product::where('category_id', $category->id)->where('is_active', true)->get();
         $comment = Comment::where('type_id',$product->id)->where('is_post',0)->where('status',1)->orderBy('created_at','DESC')->get();
-        return view('theme.shop.product-detail', compact('product', 'specs', 'category', 'relatedProducts', 'comment'));
+        $metaTag = SEO::where(['type' => 'PRODUCT', 'type_id' => $product->id])->first();
+        return view('theme.shop.product-detail', compact('product', 'specs', 'category', 'relatedProducts', 'comment', 'metaTag'));
     }
 
     public function blog() {
         $posts  = Post::where('is_visible', true)->paginate(12);
         $recentPosts = Post::where('is_visible', true)->orderBy('created_at', 'DESC')->take(4)->get();
         $tags = Tag::where('is_visible', true)->get();
-        return view('theme.blog.blog', compact('posts', 'recentPosts', 'tags'));
+        $metaTag = SEO::where('type', 'article')->first();
+        return view('theme.blog.blog', compact('posts', 'recentPosts', 'tags', 'metaTag'));
     }
 
     public function blogByTag($slug_tag) {
@@ -197,7 +202,8 @@ class ClientController extends Controller
         $tagByPosts  = $post->tags()->where('is_visible', true)->get();
         $tags = Tag::where('is_visible', true)->get();
         $comment = Comment::where('type_id',$post->id)->where('is_post',1)->where('status',1)->orderBy('created_at','DESC')->get();
-        return view('theme.blog.blog-detail', compact('post', 'recentPosts', 'tagByPosts', 'tags', 'comment'));
+        $metaTag = SEO::where(['type' => 'POST', 'type_id' => $post->id])->first();
+        return view('theme.blog.blog-detail', compact('post', 'recentPosts', 'tagByPosts', 'tags', 'comment', 'metaTag'));
     }
 
     public function project() {
@@ -214,7 +220,9 @@ class ClientController extends Controller
         $recentProjects = Post::where('is_visible', true)->whereIn('category_id', $arrayIdProjects)->orderBy('created_at', 'DESC')->take(4)->get();
         $tags = Tag::where('is_visible', true)->get();
 
-        return view('theme.project.project', compact('projects', 'recentProjects', 'tags'));
+        $metaTag = SEO::where('type', 'project')->first();
+
+        return view('theme.project.project', compact('projects', 'recentProjects', 'tags', 'metaTag'));
     }
 
     public function projectByTag($slug_tag) {
@@ -252,7 +260,9 @@ class ClientController extends Controller
 
         $recentProjects = Post::where('is_visible', true)->whereIn('category_id', $arrayIdProjects)->orderBy('created_at', 'DESC')->take(4)->get();
 
-        return view('theme.project.project-detail', compact('project', 'tagByProjects', 'tags', 'recentProjects'));
+        $metaTag = SEO::where(['type' => 'POST', 'type_id' => $project->id])->first();
+
+        return view('theme.project.project-detail', compact('project', 'tagByProjects', 'tags', 'recentProjects', 'metaTag'));
     }
 
     public function faq() {
@@ -341,8 +351,9 @@ class ClientController extends Controller
         }
 
         $products = $productByCates;
+        $metaTag = SEO::where(['type' => 'BRAND', 'type_id' => $brand->id])->first();
 
-        return view('theme.brand', compact('brand', 'categories', 'filterCategories', 'soft', 'page', 'products'));
+        return view('theme.brand', compact('brand', 'categories', 'filterCategories', 'soft', 'page', 'products', 'metaTag'));
     }
 
     public function consultations(Request $request) {

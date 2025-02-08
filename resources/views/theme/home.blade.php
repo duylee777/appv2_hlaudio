@@ -1,5 +1,5 @@
 @extends('theme.layouts.index')
-@section('title','Trang chủ')
+@section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? "Trang chủ") : "Trang chủ")
 @section('content')
 <style>
     .left-menu {

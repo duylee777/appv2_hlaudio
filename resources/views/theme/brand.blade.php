@@ -1,5 +1,5 @@
 @extends('theme.layouts.page')
-@section('title','Thương hiệu - '.$brand->name)
+@section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? 'Thương hiệu - '.$brand->name) : 'Thương hiệu - '.$brand->name)
 @section('category-url', '')
 @section('category-name', '')
 @section('page-name', $brand->name)

@@ -1,5 +1,5 @@
 @extends('theme.layouts.page')
-@section('title','Bài viết chi tiết')
+@section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? 'Bài viết - '.$post->title) : 'Bài viết - '.$post->title)
 @section('category-url', route('theme.blog'))
 @section('category-name', 'Bài viết')
 @section('page-name', $post->title)

@@ -1,5 +1,5 @@
 @extends('theme.layouts.page')
-@section('title','Giới thiệu')
+@section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? "Giới thiệu") : "Giới thiệu")
 @section('category-url', '')
 @section('category-name', '')
 @section('page-name', 'Giới thiệu')
@@ -100,7 +100,7 @@ About Area Start
                 <div class="brand-logo" style="background: #408ED4; padding: 1rem 0;">
                     @foreach($brands as $brand)
                     <div class="single-brand" style="{{$brand->slug == 'enerlong' ? 'padding-right: 2rem;' : '' }}">
-                        <a href="{{route('theme.brand')}}" style="height: 60px;" class="d-flex justify-content-center overflow-hidden">
+                        <a href="{{route('theme.brand', $brand->slug)}}" style="height: 60px;" class="d-flex justify-content-center overflow-hidden">
                             <img src="{{asset('../storage/brands/'.$brand->slug.'/'.$brand->image)}}" alt="" class="img-fluid">
                         </a>
                     </div>

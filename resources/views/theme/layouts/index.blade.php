@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    {{-- <meta charset="UTF-8"> --}}
     {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> --}}
-    <title>Hien Luong Audio - @yield('title')</title>
+    {{-- <title>Hien Luong Audio - @yield('title')</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="Hien Luong Audio - Pro Audio">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> --}}
+        <!-- Robots -->
+    {{-- <meta name="robots" content="index,follow" /> --}}
+    
+    <!-- UTF-8 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <meta name="Googlebot-News" content="index, follow, archive, snippet">
+    <meta name="googlebot" content="index, follow, archive, snippet">
+
+    <!-- Author - Copyright -->
+    <meta name='revisit-after' content='1 days' />
+    <meta name="author" content="circle-cloud" />
+    <meta name="copyright" content="circle-cloud" />
+
+    <title>@yield('title')</title>
+
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Meta Tags -->
+    @include('theme.layouts.metaTag')
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="/assets/theme/images/logo/favicon-logo-hienluongaudio.ico">
 

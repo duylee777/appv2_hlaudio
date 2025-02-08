@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\SettingWebController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\SEOController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\WishlistController;
@@ -129,6 +130,7 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
     });
     Route::get('/user-comment', [CommentController::class, 'getAllComment'])->name('admin.comnment.index');
 
+    Route::resource('/SEO', SEOController::class);
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

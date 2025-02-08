@@ -1,5 +1,5 @@
 @extends('theme.layouts.page')
-@section('title','Liên hệ')
+@section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? 'Liên hệ') : 'Liên hệ')
 @section('category-url', '')
 @section('category-name', '')
 @section('page-name', 'Liên hệ')
