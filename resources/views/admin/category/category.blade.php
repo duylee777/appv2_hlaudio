@@ -24,6 +24,13 @@
     </ol>
 </nav>
 
+@if(Session::has('msg'))
+<div id="msgbox" class="mt-12 absolute top-4 right-4 w-[300px] border bg-green-300 px-4 py-2 rounded-lg shadow-soft-lg flex items-center justify-between" >
+    <span class="text-white ">{{ Session::get('msg') }}</span>
+    <button type="" onclick="closeBox();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg></button>
+</div>
+@endif
+
 @if($errors->any())
 <ul>
     @foreach( $errors->all() as $error)
@@ -80,6 +87,9 @@
                     </thead>
                     <tbody>
                         @foreach($categories as $category)
+                        @php
+                            $SEOData = App\Models\SEO::where(['type' => 'CATEGORY', 'type_id' => $category->id])->first();
+                        @endphp
                         <tr class="category-item border-b" data-order="{{$category->id}}" data-parentid="{{$category->parent_id}}">
                             <td class="px-4 py-3">
                                 <input id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
@@ -109,6 +119,9 @@
                             <td class="px-4 py-3">
                                 <div class="flex items-center justify-end gap-4">
                                     <!-- Update category -->
+                                    @include('admin.category.partials.update-seo-form')
+
+                                    <!-- Update category -->
                                     @include('admin.category.partials.update-category-form')
                                 
                                     <!-- Delete category -->
@@ -133,42 +146,42 @@
             }
         });
 
-        $('.btn_create_item').click(function(e){
-            e.preventDefault();
+        // $('.btn_create_item').click(function(e){
+        //     e.preventDefault();
 
-            var createButton = $(this);
-            var dataNewCategory = {
-                name: $('#name').val(),
-                parent_id: $('#parent_id').find(':selected').val(),
-                is_visible: $('#visible').is(':checked'),
-                description: $('#description').val()
-            };
+        //     var createButton = $(this);
+        //     var dataNewCategory = {
+        //         name: $('#name').val(),
+        //         parent_id: $('#parent_id').find(':selected').val(),
+        //         is_visible: $('#visible').is(':checked'),
+        //         description: $('#description').val()
+        //     };
 
-            $.ajax({
-                type: 'POST',
-                url: createButton.data('route'),
-                data: dataNewCategory,
-                success: function(results) {
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: results,
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: createButton.data('route'),
+        //         data: dataNewCategory,
+        //         success: function(results) {
+        //             Swal.fire({
+        //                 position: "center",
+        //                 icon: "success",
+        //                 title: results,
+        //                 showConfirmButton: false,
+        //                 timer: 1500,
+        //             });
                     
-                    setTimeout(function(){
-                        location.reload();
-                    },2000);
-                },
-                error: function(results) {
-                    Swal.fire({
-                        title: results.responseText,
-                        icon: "error",
-                    });
-                },
-            });
-        });
+        //             setTimeout(function(){
+        //                 location.reload();
+        //             },2000);
+        //         },
+        //         error: function(results) {
+        //             Swal.fire({
+        //                 title: results.responseText,
+        //                 icon: "error",
+        //             });
+        //         },
+        //     });
+        // });
 
         $('.btn_update_item').click(function(e){
             e.preventDefault();

@@ -239,7 +239,7 @@
                         fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                    </svg>Tối ưu bài viết (SEO)
+                    </svg>Tối ưu SEO
                 </h5>
                 <button type="button" data-drawer-hide="drawer-right-example"
                     aria-controls="drawer-right-example"
@@ -369,7 +369,7 @@
                 </button>
                 
                 <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"  aria-controls="drawer-right-example" data-drawer-backdrop="true">
-                    Tối ưu bài viết (SEO)
+                    Tối ưu SEO
                 </button>
                 
                 <a href="{{ route('product.index') }}" type="button" class="btn_cancel text-black inline-flex items-center border-2 bg-white rounded-lg text-sm px-5 py-2.5 text-center">

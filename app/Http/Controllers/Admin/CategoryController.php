@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SEO;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -77,6 +78,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->seo_title); die;
         $categories = Category::all()->pluck('name')->toArray();
         if(!in_array($request->name, $categories)){
             $slug = Parent::toSlug($request->name);
@@ -95,12 +97,45 @@ class CategoryController extends Controller
                 $dataNewCategory['is_visible'] = false;
             }
 
-            Category::create($dataNewCategory);
+            $category = Category::create($dataNewCategory);
+            
+            $newSEOData = [
+                'name' => json_encode('Danh mục id '.$category->id),
+                'type' => 'CATEGORY',
+                'type_id' => $category->id,
+                'title' => is_null($request->seo_title)? null : json_encode($request->seo_title),
+                'description' => is_null($request->seo_description)? null : json_encode($request->seo_description),
+                'keywords' => is_null($request->seo_keywords)? null : json_encode($request->seo_keywords),
+                'og_site_name' => is_null($request->seo_og_site_name)? null : json_encode($request->seo_og_site_name),
+                'og_description' => is_null($request->seo_og_description)? null : json_encode($request->seo_og_description),
+                'og_title' => is_null($request->seo_og_title)? null : json_encode($request->seo_og_title),
+                'og_type' => is_null($request->seo_og_type)? null : json_encode($request->seo_og_type),
+                'og_url' => is_null($request->seo_og_url)? null : json_encode($request->seo_og_url),
+                'og_image' => is_null($request->seo_og_image)? null : json_encode($request->seo_og_image),
+                'og_image_height' => is_null($request->seo_og_image_height)? null : json_encode($request->seo_og_image_height),
+                'og_image_width' => is_null($request->seo_og_image_width)? null : json_encode($request->seo_og_image_width),
+                'og_image_type' => is_null($request->seo_og_image_type)? null : json_encode($request->seo_og_image_type),
+                'og_image_alt' => is_null($request->seo_og_image_alt)? null : json_encode($request->seo_og_image_alt),
+                'twitter_site' => is_null($request->seo_twitter_site)? null : json_encode($request->seo_twitter_site),
+                'twitter_card' => is_null($request->seo_twitter_card)? null : json_encode($request->seo_twitter_card),
+                'twitter_creator' => is_null($request->seo_twitter_creator)? null : json_encode($request->seo_twitter_creator),
+                'twitter_title' => is_null($request->seo_twitter_title)? null : json_encode($request->seo_twitter_title),
+                'twitter_description' => is_null($request->seo_twitter_description)? null : json_encode($request->seo_twitter_description),
+                'twitter_image' => is_null($request->seo_twitter_image)? null : json_encode($request->seo_twitter_image),
+                'robots' => is_null($request->seo_robots)? null : json_encode($request->seo_robots),
+                'og_locale' => is_null($request->seo_og_locale)? null : json_encode($request->seo_og_locale),
+                'article_publisher' => is_null($request->seo_article_publisher)? null : json_encode($request->seo_article_publisher),
+                'og_image_secure_url' => is_null($request->seo_og_image_secure_url)? null : json_encode($request->seo_og_image_secure_url),
+                'twitter_label1' => is_null($request->seo_twitter_label1)? null : json_encode($request->seo_twitter_label1),
+                'twitter_data1' => is_null($request->seo_twitter_data1)? null : json_encode($request->seo_twitter_data1)
+            ];
 
-            return response('Tạo danh mục mới thành công !', 200);
+            SEO::create($newSEOData);
+
+            return redirect()->route('category.index')->with(['msg' => 'Tạo danh mục mới thành công !']);
         }
 
-        return response('Tên danh mục đã tồn tại !', 400);
+        return redirect()->route('category.index')->with(['msg' => 'Tên danh mục đã tồn tại !']);
     }
 
     /**
@@ -158,11 +193,13 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $SEOData = SEO::where(['type' => 'CATEGORY', 'type_id' => $id])->first();
         $categoryChilds = Category::where('parent_id', $id)->get();
         foreach($categoryChilds as $child) {
             Category::destroy($child->id);
         }
         Category::destroy($id);
+        !is_null($SEOData) ? $SEOData->delete() : true;
         return response('Đã xóa danh mục !', 200);
     }
 }

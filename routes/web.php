@@ -130,6 +130,7 @@ Route::middleware(['auth', 'accessAdminPanel'])->prefix('admin')->group(function
     });
     Route::get('/user-comment', [CommentController::class, 'getAllComment'])->name('admin.comnment.index');
 
+    Route::patch('/update-seo/{id}', [SEOController::class, 'updateSEOCategory'])->name('admin.SEOCategory.update');
     Route::resource('/SEO', SEOController::class);
 });
 Route::middleware('auth')->group(function () {
