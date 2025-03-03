@@ -77,13 +77,18 @@ class ProductController extends Controller
         try{
             $productCodes = Product::all()->pluck('code')->toArray();
             if(in_array($request->code, $productCodes)) {
-                return response('Mã sản phẩm đã tồn tại !', 400);
+                return back()->withErrors('Mã sản phẩm đã tồn tại !')->withInput();
+            }
+            
+            $productSlugs = Product::all()->pluck('slug')->toArray();
+            if(in_array($request->slug, $productSlugs)) {
+                return back()->withErrors('Slug sản phẩm đã tồn tại !')->withInput();
             }
             else {
                 $dataNewProduct = [
                     'code' => $request->code,
                     'name' => $request->name,
-                    'slug' => Parent::toSlug($request->name),
+                    'slug' =>  $request->slug ?? Parent::toSlug($request->name),
                     'category_id' => $request->category_id,
                     'brand_id' => $request->brand_id,
                     'origin' => $request->origin,

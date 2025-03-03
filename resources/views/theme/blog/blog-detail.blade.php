@@ -1,5 +1,10 @@
 @extends('theme.layouts.page')
 @section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? 'Bài viết - '.$post->title) : 'Bài viết - '.$post->title)
+
+@section('metaTags')
+    @include('theme.layouts.metaTags', ['localPage' => false, 'pageTitle' => $post->title, 'objectPage' => $post, 'postUrl' => url(route('theme.blog_detail'))])
+@endsection
+
 @section('category-url', route('theme.blog'))
 @section('category-name', 'Bài viết')
 @section('page-name', $post->title)

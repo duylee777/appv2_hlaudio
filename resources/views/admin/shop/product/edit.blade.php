@@ -30,21 +30,8 @@
     </ol>
 </nav>
 
-@if($errors->any())
-<ul>
-    @foreach( $errors->all() as $error)
-    <li>
-        <span class="text-red-300">{{$error}}</span>
-    </li>
-    @endforeach
-</ul>
-@endif
-@if(Session::has('msg'))
-<div id="msgbox" class="mt-12 absolute top-4 right-4 w-[300px] border bg-green-300 px-4 py-2 rounded-lg shadow-soft-lg flex items-center justify-between" >
-    <span class="text-white ">{{ Session::get('msg') }}</span>
-    <button type="" onclick="closeBox();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg></button>
-</div>
-@endif
+
+
 
 @php
     if(Session::get('backLink') == "" && url()->current() != url()->previous()) {
@@ -90,7 +77,11 @@
                     </div>
                     <div class="col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Tên sản phẩm</label>
-                        <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Nhập tên sản phẩm ..." required="" value="{{$product->name}}">
+                        <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Nhập tên sản phẩm ..." required="" value="{{$product->name}}" onfocusin="prevData(this)" onchange="titleDefault(this)">
+                    </div>
+                    <div class="col-span-2">
+                        <label for="slug" class="block mb-2 text-sm font-medium text-gray-900">Slug (tối ưu url)</label>
+                        <input type="text" id="slug" name="slug" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Có thể để trống, Ví dụ theo tên sản phẩm..." value="{{$product->slug}}" onfocusin="prevData(this)" onchange="ogUrlDefault(this)">
                     </div>
                     <div class="col-span-2">
                         <label class="block mb-2 text-sm font-semibold text-gray-900">Danh mục</label>
@@ -269,7 +260,7 @@
                         //         }
                         //     })
                         // });
-                    </script>
+                        </script>
                     </div>
                 </div>
                 <div class="">
@@ -405,7 +396,7 @@
                 </div>
             </div>
             
-            <!-- drawer component -->
+            {{-- <!-- drawer component -->
             <div id="drawer-right-example"
                 class="fixed top-0 right-0 z-[9999] h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-[67%] max-md:w-full dark:bg-gray-800 duration-500 border border-gray-300"
                 tabindex="-1" aria-labelledby="drawer-right-label">
@@ -534,7 +525,7 @@
                         <textarea name="seo_twitter_data1" id="twitter_data1" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Có thể để trống...">{{is_null($SEOData) ? "" : json_decode($SEOData->twitter_data1)}}</textarea>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="flex items-center flex-wrap gap-4">
                 <button type="submit" class="text-white inline-flex items-center bg-yellow-500 hover:bg-yellow-700 border-2 border-yellow-500 hover:border-yellow-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
@@ -544,9 +535,12 @@
                     Cập nhật
                 </button>
                 
-                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"  aria-controls="drawer-right-example" data-drawer-backdrop="true">
+                {{-- SEO  --}}
+                @include('admin.SEO.seo_drawer', ['isCreateForm' => false,'titleDefault' => $product->name, 'urlBase' => url(route('theme.product_detail', '')), 'urlDefault' => url(route('theme.product_detail', $product->slug))])
+
+                {{-- <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"  aria-controls="drawer-right-example" data-drawer-backdrop="true">
                     Tối ưu SEO
-                </button>
+                </button> --}}
                 
                 <a href="{{ route('product.index') }}" type="button" class="btn_cancel text-black inline-flex items-center border-2 bg-white rounded-lg text-sm px-5 py-2.5 text-center">
                     Hủy bỏ

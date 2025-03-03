@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 
-                <!-- drawer component -->
+                {{-- <!-- drawer component -->
                 <div id="drawer-right-example"
                     class="fixed top-0 right-0 z-[9999] h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-[50%] max-md:w-full dark:bg-gray-800 duration-500 border border-gray-300"
                     tabindex="-1" aria-labelledby="drawer-right-label">
@@ -179,23 +179,26 @@
                             <textarea name="seo_twitter_data1" id="twitter_data1" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Có thể để trống..."></textarea>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="flex flex-row">
+                <div class="flex flex-row gap-5">
                     <button type="submit" class="btn_create_item text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                         Tạo danh mục mới
                     </button>
                     
-                    <button id="open-drawer" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-5 text-center" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"  aria-controls="drawer-right-example" data-drawer-backdrop="flase">
+                    {{-- SEO  --}}
+                    @include('admin.SEO.seo_drawer', ['isCreateForm' => true, 'urlDefault' => url(route('theme.category', ''))])
+
+                    {{-- <button id="open-drawer" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-5 text-center" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right"  aria-controls="drawer-right-example" data-drawer-backdrop="flase">
                         Tối ưu SEO
-                    </button>    
+                    </button>     --}}
                 </div>
             </form>
         </div>
     </div>
 </div> 
-<script>
+{{-- <script>
     window.addEventListener('click', function(e){   
         if (!document.getElementById('drawer-right-example').contains(e.target) && !document.getElementById('open-drawer').contains(e.target) && $('#drawer-right-example').attr('aria-modal') == 'true'){
             $('#close-drawer').trigger('click');
@@ -205,4 +208,4 @@
             console.log(false);
         }
     });
-</script>
+</script> --}}

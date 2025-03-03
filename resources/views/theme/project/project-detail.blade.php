@@ -1,5 +1,10 @@
 @extends('theme.layouts.page')
 @section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? $project->title) : $project->title)
+
+@section('metaTags')
+    @include('theme.layouts.metaTags', ['localPage' => false, 'pageTitle' => $project->title, 'objectPage' => $project, 'postUrl' => url(route('theme.project_detail'))])
+@endsection
+
 @section('category-url', route('theme.project'))
 @section('category-name', 'Dự án')
 @section('page-name', $project->title)

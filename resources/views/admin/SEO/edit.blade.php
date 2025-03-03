@@ -69,127 +69,133 @@
             <form method="POST" action="{{ route('SEO.update', $SEOData->id) }}" class="px-4" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
+                @php
+                    $metaDefault = config('app_seo_default.metaTags');
+                    $metaDefault->og_image = json_encode(asset($metaDefault->og_image));
+                    $metaDefault->og_image_secure_url = json_encode(asset($metaDefault->og_image_secure_url));
+                    $metaDefault->twitter_image = json_encode(asset($metaDefault->twitter_image));
+                @endphp
                 <div class="flex flex-row flex-wrap gap-4">
                     <div class="w-[calc(50%-8px)] max-md:w-full hidden">
-                        <label for="seo_name" class="block mb-2 font-semibold text-gray-900">Trang (<span class="text-rose-600">*</span>)</label>
-                        <input type="text" name="seo_name" id="seo_name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="name..." required="" value="{{json_decode($SEOData->name)}}">
+                        <label for="name" class="block mb-2 font-semibold text-gray-900">Trang (<span class="text-rose-600">*</span>)</label>
+                        <input type="text" name="seo_name" id="name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="name..." required="" value="{{json_decode($SEOData->name)}}">
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full hidden">
-                        <label for="seo_type" class="block mb-2 font-semibold text-gray-900">Type (<span class="text-rose-600">*</span>)</label>
-                        <input type="text" name="seo_type" id="seo_type" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="type..." required="" value="{{$SEOData->type}}">
+                        <label for="type" class="block mb-2 font-semibold text-gray-900">Type (<span class="text-rose-600">*</span>)</label>
+                        <input type="text" name="seo_type" id="type" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="type..." required="" value="{{$SEOData->type}}">
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full hidden">
-                        <label for="seo_type_id" class="block mb-2 font-semibold text-gray-900">Type_id</label>
-                        <input type="text" name="seo_type_id" id="seo_type_id" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="type_id..." value="{{$SEOData->type_id}}">
+                        <label for="type" class="block mb-2 font-semibold text-gray-900">Type_id</label>
+                        <input type="text" name="seo_type_id" id="type_id" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="type_id..." value="{{$SEOData->type_id}}">
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
-                        <label for="seo_title" class="block mb-2 font-semibold text-gray-900">Thẻ title</label>
-                        <textarea name="seo_title" id="seo_title" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: <Tên trang>">{{json_decode($SEOData->title)}}</textarea>
+                        <label for="title" class="block mb-2 font-semibold text-gray-900">Thẻ title</label>
+                        <textarea name="seo_title" id="title" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{(json_decode($SEOData->name) == "Trang chủ" ? "Hienluong Audio - " : "").json_decode($SEOData->name)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->title) ?? (json_decode($SEOData->name) == "Trang chủ" ? "Hienluong Audio - " : "").json_decode($SEOData->name)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="robots" class="block mb-2 font-semibold text-gray-900">Thẻ meta robots</label>
-                        <textarea name="seo_robots" id="robots" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: index, follow">{{json_decode($SEOData->robots)}}</textarea>
+                        <textarea name="seo_robots" id="robots" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->robots)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->robots)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
-                        <label for="seo_description" class="block mb-2 font-semibold text-gray-900">Thẻ meta description</label>
-                        <textarea name="seo_description" id="seo_description" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: Aucus Audio là đơn vị nhập khẩu, phân phối các thiết bị âm thanh chính hãng, chuyên nghiệp. Các loại loa, microphone, Amplifier, dàn loa karaoke, phụ kiện âm thanh…">{{json_decode($SEOData->description)}}</textarea>
+                        <label for="description" class="block mb-2 font-semibold text-gray-900">Thẻ meta description</label>
+                        <textarea name="seo_description" id="description" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->description)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->description)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="keywords" class="block mb-2 font-semibold text-gray-900">Thẻ meta keywords</label>
-                        <textarea name="seo_keywords" id="keywords" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: AucusAudio, Line Array, Loa, Speaker, Công suất, Amplifier, Microphone, Vang, Mixer, Crossover, Quản lý nguồn điện, Phụ kiện âm thanh, Dàn loa Karaoke">{{json_decode($SEOData->keywords)}}</textarea>
+                        <textarea name="seo_keywords" id="keywords" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->keywords)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->keywords)}}</textarea>
                     </div>
-
+        
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_locale" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:locale</label>
-                        <textarea name="seo_og_locale" id="og_locale" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: vi_VN">{{json_decode($SEOData->og_locale)}}</textarea>
+                        <textarea name="seo_og_locale" id="og_locale" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_locale)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_locale)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_site_name" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:site_name</label>
-                        <textarea name="seo_og_site_name" id="og_site_name" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: <url trang hiện tại>">{{json_decode($SEOData->og_site_name)}}</textarea>
+                        <textarea name="seo_og_site_name" id="og_site_name" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_site_name)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_site_name)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_description" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:description</label>
-                        <textarea name="seo_og_description" id="og_description" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: Aucus Audio là đơn vị nhập khẩu, phân phối các thiết bị âm thanh chính hãng, chuyên nghiệp. Các loại loa, microphone, Amplifier, dàn loa karaoke, phụ kiện âm thanh…">{{json_decode($SEOData->og_description)}}</textarea>
+                        <textarea name="seo_og_description" id="og_description" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_description)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_description)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_title" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:title</label>
-                        <textarea name="seo_og_title" id="og_title" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: <Tên trang>">{{json_decode($SEOData->og_title)}}</textarea>
+                        <textarea name="seo_og_title" id="og_title" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{(json_decode($SEOData->name) == "Trang chủ" ? "Hienluong Audio - " : "").json_decode($SEOData->name)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_title) ?? (json_decode($SEOData->name) == "Trang chủ" ? "Hienluong Audio - " : "").json_decode($SEOData->name)}}</textarea>
                     </div>
-
+        
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_type" class="block mb-2 font-semibold text-gray-900">Thẻ og:type</label>
-                        <textarea name="seo_og_type" id="og_type" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: object">{{json_decode($SEOData->og_type)}}</textarea>
+                        <textarea name="seo_og_type" id="og_type" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="object" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_type)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_url" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:url</label>
-                        <textarea name="seo_og_url" id="og_url" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: <url trang hiện tại>">{{json_decode($SEOData->og_url)}}</textarea>
+                        <textarea name="seo_og_url" id="og_url" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Có thể để trống, mặc định là url của trang">{{json_decode($SEOData->og_url)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="article_publisher" class="block mb-2 font-semibold text-gray-900">Thẻ meta article:publisher</label>
-                        <textarea name="seo_article_publisher" id="article_publisher" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: <link facebook của Aucus Audio>">{{json_decode($SEOData->article_publisher)}}</textarea>
+                        <textarea name="seo_article_publisher" id="article_publisher" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->article_publisher)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->article_publisher)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_image" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:image</label>
-                        <textarea name="seo_og_image" id="og_image" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: <link ảnh của thương hiệu>">{{json_decode($SEOData->og_image)}}</textarea>
+                        <textarea name="seo_og_image" id="og_image" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_image)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_image)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_image_secure_url" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:image:secure_url</label>
-                        <textarea name="seo_og_image_secure_url" id="og_image_secure_url" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: <link ảnh của thương hiệu>">{{json_decode($SEOData->og_image_secure_url)}}</textarea>
+                        <textarea name="seo_og_image_secure_url" id="og_image_secure_url" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_image_secure_url)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_image_secure_url)}}</textarea>
                     </div>
                     
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_image_height" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:image:height</label>
-                        <textarea name="seo_og_image_height" id="og_image_height" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Kích thước ảnh: height">{{json_decode($SEOData->og_image_height)}}</textarea>
+                        <textarea name="seo_og_image_height" id="og_image_height" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_image_height)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_image_height)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_image_width" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:image:width</label>
-                        <textarea name="seo_og_image_width" id="og_image_width" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Kích thước ảnh: width">{{json_decode($SEOData->og_image_width)}}</textarea>
+                        <textarea name="seo_og_image_width" id="og_image_width" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_image_width)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_image_width)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_image_type" class="block mb-2 font-semibold text-gray-900">Thẻ meta og:image:type</label>
-                        <textarea name="seo_og_image_type" id="og_image_type" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: image/png">{{json_decode($SEOData->og_image_type)}}</textarea>
+                        <textarea name="seo_og_image_type" id="og_image_type" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_image_type)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_image_type)}}</textarea>
                     </div>
                     
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="og_image_alt" class="block mb-2 font-semibold text-gray-900">Thẻ og:image:alt</label>
-                        <textarea name="seo_og_image_alt" id="og_image_alt" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: AucusAudio logo">{{json_decode($SEOData->og_image_alt)}}</textarea>
+                        <textarea name="seo_og_image_alt" id="og_image_alt" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->og_image_alt)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->og_image_alt)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="twitter_site" class="block mb-2 font-semibold text-gray-900">Thẻ meta twitter:site</label>
-                        <textarea name="seo_twitter_site" id="twitter_site" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: cskh@aucusaudio.vn">{{json_decode($SEOData->twitter_site)}}</textarea>
+                        <textarea name="seo_twitter_site" id="twitter_site" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->twitter_site)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->twitter_site)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="twitter_card" class="block mb-2 font-semibold text-gray-900">Thẻ meta twitter:card</label>
-                        <textarea name="seo_twitter_card" id="twitter_card" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Mặc định: summary_large_image">{{json_decode($SEOData->twitter_card)}}</textarea>
+                        <textarea name="seo_twitter_card" id="twitter_card" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->twitter_card)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->twitter_card)}}</textarea>
                     </div>
                     
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="twitter_creator" class="block mb-2 font-semibold text-gray-900">Thẻ meta twitter:creator</label>
-                        <textarea name="seo_twitter_creator" id="twitter_creator" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: aucusaudio.vn">{{json_decode($SEOData->twitter_creator)}}</textarea>
+                        <textarea name="seo_twitter_creator" id="twitter_creator" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->twitter_creator)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->twitter_creator)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="twitter_title" class="block mb-2 font-semibold text-gray-900">Thẻ meta twitter:title</label>
-                        <textarea name="seo_twitter_title" id="twitter_title" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: AucusAudio">{{json_decode($SEOData->twitter_title)}}</textarea>
+                        <textarea name="seo_twitter_title" id="twitter_title" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{(json_decode($SEOData->name) == "Trang chủ" ? "Hienluong Audio - " : "").json_decode($SEOData->name)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->twitter_title) ?? (json_decode($SEOData->name) == "Trang chủ" ? "Hienluong Audio - " : "").json_decode($SEOData->name)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="twitter_description" class="block mb-2 font-semibold text-gray-900">Thẻ meta twitter:description</label>
-                        <textarea name="seo_twitter_description" id="twitter_description" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: Aucus Audio là đơn vị nhập khẩu, phân phối các thiết bị âm thanh chính hãng, chuyên nghiệp. Các loại loa, microphone, Amplifier, dàn loa karaoke, phụ kiện âm thanh…">{{json_decode($SEOData->twitter_description)}}</textarea>
+                        <textarea name="seo_twitter_description" id="twitter_description" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->twitter_description)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->twitter_description)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="twitter_image" class="block mb-2 font-semibold text-gray-900">Thẻ meta twitter:image</label>
-                        <textarea name="seo_twitter_image" id="twitter_image" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Ví dụ: <link ảnh của thương hiệu>">{{json_decode($SEOData->twitter_image)}}</textarea>
+                        <textarea name="seo_twitter_image" id="twitter_image" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="{{json_decode($metaDefault->twitter_image)}}" onfocusin="focusInPut(this)">{{json_decode($SEOData->twitter_image)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="twitter_label1" class="block mb-2 font-semibold text-gray-900">Thẻ meta twitter:label1</label>
-                        <textarea name="seo_twitter_label1" id="twitter_label1" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Có thể để trống...">{{json_decode($SEOData->twitter_label1)}}</textarea>
+                        <textarea name="seo_twitter_label1" id="twitter_label1" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Có thể để trống">{{json_decode($SEOData->twitter_label1)}}</textarea>
                     </div>
                     <div class="w-[calc(50%-8px)] max-md:w-full">
                         <label for="twitter_data1" class="block mb-2 font-semibold text-gray-900">Thẻ meta twitter:data1</label>
-                        <textarea name="seo_twitter_data1" id="twitter_data1" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Có thể để trống...">{{json_decode($SEOData->twitter_data1)}}</textarea>
+                        <textarea name="seo_twitter_data1" id="twitter_data1" cols="30" rows="3" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5" placeholder="Có thể để trống">{{json_decode($SEOData->twitter_data1)}}</textarea>
                     </div>
                 </div>
                 <div class="text-left">
-                    <button type="submit" class="px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-blue-800">
+                    <button type="submit" onclick="return confirm('Xác nhận chỉnh sửa?')" class="px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-blue-800">
                         Chỉnh sửa
                     </button>
                 </div>
@@ -197,4 +203,15 @@
         </div>
     </section>
 </div>
+<script type="text/javascript">
+    function focusInPut(element) {
+        if ($(element).val() == "") {
+            console.log(true);
+            $(element).val($(element).attr('placeholder'));
+        }
+        else{
+            console.log(false);
+        }
+    }
+</script>
 @endsection

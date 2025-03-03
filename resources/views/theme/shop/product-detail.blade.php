@@ -1,5 +1,10 @@
 @extends('theme.layouts.page')
 @section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? $product->name) : $product->name)
+
+@section('metaTags')
+    @include('theme.layouts.metaTags', ['localPage' => false, 'pageTitle' => $product->name, 'objectPage' => $product])
+@endsection
+
 @section('category-url', route('theme.category', $category->slug))
 @section('category-name', $category->name)
 @section('page-name', $product->name)

@@ -22,15 +22,7 @@
     </ol>
 </nav>
 
-@if($errors->any())
-<ul>
-    @foreach( $errors->all() as $error)
-    <li>
-        <span class="text-red-300">{{$error}}</span>
-    </li>
-    @endforeach
-</ul>
-@endif
+
 @if(Session::has('msg'))
 <div id="msgbox" class="mt-12 absolute top-4 right-4 w-[300px] border bg-green-300 px-4 py-2 rounded-lg shadow-soft-lg flex items-center justify-between" >
     <span class="text-white ">{{ Session::get('msg') }}</span>

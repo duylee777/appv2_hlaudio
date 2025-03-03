@@ -1,6 +1,6 @@
 @extends('admin.layouts.index')
  
-@section('title', 'Page Title')
+@section('title', 'Danh mục')
 
 @section('content')
 
@@ -24,22 +24,9 @@
     </ol>
 </nav>
 
-@if(Session::has('msg'))
-<div id="msgbox" class="mt-12 absolute top-4 right-4 w-[300px] border bg-green-300 px-4 py-2 rounded-lg shadow-soft-lg flex items-center justify-between" >
-    <span class="text-white ">{{ Session::get('msg') }}</span>
-    <button type="" onclick="closeBox();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg></button>
-</div>
-@endif
 
-@if($errors->any())
-<ul>
-    @foreach( $errors->all() as $error)
-    <li>
-        <span class="text-red-300">{{$error}}</span>
-    </li>
-    @endforeach
-</ul>
-@endif
+
+
 
 <section class="bg-gray-50 py-4 sm:py-5 mt-5">
     <div class="px-4 mx-auto max-w-screen-2xl">
@@ -65,7 +52,13 @@
 
                 <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3"> 
                     <!-- Create main modal -->
-                    @include('admin.category.partials.create-category-form')  
+                    {{-- @include('admin.category.partials.create-category-form')   --}}
+                    <a href="{{route('category.create')}}" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+                        </svg>
+                        Thêm danh mục mới
+                    </a>
                 </div>
             </div>
             <!-- --------- -->
@@ -118,8 +111,8 @@
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center justify-end gap-4">
-                                    <!-- Update category -->
-                                    @include('admin.category.partials.update-seo-form')
+                                    {{-- <!-- Update category -->
+                                    @include('admin.category.partials.update-seo-form') --}}
 
                                     <!-- Update category -->
                                     @include('admin.category.partials.update-category-form')
@@ -133,7 +126,9 @@
                     </tbody>
                 </table>
             </div>
-            
+            <div class="p-4">
+                {{-- {{ $categories->links() }} --}}
+            </div>
         </div>
     </div>
 </section>
@@ -183,47 +178,47 @@
         //     });
         // });
 
-        $('.btn_update_item').click(function(e){
-            e.preventDefault();
+        // $('.btn_update_item').click(function(e){
+        //     e.preventDefault();
             
-            var updateButton = $(this);
-            var id = updateButton.data("id");
+        //     var updateButton = $(this);
+        //     var id = updateButton.data("id");
 
-            let url = $('.update-category-'+id).data('route');
+        //     let url = $('.update-category-'+id).data('route');
             
-            var dataCategoryUpdate = {
-                name: $('#name-'+id).val(),
-                parent_id: $('#parent_id-'+id).find(':selected').val(),
-                is_visible: $('#visible-'+id).is(':checked'),
-                description: $('#description-'+id).val()
-            };
+        //     var dataCategoryUpdate = {
+        //         name: $('#name-'+id).val(),
+        //         parent_id: $('#parent_id-'+id).find(':selected').val(),
+        //         is_visible: $('#visible-'+id).is(':checked'),
+        //         description: $('#description-'+id).val()
+        //     };
 
-            $.ajax({
-                type: 'POST',
-                method: 'PUT',
-                url: url,
-                data: dataCategoryUpdate,
-                success: function(results) {
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: results,
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
+        //     $.ajax({
+        //         type: 'POST',
+        //         method: 'PUT',
+        //         url: url,
+        //         data: dataCategoryUpdate,
+        //         success: function(results) {
+        //             Swal.fire({
+        //                 position: "center",
+        //                 icon: "success",
+        //                 title: results,
+        //                 showConfirmButton: false,
+        //                 timer: 1500,
+        //             });
                     
-                    setTimeout(function(){
-                        location.reload();
-                    },2000);
-                },
-                error: function(results) {
-                    Swal.fire({
-                        title: results.responseText,
-                        icon: "error",
-                    });
-                },
-            });
-        });
+        //             setTimeout(function(){
+        //                 location.reload();
+        //             },2000);
+        //         },
+        //         error: function(results) {
+        //             Swal.fire({
+        //                 title: results.responseText,
+        //                 icon: "error",
+        //             });
+        //         },
+        //     });
+        // });
 
         $('.btn_delete_item').click(function(e){
             e.preventDefault();

@@ -22,15 +22,7 @@
     </ol>
 </nav>
 
-@if($errors->any())
-<ul>
-    @foreach( $errors->all() as $error)
-    <li>
-        <span class="text-red-300">{{$error}}</span>
-    </li>
-    @endforeach
-</ul>
-@endif
+
 
 <section class="bg-gray-50 py-4 sm:py-5 mt-5">
     <div class="px-4 mx-auto max-w-screen-2xl">

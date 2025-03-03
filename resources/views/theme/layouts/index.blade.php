@@ -29,8 +29,9 @@
     <link rel="canonical" href="{{ url()->current() }}">
     <meta name="format-detection" content="telephone=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <!-- Meta Tags -->
-    @include('theme.layouts.metaTag')
+    @yield('metaTags')
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="/assets/theme/images/logo/favicon-logo-hienluongaudio.ico">

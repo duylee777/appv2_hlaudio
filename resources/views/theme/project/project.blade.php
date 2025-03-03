@@ -1,5 +1,10 @@
 @extends('theme.layouts.page')
 @section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? 'Dự án') : 'Dự án')
+
+@section('metaTags')
+    @include('theme.layouts.metaTags', ['localPage' => true])
+@endsection
+
 @section('category-url', '')
 @section('category-name', '')
 @section('page-name', 'Dự án')

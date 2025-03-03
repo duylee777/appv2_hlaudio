@@ -1,5 +1,10 @@
 @extends('theme.layouts.index')
 @section('title', isset($metaTag) ? (json_decode($metaTag->title) ?? "Trang chủ") : "Trang chủ")
+
+@section('metaTags')
+    @include('theme.layouts.metaTags', ['localPage' => true])
+@endsection
+
 @section('content')
 <style>
     .left-menu {

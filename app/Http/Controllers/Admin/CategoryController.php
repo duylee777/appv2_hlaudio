@@ -55,13 +55,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('parent_id', 'ASC')->orderBy('id', 'ASC')->paginate(20);
+        $categories = Category::orderBy('parent_id', 'ASC')->orderBy('id', 'ASC')->get();
         $newArray = [];
         foreach($categories as $cate) {
             $newArray = array_merge($newArray, $this->arrCategoryByParent($cate, $categories));
         }
         $categories = (object)array_unique($newArray);
-
+        // dd($categories);die;
         return view('admin.category.category', compact('categories'));
     }
 
@@ -70,7 +70,14 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::orderBy('parent_id', 'ASC')->orderBy('id', 'ASC')->get();;
+        $newArray = [];
+        foreach($categories as $cate) {
+            $newArray = array_merge($newArray, $this->arrCategoryByParent($cate, $categories));
+        }
+        $categories = (object)array_unique($newArray);
+
+        return view('admin.category.create', compact('categories'));
     }
 
     /**
@@ -135,7 +142,7 @@ class CategoryController extends Controller
             return redirect()->route('category.index')->with(['msg' => 'Tạo danh mục mới thành công !']);
         }
 
-        return redirect()->route('category.index')->with(['msg' => 'Tên danh mục đã tồn tại !']);
+        return redirect()->route('category.create')->withErrors('Tên danh mục đã tồn tại !');
     }
 
     /**
@@ -149,9 +156,17 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $categories)
+    public function edit($id)
     {
-        //
+        $category = Category::where('id', $id)->first();
+        $categories = Category::orderBy('parent_id', 'ASC')->orderBy('id', 'ASC')->get();
+        $newArray = [];
+        foreach($categories as $cate) {
+            $newArray = array_merge($newArray, $this->arrCategoryByParent($cate, $categories));
+        }
+        $categories = (object)array_unique($newArray);
+        $SEOData = SEO::where(['type' => 'CATEGORY', 'type_id' => $category->id])->first();
+        return view('admin.category.edit', compact('category', 'categories', 'SEOData'));
     }
 
     /**
@@ -177,15 +192,85 @@ class CategoryController extends Controller
         if($request->is_visible == 'false') {
             $dataCategoryUpdate['is_visible'] = false;
         }
+
+        $metaTag = SEO::where(['type' => 'CATEGORY', 'type_id' => $updateCategory->id])->first();
+        $updateSEOData = [
+            'name' => json_encode('Danh mục id '.$updateCategory->id),
+            'type' => 'CATEGORY',
+            'type_id' => $updateCategory->id,
+            'title' => is_null($request->seo_title)? null : json_encode($request->seo_title),
+            'description' => is_null($request->seo_description)? null : json_encode($request->seo_description),
+            'keywords' => is_null($request->seo_keywords)? null : json_encode($request->seo_keywords),
+            'og_site_name' => is_null($request->seo_og_site_name)? null : json_encode($request->seo_og_site_name),
+            'og_description' => is_null($request->seo_og_description)? null : json_encode($request->seo_og_description),
+            'og_title' => is_null($request->seo_og_title)? null : json_encode($request->seo_og_title),
+            'og_type' => is_null($request->seo_og_type)? null : json_encode($request->seo_og_type),
+            'og_url' => is_null($request->seo_og_url)? null : json_encode($request->seo_og_url),
+            'og_image' => is_null($request->seo_og_image)? null : json_encode($request->seo_og_image),
+            'og_image_height' => is_null($request->seo_og_image_height)? null : json_encode($request->seo_og_image_height),
+            'og_image_width' => is_null($request->seo_og_image_width)? null : json_encode($request->seo_og_image_width),
+            'og_image_type' => is_null($request->seo_og_image_type)? null : json_encode($request->seo_og_image_type),
+            'og_image_alt' => is_null($request->seo_og_image_alt)? null : json_encode($request->seo_og_image_alt),
+            'twitter_site' => is_null($request->seo_twitter_site)? null : json_encode($request->seo_twitter_site),
+            'twitter_card' => is_null($request->seo_twitter_card)? null : json_encode($request->seo_twitter_card),
+            'twitter_creator' => is_null($request->seo_twitter_creator)? null : json_encode($request->seo_twitter_creator),
+            'twitter_title' => is_null($request->seo_twitter_title)? null : json_encode($request->seo_twitter_title),
+            'twitter_description' => is_null($request->seo_twitter_description)? null : json_encode($request->seo_twitter_description),
+            'twitter_image' => is_null($request->seo_twitter_image)? null : json_encode($request->seo_twitter_image),
+            'robots' => is_null($request->seo_robots)? null : json_encode($request->seo_robots),
+            'og_locale' => is_null($request->seo_og_locale)? null : json_encode($request->seo_og_locale),
+            'article_publisher' => is_null($request->seo_article_publisher)? null : json_encode($request->seo_article_publisher),
+            'og_image_secure_url' => is_null($request->seo_og_image_secure_url)? null : json_encode($request->seo_og_image_secure_url),
+            'twitter_label1' => is_null($request->seo_twitter_label1)? null : json_encode($request->seo_twitter_label1),
+            'twitter_data1' => is_null($request->seo_twitter_data1)? null : json_encode($request->seo_twitter_data1)
+        ];
+        if(is_null($metaTag)){
+            SEO::create($updateSEOData);
+        }
+        else{
+            $oldSEOData = [
+                'name' => $metaTag->name,
+                'type' => $metaTag->type,
+                'type_id' => $metaTag->type_id,
+                'title' => $metaTag->title,
+                'description' => $metaTag->description,
+                'keywords' => $metaTag->keywords,
+                'og_site_name' => $metaTag->og_site_name,
+                'og_description' => $metaTag->og_description,
+                'og_title' => $metaTag->og_title,
+                'og_type' => $metaTag->og_type,
+                'og_url' => $metaTag->og_url,
+                'og_image' => $metaTag->og_image,
+                'og_image_height' => $metaTag->og_image_height,
+                'og_image_width' => $metaTag->og_image_width,
+                'og_image_type' => $metaTag->og_image_type,
+                'og_image_alt' => $metaTag->og_image_alt,
+                'twitter_site' => $metaTag->twitter_site,
+                'twitter_card' => $metaTag->twitter_card,
+                'twitter_creator' => $metaTag->twitter_creator,
+                'twitter_title' => $metaTag->twitter_title,
+                'twitter_description' => $metaTag->twitter_description,
+                'twitter_image' => $metaTag->twitter_image,
+                'robots' => $metaTag->robots,
+                'og_locale' => $metaTag->og_locale,
+                'article_publisher' => $metaTag->article_publisher,
+                'og_image_secure_url' => $metaTag->og_image_secure_url,
+                'twitter_label1' => $metaTag->twitter_label1,
+                'twitter_data1' => $metaTag->twitter_data1
+            ];
+            if($updateSEOData != $oldSEOData){
+                $metaTag->update($updateSEOData);
+            }
+        }
         
         if(!in_array($request->name, $categories)) {
             $slug = Parent::toSlug($request->name);
             $dataCategoryUpdate['slug'] = $slug;
             $updateCategory->update($dataCategoryUpdate);
 
-            return response('Cập nhật danh mục thành công !', 200);
+            return redirect()->route('category.edit', $id)->with(['msg' => 'Chỉnh sửa thành công !']);
         }
-        return response('Tên danh mục đã tồn tại !', 400);
+        return redirect()->route('category.edit', $id)->withErrors('Tên danh mục đã tồn tại !')->withInput();
     }
 
     /**
